@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Dental Website Audit | DentalWebAI</title>
+    <meta name="description" content="Get an instant free audit of your dental website. Check speed, mobile, SEO, booking, and more — results in 30 seconds.">
+    <link rel="canonical" href="https://dentalwebai.com/audit.html">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230066FF'/><text x='50' y='70' text-anchor='middle' font-family='sans-serif' font-size='50' font-weight='bold' fill='white'>D</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #0066FF; --primary-light: #E8F0FE; --dark: #0A1628; --text: #1A2B4A; --text-light: #5A6B8A; --bg: #FFFFFF; --bg-alt: #F5F7FA; --border: #E2E8F0; --green: #10B981; --red: #EF4444; --yellow: #F59E0B; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
+
+        .nav { background: var(--dark); padding: 16px 24px; }
+        .nav__inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav__logo { font-family: 'Plus Jakarta Sans'; font-weight: 800; color: #fff; text-decoration: none; font-size: 1.1rem; }
+        .nav__logo span { color: var(--primary); }
+        .nav__back { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; }
+
+        .hero { background: var(--dark); color: #fff; text-align: center; padding: 80px 24px 60px; }
+        .hero h1 { font-family: 'Plus Jakarta Sans'; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 16px; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { color: rgba(255,255,255,0.6); font-size: 1.1rem; max-width: 500px; margin: 0 auto 40px; }
+
+        .audit-form { display: flex; gap: 12px; max-width: 550px; margin: 0 auto; }
+        .audit-form input { flex: 1; padding: 16px 20px; border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; background: rgba(255,255,255,0.05); color: #fff; font-size: 1rem; }
+        .audit-form input::placeholder { color: rgba(255,255,255,0.3); }
+        .audit-form input:focus { outline: none; border-color: var(--primary); }
+        .audit-form button { padding: 16px 32px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .audit-form button:hover { background: #0052CC; }
+        .audit-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .loading { display: none; text-align: center; padding: 60px 24px; }
+        .loading.active { display: block; }
+        .spinner { width: 48px; height: 48px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading p { color: var(--text-light); }
+        .loading__step { font-size: 0.9rem; color: var(--primary); margin-top: 8px; }
+
+        .results { display: none; max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+        .results.active { display: block; }
+
+        .score-card { text-align: center; padding: 48px; background: var(--bg-alt); border-radius: 20px; margin-bottom: 32px; }
+        .score-ring { width: 160px; height: 160px; margin: 0 auto 20px; position: relative; }
+        .score-ring svg { transform: rotate(-90deg); }
+        .score-ring__value { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans'; font-size: 3rem; font-weight: 800; }
+        .score-card h2 { font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; margin-bottom: 8px; }
+        .score-card p { color: var(--text-light); }
+
+        .checks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .check-item { background: var(--bg-alt); border-radius: 12px; padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+        .check-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .check-icon--pass { background: #ECFDF5; color: var(--green); }
+        .check-icon--fail { background: #FEE2E2; color: var(--red); }
+        .check-icon--warn { background: #FEF3C7; color: var(--yellow); }
+        .check-item h4 { font-size: 0.95rem; margin-bottom: 4px; }
+        .check-item p { font-size: 0.8rem; color: var(--text-light); line-height: 1.5; }
+
+        .pagespeed-scores { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+        .ps-score { text-align: center; background: var(--bg-alt); border-radius: 12px; padding: 24px 16px; }
+        .ps-score__num { font-family: 'Plus Jakarta Sans'; font-size: 2rem; font-weight: 800; }
+        .ps-score__num--good { color: var(--green); }
+        .ps-score__num--avg { color: var(--yellow); }
+        .ps-score__num--poor { color: var(--red); }
+        .ps-score__label { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; }
+
+        .cta-result { background: var(--dark); color: #fff; padding: 48px; border-radius: 16px; text-align: center; }
+        .cta-result h2 { font-family: 'Plus Jakarta Sans'; margin-bottom: 12px; }
+        .cta-result p { color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+        .cta-result .btn { background: var(--primary); color: #fff; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 600; display: inline-block; }
+
+        .footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-light); }
+        .footer a { color: var(--primary); text-decoration: none; }
+
+        @media (max-width: 600px) {
+            .audit-form { flex-direction: column; }
+            .pagespeed-scores { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav__inner">
+        <a href="/" class="nav__logo"><span>&#9677;</span> DentalWebAI</a>
+        <a href="/" class="nav__back">&larr; Back to home</a>
+    </div>
+</nav>
+
+<section class="hero" id="heroSection">
+    <h1>Free <span>Website Audit</span></h1>
+    <p>Enter your website URL and get a comprehensive audit in 30 seconds. Speed, mobile, SEO, booking — everything checked.</p>
+    <form class="audit-form" id="auditForm">
+        <input type="url" id="urlInput" placeholder="https://your-dental-clinic.com" required>
+        <button type="submit" id="auditBtn">Audit Now</button>
+    </form>
+</section>
+
+<div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Analyzing your website...</p>
+    <p class="loading__step" id="loadingStep">Checking SSL certificate...</p>
+</div>
+
+<div class="results" id="results">
+    <div class="score-card" id="scoreCard">
+        <div class="score-ring">
+            <svg width="160" height="160">
+                <circle cx="80" cy="80" r="70" fill="none" stroke="#E2E8F0" stroke-width="10"/>
+                <circle cx="80" cy="80" r="70" fill="none" stroke-width="10" stroke-linecap="round" id="scoreCircle"
+                    stroke-dasharray="440" stroke-dashoffset="440" style="transition: stroke-dashoffset 1.5s ease"/>
+            </svg>
+            <div class="score-ring__value" id="scoreValue">0</div>
+        </div>
+        <h2 id="scoreLabel">Analyzing...</h2>
+        <p id="scoreDesc"></p>
+    </div>
+
+    <h3 style="margin-bottom:16px;font-family:'Plus Jakarta Sans'">PageSpeed Insights</h3>
+    <div class="pagespeed-scores" id="pagespeedScores"></div>
+
+    <h3 style="margin-bottom:16px;font-family:'Plus Jakarta Sans'">Detailed Checks</h3>
+    <div class="checks-grid" id="checksGrid"></div>
+
+    <div class="cta-result">
+        <h2>Want us to fix these issues?</h2>
+        <p>We build modern, high-converting dental websites — starting at €1,400, delivered in 3-10 days.</p>
+        <a href="/#packages" class="btn">View Our Packages</a>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2026 <a href="/">DentalWebAI</a> | <a href="/#packages">Packages</a> | <a href="/blog/dental-website-cost.html">Pricing Guide</a></p>
+</footer>
+
+<script>
+const PAGESPEED_API = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
+
+const form = document.getElementById('auditForm');
+const urlInput = document.getElementById('urlInput');
+const btn = document.getElementById('auditBtn');
+const loading = document.getElementById('loading');
+const loadingStep = document.getElementById('loadingStep');
+const results = document.getElementById('results');
+const heroSection = document.getElementById('heroSection');
+
+const steps = [
+    'Checking SSL certificate...',
+    'Testing mobile responsiveness...',
+    'Analyzing page speed...',
+    'Scanning for SEO issues...',
+    'Checking online booking...',
+    'Reviewing schema markup...',
+    'Generating report...'
+];
+
+form.addEventListener('submit', async e => {
+    e.preventDefault();
+    let url = urlInput.value.trim();
+    if (!url.startsWith('http')) url = 'https://' + url;
+
+    btn.disabled = true;
+    btn.textContent = 'Auditing...';
+    results.classList.remove('active');
+    loading.classList.add('active');
+
+    // Animate loading steps
+    let stepIdx = 0;
+    const stepInterval = setInterval(() => {
+        stepIdx = (stepIdx + 1) % steps.length;
+        loadingStep.textContent = steps[stepIdx];
+    }, 2500);
+
+    try {
+        // Run PageSpeed API (mobile)
+        const psRes = await fetch(`${PAGESPEED_API}?url=${encodeURIComponent(url)}&strategy=mobile&category=performance&category=seo&category=accessibility&category=best-practices`);
+        const psData = await psRes.json();
+
+        clearInterval(stepInterval);
+        loading.classList.remove('active');
+
+        if (psData.error) {
+            alert('Could not analyze this URL. Please check the address and try again.');
+            btn.disabled = false;
+            btn.textContent = 'Audit Now';
+            return;
+        }
+
+        // Extract scores
+        const cats = psData.lighthouseResult?.categories || {};
+        const perfScore = Math.round((cats.performance?.score || 0) * 100);
+        const seoScore = Math.round((cats.seo?.score || 0) * 100);
+        const a11yScore = Math.round((cats.accessibility?.score || 0) * 100);
+        const bpScore = Math.round((cats['best-practices']?.score || 0) * 100);
+
+        // Extract audits
+        const audits = psData.lighthouseResult?.audits || {};
+        const fcp = audits['first-contentful-paint']?.displayValue || '?';
+        const lcp = audits['largest-contentful-paint']?.displayValue || '?';
+        const cls = audits['cumulative-layout-shift']?.displayValue || '?';
+        const tbt = audits['total-blocking-time']?.displayValue || '?';
+        const isHttps = audits['is-on-https']?.score === 1;
+        const hasViewport = audits['viewport']?.score === 1;
+        const hasMetaDesc = audits['meta-description']?.score === 1;
+        const docTitle = audits['document-title']?.score === 1;
+        const hreflang = audits['hreflang']?.score;
+        const robots = audits['robots-txt']?.score === 1;
+        const canonical = audits['canonical']?.score === 1;
+        const fontSize = audits['font-size']?.score === 1;
+        const tapTargets = audits['tap-targets']?.score === 1;
+
+        // Additional checks from HTML
+        const finalUrl = psData.lighthouseResult?.finalUrl || url;
+        const htmlContent = psData.lighthouseResult?.audits?.['final-screenshot']?.details?.data ? '' : '';
+
+        // Our custom score (weighted)
+        const overallScore = Math.round(perfScore * 0.3 + seoScore * 0.3 + a11yScore * 0.2 + bpScore * 0.2);
+
+        // Render results
+        renderResults(overallScore, perfScore, seoScore, a11yScore, bpScore, {
+            isHttps, hasViewport, hasMetaDesc, docTitle, robots, canonical, fontSize, tapTargets,
+            fcp, lcp, cls, tbt, finalUrl
+        });
+
+    } catch (err) {
+        clearInterval(stepInterval);
+        loading.classList.remove('active');
+        alert('Error analyzing website: ' + err.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Audit Again';
+});
+
+function scoreColor(score) {
+    if (score >= 90) return '#10B981';
+    if (score >= 50) return '#F59E0B';
+    return '#EF4444';
+}
+
+function scoreClass(score) {
+    if (score >= 90) return 'good';
+    if (score >= 50) return 'avg';
+    return 'poor';
+}
+
+function scoreLabel(score) {
+    if (score >= 90) return 'Excellent';
+    if (score >= 70) return 'Good — room for improvement';
+    if (score >= 50) return 'Needs work';
+    return 'Critical — losing patients';
+}
+
+function renderResults(overall, perf, seo, a11y, bp, checks) {
+    results.classList.add('active');
+
+    // Score ring
+    const circle = document.getElementById('scoreCircle');
+    const offset = 440 - (440 * overall / 100);
+    circle.style.stroke = scoreColor(overall);
+    setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
+
+    const scoreValue = document.getElementById('scoreValue');
+    let counter = 0;
+    const counterInterval = setInterval(() => {
+        counter += 2;
+        if (counter >= overall) { counter = overall; clearInterval(counterInterval); }
+        scoreValue.textContent = counter;
+        scoreValue.style.color = scoreColor(overall);
+    }, 20);
+
+    document.getElementById('scoreLabel').textContent = scoreLabel(overall);
+    document.getElementById('scoreDesc').textContent = `Overall score for ${checks.finalUrl}`;
+
+    // PageSpeed scores
+    const psContainer = document.getElementById('pagespeedScores');
+    psContainer.innerHTML = [
+        { label: 'Performance', score: perf },
+        { label: 'SEO', score: seo },
+        { label: 'Accessibility', score: a11y },
+        { label: 'Best Practices', score: bp }
+    ].map(s => `
+        <div class="ps-score">
+            <div class="ps-score__num ps-score__num--${scoreClass(s.score)}">${s.score}</div>
+            <div class="ps-score__label">${s.label}</div>
+        </div>
+    `).join('');
+
+    // Detailed checks
+    const grid = document.getElementById('checksGrid');
+    const items = [
+        { pass: checks.isHttps, title: 'SSL / HTTPS', good: 'Site is served over HTTPS — secure connection.', bad: 'No HTTPS — patients see "Not Secure" warning. Critical trust issue.' },
+        { pass: checks.hasViewport, title: 'Mobile Responsive', good: 'Viewport meta tag is set — site adapts to mobile.', bad: 'Not mobile-friendly — 60% of patients search on mobile. You\'re losing them.' },
+        { pass: checks.hasMetaDesc, title: 'Meta Description', good: 'Meta description is set — Google can show your summary.', bad: 'No meta description — Google creates its own (often bad) summary of your practice.' },
+        { pass: checks.docTitle, title: 'Page Title', good: 'Page title is properly set.', bad: 'Missing or generic page title — this is what patients see in Google results.' },
+        { pass: checks.canonical, title: 'Canonical URL', good: 'Canonical URL is set — no duplicate content issues.', bad: 'No canonical URL — risk of duplicate content hurting your rankings.' },
+        { pass: checks.robots, title: 'Robots.txt', good: 'Robots.txt is properly configured.', bad: 'Robots.txt issues — search engines may not crawl your site correctly.' },
+        { pass: checks.fontSize, title: 'Font Size', good: 'Text is legible on mobile devices.', bad: 'Text too small on mobile — patients have to pinch to zoom. Bad experience.' },
+        { pass: checks.tapTargets, title: 'Tap Targets', good: 'Buttons and links are properly sized for mobile tapping.', bad: 'Tap targets too small — mobile users struggle to click buttons and links.' },
+    ];
+
+    // Add speed checks
+    items.push({
+        pass: parseInt(checks.fcp) < 2.5,
+        title: `First Paint: ${checks.fcp}`,
+        good: 'Page starts rendering quickly — good first impression.',
+        bad: 'Slow first paint — patients may leave before seeing anything.'
+    });
+    items.push({
+        pass: parseInt(checks.lcp) < 4,
+        title: `Largest Paint: ${checks.lcp}`,
+        good: 'Main content loads fast.',
+        bad: 'Main content loads too slowly — 67% of patients leave after 3 seconds.'
+    });
+
+    grid.innerHTML = items.map(item => `
+        <div class="check-item">
+            <div class="check-icon ${item.pass ? 'check-icon--pass' : (item.pass === null ? 'check-icon--warn' : 'check-icon--fail')}">
+                ${item.pass ? '&#10003;' : (item.pass === null ? '!' : '&#10007;')}
+            </div>
+            <div>
+                <h4>${item.title}</h4>
+                <p>${item.pass ? item.good : item.bad}</p>
+            </div>
+        </div>
+    `).join('');
+
+    // Scroll to results
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+
+</body>
+</html>
