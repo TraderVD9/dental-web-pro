@@ -1,0 +1,39 @@
+{
+  "url": "https://gentledentalcarect.weebly.com/",
+  "timestamp": "2026-03-28T13:18:17.127Z",
+  "issues": [
+    {
+      "severity": "medium",
+      "issue": "No meta description",
+      "detail": "Missing meta description tag. This is what Google shows in search results."
+    },
+    {
+      "severity": "medium",
+      "issue": "No structured data",
+      "detail": "No schema.org markup found. This helps Google understand your practice and show rich results."
+    },
+    {
+      "severity": "low",
+      "issue": "No Google Maps",
+      "detail": "No embedded Google Maps found. Helps patients find your practice easily."
+    },
+    {
+      "severity": "medium",
+      "issue": "No click-to-call",
+      "detail": "No click-to-call phone link found. Mobile users should be able to call with one tap."
+    },
+    {
+      "severity": "medium",
+      "issue": "No patient reviews",
+      "detail": "No reviews or testimonials section found. Social proof is critical for dental practices."
+    }
+  ],
+  "score": 74,
+  "details": {
+    "loadTime": 339,
+    "statusCode": 200,
+    "mobileViewport": true,
+    "onlineBooking": true,
+    "platform": "Unknown/Custom"
+  }
+}

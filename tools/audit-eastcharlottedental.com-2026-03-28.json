@@ -1,0 +1,54 @@
+{
+  "url": "https://www.eastcharlottedental.com/",
+  "timestamp": "2026-03-28T13:18:16.289Z",
+  "issues": [
+    {
+      "severity": "high",
+      "issue": "Not mobile-friendly",
+      "detail": "No viewport meta tag found. 60% of patients search on mobile."
+    },
+    {
+      "severity": "high",
+      "issue": "No online booking",
+      "detail": "70% of patients prefer booking online. No booking system detected."
+    },
+    {
+      "severity": "medium",
+      "issue": "No meta description",
+      "detail": "Missing meta description tag. This is what Google shows in search results."
+    },
+    {
+      "severity": "medium",
+      "issue": "No structured data",
+      "detail": "No schema.org markup found. This helps Google understand your practice and show rich results."
+    },
+    {
+      "severity": "low",
+      "issue": "No Google Maps",
+      "detail": "No embedded Google Maps found. Helps patients find your practice easily."
+    },
+    {
+      "severity": "medium",
+      "issue": "No click-to-call",
+      "detail": "No click-to-call phone link found. Mobile users should be able to call with one tap."
+    },
+    {
+      "severity": "medium",
+      "issue": "No patient reviews",
+      "detail": "No reviews or testimonials section found. Social proof is critical for dental practices."
+    },
+    {
+      "severity": "medium",
+      "issue": "No contact form",
+      "detail": "No contact form detected. Some patients prefer to send a message rather than call."
+    }
+  ],
+  "score": 42,
+  "details": {
+    "loadTime": 210,
+    "statusCode": 200,
+    "mobileViewport": false,
+    "onlineBooking": false,
+    "platform": "Unknown/Custom"
+  }
+}
