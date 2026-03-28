@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bright Smile Dental — Premium Cosmetic Dentistry</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #C9A96E;
+  --gold-light: #E8D5B0;
+  --dark: #0A0A0F;
+  --dark-card: #12121A;
+  --dark-lighter: #1A1A25;
+  --text: #E8E8EC;
+  --text-muted: #8A8A9A;
+  --accent: #4A90D9;
+  --radius: 16px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ CURSOR ═══ */
+.cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.15s ease, opacity 0.3s; mix-blend-mode: difference; }
+.cursor-dot { position: fixed; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; }
+
+/* ═══ PARTICLES ═══ */
+#particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* ═══ NAV ═══ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(10,10,15,0.6); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,169,110,0.1);
+  transition: 0.4s;
+}
+.nav__logo { font-family: 'Playfair Display'; font-size: 1.5rem; font-weight: 700; color: var(--gold); text-decoration: none; letter-spacing: 1px; }
+.nav__links { display: flex; gap: 32px; align-items: center; }
+.nav__links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 400; letter-spacing: 0.5px; transition: 0.3s; }
+.nav__links a:hover { color: var(--gold); }
+.nav__cta { background: var(--gold) !important; color: var(--dark) !important; padding: 10px 24px !important; border-radius: 8px; font-weight: 600 !important; }
+.nav__cta:hover { background: var(--gold-light) !important; transform: translateY(-2px); }
+
+/* ═══ HERO ═══ */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
+}
+.hero__video {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0A0A1A 0%, #1A1030 50%, #0A0A1A 100%);
+  z-index: 0;
+}
+.hero__video::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, var(--dark) 70%);
+}
+/* Animated gradient orbs simulating video */
+.hero__orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.hero__orb--1 { width: 500px; height: 500px; background: #4A2080; top: 10%; left: 20%; animation-delay: 0s; }
+.hero__orb--2 { width: 400px; height: 400px; background: #C9A96E; top: 40%; right: 10%; animation-delay: -3s; animation-duration: 10s; }
+.hero__orb--3 { width: 350px; height: 350px; background: #2060A0; bottom: 10%; left: 40%; animation-delay: -5s; animation-duration: 12s; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+.hero__content { position: relative; z-index: 2; max-width: 800px; padding: 0 24px; }
+.hero__badge {
+  display: inline-block; border: 1px solid var(--gold);
+  color: var(--gold); padding: 6px 20px; border-radius: 100px;
+  font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 32px; opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
+}
+.hero__title {
+  font-family: 'Playfair Display'; font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 900; line-height: 1.05; margin-bottom: 24px;
+  background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, var(--gold) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.5s;
+}
+.hero__sub {
+  font-size: 1.15rem; color: var(--text-muted); line-height: 1.7;
+  max-width: 550px; margin: 0 auto 40px;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.7s;
+}
+.hero__ctas {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp 1s ease forwards 0.9s;
+}
+.btn {
+  padding: 16px 36px; border-radius: 10px; font-size: 1rem; font-weight: 600;
+  text-decoration: none; border: 2px solid transparent; cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1); display: inline-flex; align-items: center; gap: 8px;
+}
+.btn--gold { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+.btn--gold:hover { background: transparent; color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(201,169,110,0.3); }
+.btn--ghost { border-color: rgba(255,255,255,0.2); color: var(--text); }
+.btn--ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+
+.hero__scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text-muted); font-size: 0.75rem; letter-spacing: 2px;
+  animation: fadeUp 1s ease forwards 1.2s; opacity: 0;
+}
+.hero__scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease infinite; }
+@keyframes scrollPulse { 0%,100% { opacity: 0.3; height: 40px; } 50% { opacity: 1; height: 60px; } }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══ SECTIONS ═══ */
+.section { padding: 120px 0; position: relative; z-index: 1; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section__label { color: var(--gold); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+.section__title { font-family: 'Playfair Display'; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.2; margin-bottom: 20px; }
+.section__sub { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; max-width: 550px; }
+
+/* ═══ SERVICES — 3D TILT CARDS ═══ */
+.services { background: linear-gradient(180deg, var(--dark) 0%, var(--dark-lighter) 100%); }
+.services__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+.service-card {
+  background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--radius); padding: 40px 32px;
+  transition: all 0.4s; position: relative; overflow: hidden;
+  transform-style: preserve-3d; perspective: 1000px;
+}
+.service-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(201,169,110,0.08), transparent 60%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.service-card:hover::before { opacity: 1; }
+.service-card:hover { border-color: rgba(201,169,110,0.2); transform: translateY(-8px); }
+.service-card__icon { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+.service-card h3 { font-family: 'Playfair Display'; font-size: 1.3rem; margin-bottom: 12px; }
+.service-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+.service-card__line { width: 40px; height: 2px; background: var(--gold); margin-top: 20px; transition: width 0.4s; }
+.service-card:hover .service-card__line { width: 80px; }
+
+/* ═══ ABOUT — SPLIT ═══ */
+.about { background: var(--dark-lighter); }
+.about__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about__img {
+  aspect-ratio: 4/5; border-radius: var(--radius); overflow: hidden; position: relative;
+  background: linear-gradient(135deg, #1a1a2e, #2a1a3e);
+}
+.about__img-decor {
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='400' height='500' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23C9A96E' stop-opacity='0.2'/%3E%3Cstop offset='100%25' stop-color='%234A90D9' stop-opacity='0.1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='200' cy='250' r='150' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='250' r='100' fill='none' stroke='%23C9A96E' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='200' cy='250' r='120' fill='none' stroke='%23C9A96E' stroke-width='0.5' opacity='0.2'/%3E%3Ctext x='200' y='240' text-anchor='middle' font-family='Playfair Display' font-size='48' fill='%23C9A96E' opacity='0.6'%3E%E2%9C%A6%3C/text%3E%3Ctext x='200' y='290' text-anchor='middle' font-family='Inter' font-size='14' fill='%23E8E8EC' letter-spacing='4' opacity='0.5'%3EEXCELLENCE%3C/text%3E%3C/svg%3E") center/cover;
+  animation: imgFloat 6s ease-in-out infinite;
+}
+@keyframes imgFloat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+.about__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+.about__stat { text-align: center; }
+.about__stat-num { font-family: 'Playfair Display'; font-size: 2.5rem; font-weight: 700; color: var(--gold); display: block; }
+.about__stat-label { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+
+/* ═══ TESTIMONIALS — CAROUSEL ═══ */
+.testimonials { background: var(--dark); overflow: hidden; }
+.testimonials__track {
+  display: flex; gap: 24px;
+  animation: scrollTrack 30s linear infinite;
+  width: max-content;
+}
+@keyframes scrollTrack {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.testimonial {
+  background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--radius); padding: 32px;
+  min-width: 380px; flex-shrink: 0;
+}
+.testimonial__stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 16px; }
+.testimonial__text { font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; font-style: italic; color: var(--text); }
+.testimonial__author { font-size: 0.85rem; color: var(--text-muted); }
+.testimonial__author strong { color: var(--gold); font-weight: 600; }
+
+/* ═══ GALLERY — 3D PERSPECTIVE ═══ */
+.gallery { background: var(--dark-lighter); }
+.gallery__grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 64px;
+  perspective: 1200px;
+}
+.gallery__item {
+  aspect-ratio: 3/4; border-radius: var(--radius); overflow: hidden;
+  position: relative; cursor: pointer;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  background: linear-gradient(135deg, var(--dark-card), var(--dark-lighter));
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+}
+.gallery__item:nth-child(1) { transform: rotateY(5deg); }
+.gallery__item:nth-child(2) { transform: rotateY(0deg) scale(1.05); z-index: 2; }
+.gallery__item:nth-child(3) { transform: rotateY(-5deg); }
+.gallery__item:hover { transform: rotateY(0deg) scale(1.08); z-index: 3; border-color: var(--gold); }
+.gallery__item-inner {
+  text-align: center; padding: 40px;
+}
+.gallery__item-icon { font-size: 3rem; margin-bottom: 16px; display: block; }
+.gallery__item h4 { font-family: 'Playfair Display'; font-size: 1.2rem; margin-bottom: 8px; }
+.gallery__item p { color: var(--text-muted); font-size: 0.85rem; }
+
+/* ═══ CTA ═══ */
+.cta-section {
+  background: linear-gradient(135deg, #1A1030 0%, var(--dark) 100%);
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(201,169,110,0.08), transparent 60%);
+}
+.cta__inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+.cta__inner .section__title { text-align: center; }
+.cta__inner .section__sub { text-align: center; margin: 0 auto 40px; }
+
+.cta-form { display: flex; flex-direction: column; gap: 12px; max-width: 420px; margin: 0 auto; }
+.cta-form input {
+  padding: 16px 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; color: var(--text); font-size: 0.95rem; transition: 0.3s;
+}
+.cta-form input:focus { outline: none; border-color: var(--gold); background: rgba(255,255,255,0.08); }
+.cta-form input::placeholder { color: var(--text-muted); }
+.cta-form .btn { width: 100%; justify-content: center; }
+
+/* ═══ FOOTER ═══ */
+.footer {
+  background: var(--dark); border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 48px 0; text-align: center;
+}
+.footer__logo { font-family: 'Playfair Display'; font-size: 1.3rem; color: var(--gold); margin-bottom: 16px; }
+.footer__links { display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+.footer__links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: 0.3s; }
+.footer__links a:hover { color: var(--gold); }
+.footer__copy { color: var(--text-muted); font-size: 0.75rem; opacity: 0.5; }
+
+/* ═══ SCROLL REVEAL ═══ */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .services__grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .about__inner { grid-template-columns: 1fr; gap: 40px; }
+  .about__img { max-height: 300px; }
+  .gallery__grid { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
+  .gallery__item, .gallery__item:nth-child(1), .gallery__item:nth-child(2), .gallery__item:nth-child(3) { transform: none; }
+  .testimonial { min-width: 300px; }
+}
+@media (max-width: 768px) {
+  .nav { padding: 16px 20px; }
+  .nav__links { display: none; }
+  .hero__title { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+  .section { padding: 80px 0; }
+  .about__stats { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .cursor, .cursor-dot { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav__logo">Bright Smile</a>
+  <div class="nav__links">
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact" class="nav__cta">Book Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__video">
+    <div class="hero__orb hero__orb--1"></div>
+    <div class="hero__orb hero__orb--2"></div>
+    <div class="hero__orb hero__orb--3"></div>
+  </div>
+  <div class="hero__content">
+    <div class="hero__badge">Premium Cosmetic Dentistry</div>
+    <h1 class="hero__title">Your Smile Deserves Perfection</h1>
+    <p class="hero__sub">Experience world-class dental care powered by cutting-edge technology. Where art meets science for your most confident smile.</p>
+    <div class="hero__ctas">
+      <a href="#contact" class="btn btn--gold">Book Consultation</a>
+      <a href="#services" class="btn btn--ghost">Our Services &#8594;</a>
+    </div>
+  </div>
+  <div class="hero__scroll">
+    SCROLL
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section__label reveal">What We Offer</div>
+    <h2 class="section__title reveal">Comprehensive Dental Excellence</h2>
+    <p class="section__sub reveal">From routine care to complete smile transformations, we deliver results that change lives.</p>
+    <div class="services__grid">
+      <div class="service-card reveal">
+        <span class="service-card__icon">&#9830;</span>
+        <h3>Cosmetic Dentistry</h3>
+        <p>Veneers, whitening, bonding — personalized treatments for your dream smile using advanced digital imaging.</p>
+        <div class="service-card__line"></div>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-card__icon">&#10022;</span>
+        <h3>Dental Implants</h3>
+        <p>State-of-the-art implant solutions with 3D-guided surgery for precise, long-lasting results.</p>
+        <div class="service-card__line"></div>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-card__icon">&#9733;</span>
+        <h3>Invisalign</h3>
+        <p>Clear aligners with AI-predicted outcomes. See your new smile before treatment begins.</p>
+        <div class="service-card__line"></div>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-card__icon">&#10038;</span>
+        <h3>General Dentistry</h3>
+        <p>Comprehensive check-ups, cleanings, and preventive care with a gentle touch.</p>
+        <div class="service-card__line"></div>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-card__icon">&#9672;</span>
+        <h3>Emergency Care</h3>
+        <p>Same-day emergency appointments. Because dental pain doesn't wait.</p>
+        <div class="service-card__line"></div>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-card__icon">&#10048;</span>
+        <h3>Pediatric Dentistry</h3>
+        <p>Gentle, fun dental experiences that help children build healthy habits for life.</p>
+        <div class="service-card__line"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <div class="container">
+    <div class="about__inner">
+      <div class="about__img reveal">
+        <div class="about__img-decor"></div>
+      </div>
+      <div>
+        <div class="section__label reveal">About Us</div>
+        <h2 class="section__title reveal">20+ Years of Dental Excellence</h2>
+        <p class="section__sub reveal">Founded by Dr. Sarah Mitchell, Bright Smile Dental combines decades of expertise with the latest technology to deliver exceptional results in a warm, welcoming environment.</p>
+        <div class="about__stats reveal">
+          <div class="about__stat">
+            <span class="about__stat-num" data-count="15000">0</span>
+            <span class="about__stat-label">Happy Patients</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num" data-count="20">0</span>
+            <span class="about__stat-label">Years Experience</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num" data-count="98">0</span>
+            <span class="about__stat-label">% Satisfaction</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials" id="reviews">
+  <div class="container">
+    <div class="section__label reveal" style="text-align:center">Testimonials</div>
+    <h2 class="section__title reveal" style="text-align:center">What Our Patients Say</h2>
+  </div>
+  <div class="testimonials__track" style="margin-top:48px">
+    <div class="testimonial"><div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial__text">"Absolutely transformed my smile. The team is incredibly professional and the results exceeded all my expectations."</p><p class="testimonial__author"><strong>Jennifer M.</strong> &mdash; Cosmetic Patient</p></div>
+    <div class="testimonial"><div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial__text">"Best dental experience ever. From the modern office to the painless procedures — I actually look forward to my visits now."</p><p class="testimonial__author"><strong>Robert K.</strong> &mdash; Implant Patient</p></div>
+    <div class="testimonial"><div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial__text">"My Invisalign journey was seamless. Dr. Mitchell showed me my predicted results on day one — and they delivered exactly that."</p><p class="testimonial__author"><strong>Amanda L.</strong> &mdash; Invisalign Patient</p></div>
+    <div class="testimonial"><div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial__text">"My kids actually ask to go to the dentist now. The pediatric team is wonderful — patient, fun, and so gentle."</p><p class="testimonial__author"><strong>David & Sarah T.</strong> &mdash; Family Patients</p></div>
+    <div class="testimonial"><div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial__text">"Emergency appointment within 2 hours. Saved my tooth and my sanity. Can't recommend Bright Smile enough."</p><p class="testimonial__author"><strong>Michael R.</strong> &mdash; Emergency Patient</p></div>
+    <!-- Duplicated for infinite scroll -->
+    <div class="testimonial"><div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial__text">"Absolutely transformed my smile. The team is incredibly professional and the results exceeded all my expectations."</p><p class="testimonial__author"><strong>Jennifer M.</strong> &mdash; Cosmetic Patient</p></div>
+    <div class="testimonial"><div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial__text">"Best dental experience ever. From the modern office to the painless procedures — I actually look forward to my visits now."</p><p class="testimonial__author"><strong>Robert K.</strong> &mdash; Implant Patient</p></div>
+    <div class="testimonial"><div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial__text">"My Invisalign journey was seamless. Dr. Mitchell showed me my predicted results on day one — and they delivered exactly that."</p><p class="testimonial__author"><strong>Amanda L.</strong> &mdash; Invisalign Patient</p></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section gallery" id="gallery">
+  <div class="container">
+    <div class="section__label reveal" style="text-align:center">Our Practice</div>
+    <h2 class="section__title reveal" style="text-align:center">Step Inside Bright Smile</h2>
+    <div class="gallery__grid">
+      <div class="gallery__item reveal"><div class="gallery__item-inner"><span class="gallery__item-icon">&#127963;</span><h4>Modern Reception</h4><p>Warm & welcoming atmosphere</p></div></div>
+      <div class="gallery__item reveal"><div class="gallery__item-inner"><span class="gallery__item-icon">&#9881;</span><h4>Advanced Technology</h4><p>3D scanners, digital X-rays</p></div></div>
+      <div class="gallery__item reveal"><div class="gallery__item-inner"><span class="gallery__item-icon">&#127808;</span><h4>Relaxation Suite</h4><p>Comfort-first treatment rooms</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-section" id="contact">
+  <div class="container">
+    <div class="cta__inner">
+      <div class="section__label reveal">Get Started</div>
+      <h2 class="section__title reveal">Book Your Consultation</h2>
+      <p class="section__sub reveal">Take the first step toward your perfect smile. Free consultation, no obligation.</p>
+      <form class="cta-form reveal" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='✓ Sent!'; this.querySelector('.btn').style.background='#00D4AA'">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="tel" placeholder="Phone Number">
+        <button type="submit" class="btn btn--gold">Request Appointment</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__logo">Bright Smile Dental</div>
+    <div class="footer__links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p class="footer__copy">&copy; 2026 Bright Smile Dental. All rights reserved. Demo by DentalWebPro.</p>
+  </div>
+</footer>
+
+<script>
+// ═══ PARTICLES ═══
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.size = Math.random() * 2 + 0.5;
+    this.opacity = Math.random() * 0.3 + 0.1;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.fillStyle = `rgba(201, 169, 110, ${this.opacity})`;
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+  }
+}
+
+for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+
+  // Draw connections
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        ctx.strokeStyle = `rgba(201, 169, 110, ${0.05 * (1 - dist/120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ═══ CUSTOM CURSOR ═══
+const cursor = document.getElementById('cursor');
+const dot = document.getElementById('cursorDot');
+let mx = 0, my = 0, cx = 0, cy = 0;
+
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function updateCursor() {
+  cx += (mx - cx) * 0.12; cy += (my - cy) * 0.12;
+  cursor.style.left = cx - 10 + 'px'; cursor.style.top = cy - 10 + 'px';
+  dot.style.left = mx - 3 + 'px'; dot.style.top = my - 3 + 'px';
+  requestAnimationFrame(updateCursor);
+}
+updateCursor();
+
+// ═══ 3D TILT ON CARDS ═══
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    card.style.setProperty('--mouse-x', x * 100 + '%');
+    card.style.setProperty('--mouse-y', y * 100 + '%');
+    card.style.transform = `perspective(800px) rotateY(${(x-0.5)*8}deg) rotateX(${(0.5-y)*8}deg) translateY(-8px)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+
+// ═══ SCROLL REVEAL ═══
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ═══ COUNTER ANIMATION ═══
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = parseInt(el.dataset.count);
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.round(current).toLocaleString() + (target === 98 ? '%' : target === 15000 ? '+' : '+');
+      }, 20);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+// ═══ SMOOTH SCROLL ═══
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) window.scrollTo({ top: t.offsetTop - 72, behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>

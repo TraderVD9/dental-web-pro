@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpine Family Dentistry — Modern Family Dental Care</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #2563EB;
+  --primary-light: #60A5FA;
+  --primary-bg: #EFF6FF;
+  --mint: #10B981;
+  --mint-bg: #ECFDF5;
+  --coral: #F97316;
+  --purple: #8B5CF6;
+  --dark: #0F172A;
+  --text: #1E293B;
+  --text-muted: #64748B;
+  --bg: #FFFFFF;
+  --bg-alt: #F8FAFC;
+  --border: #E2E8F0;
+  --glass: rgba(255,255,255,0.7);
+  --glass-border: rgba(255,255,255,0.3);
+  --radius: 16px;
+  --radius-xl: 24px;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--bg); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+h1,h2,h3 { font-family: 'Space Grotesk', sans-serif; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ═══ NAV ═══ */
+.nav {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100;
+  background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+  border-radius: 100px; padding: 12px 32px;
+  display: flex; align-items: center; gap: 32px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+  transition: 0.3s;
+}
+.nav__logo { font-family: 'Space Grotesk'; font-weight: 700; font-size: 1.2rem; color: var(--primary); text-decoration: none; white-space: nowrap; }
+.nav__links { display: flex; gap: 24px; }
+.nav__links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 500; transition: 0.3s; }
+.nav__links a:hover { color: var(--primary); }
+.nav__cta {
+  background: var(--primary); color: #fff !important; padding: 8px 20px;
+  border-radius: 100px; font-weight: 600 !important; transition: 0.3s;
+}
+.nav__cta:hover { background: #1D4ED8; transform: scale(1.05); }
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #F0F7FF 0%, #FFFFFF 100%);
+}
+.hero__mesh {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(at 20% 30%, rgba(37,99,235,0.12) 0%, transparent 50%),
+    radial-gradient(at 80% 70%, rgba(16,185,129,0.1) 0%, transparent 50%),
+    radial-gradient(at 50% 20%, rgba(139,92,246,0.06) 0%, transparent 50%);
+}
+
+/* Floating 3D shapes */
+.float-shape {
+  position: absolute; z-index: 1; opacity: 0.6;
+  animation: floatShape 6s ease-in-out infinite;
+}
+.float-shape--1 {
+  top: 15%; right: 10%; width: 120px; height: 120px;
+  background: linear-gradient(135deg, var(--primary-light), var(--purple));
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  animation-delay: 0s; filter: blur(1px);
+}
+.float-shape--2 {
+  top: 60%; right: 25%; width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--mint), var(--primary-light));
+  border-radius: 50%; animation-delay: -2s;
+}
+.float-shape--3 {
+  top: 30%; left: 5%; width: 60px; height: 60px;
+  background: linear-gradient(135deg, var(--coral), #FBBF24);
+  border-radius: 20px; transform: rotate(45deg);
+  animation-delay: -4s;
+}
+@keyframes floatShape {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(10deg); }
+}
+
+.hero__inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.hero__content { max-width: 560px; }
+.hero__pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--primary-bg); color: var(--primary); padding: 6px 16px;
+  border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-bottom: 24px;
+  opacity: 0; animation: slideIn 0.8s ease forwards 0.2s;
+}
+.hero__pill::before { content: ''; width: 8px; height: 8px; background: var(--mint); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.hero__title {
+  font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; line-height: 1.1;
+  color: var(--dark); margin-bottom: 20px;
+  opacity: 0; animation: slideIn 0.8s ease forwards 0.4s;
+}
+.hero__title span { color: var(--primary); }
+.hero__sub {
+  font-size: 1.1rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 32px;
+  opacity: 0; animation: slideIn 0.8s ease forwards 0.6s;
+}
+.hero__ctas {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  opacity: 0; animation: slideIn 0.8s ease forwards 0.8s;
+}
+.btn { padding: 14px 28px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; text-decoration: none; border: 2px solid transparent; transition: all 0.3s; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn--primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+.btn--primary:hover { background: #1D4ED8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+.btn--secondary { background: var(--bg); color: var(--text); border-color: var(--border); }
+.btn--secondary:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
+@keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Hero right — 3D card stack */
+.hero__visual { position: relative; height: 500px; perspective: 1200px; }
+.hero__card {
+  position: absolute; width: 320px; border-radius: var(--radius-xl);
+  background: var(--glass); backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border); padding: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  opacity: 0; animation: cardIn 0.8s ease forwards;
+}
+.hero__card--1 { top: 0; left: 0; transform: rotateY(-8deg) rotateX(5deg); animation-delay: 0.5s; }
+.hero__card--2 { top: 60px; left: 80px; transform: rotateY(-4deg) rotateX(3deg); z-index: 2; animation-delay: 0.7s; }
+.hero__card--3 { top: 120px; left: 160px; transform: rotateY(0deg); z-index: 3; animation-delay: 0.9s; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(40px) rotateY(-15deg); } to { opacity: 1; } }
+
+.hero__card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 12px; }
+.hero__card--1 .hero__card-icon { background: var(--primary-bg); }
+.hero__card--2 .hero__card-icon { background: var(--mint-bg); }
+.hero__card--3 .hero__card-icon { background: #FEF3C7; }
+.hero__card h4 { font-size: 1rem; margin-bottom: 4px; }
+.hero__card p { font-size: 0.8rem; color: var(--text-muted); }
+.hero__card-bar { height: 4px; border-radius: 4px; margin-top: 12px; overflow: hidden; background: var(--border); }
+.hero__card-bar span { display: block; height: 100%; border-radius: 4px; animation: barGrow 2s ease forwards; }
+.hero__card--1 .hero__card-bar span { width: 0; background: var(--primary); animation-delay: 1.2s; }
+.hero__card--2 .hero__card-bar span { width: 0; background: var(--mint); animation-delay: 1.4s; }
+.hero__card--3 .hero__card-bar span { width: 0; background: var(--coral); animation-delay: 1.6s; }
+@keyframes barGrow { to { width: var(--bar-width, 70%); } }
+
+/* ═══ FEATURES ═══ */
+.section { padding: 120px 0; position: relative; }
+.section__badge { display: inline-flex; padding: 6px 16px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-bottom: 16px; }
+.section__badge--blue { background: var(--primary-bg); color: var(--primary); }
+.section__badge--green { background: var(--mint-bg); color: var(--mint); }
+.section__title { font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: var(--dark); line-height: 1.15; margin-bottom: 16px; }
+.section__sub { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; max-width: 560px; }
+
+.features { background: var(--bg-alt); }
+.features__header { text-align: center; margin-bottom: 64px; }
+.features__header .section__sub { margin: 0 auto; }
+.features__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+.feature-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: 36px 28px;
+  transition: all 0.4s; position: relative; overflow: hidden;
+  transform-style: preserve-3d;
+}
+.feature-card:hover { transform: translateY(-8px) rotateX(2deg); box-shadow: 0 20px 60px rgba(0,0,0,0.08); border-color: var(--primary); }
+.feature-card__icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 20px; }
+.feature-card:nth-child(1) .feature-card__icon { background: var(--primary-bg); }
+.feature-card:nth-child(2) .feature-card__icon { background: var(--mint-bg); }
+.feature-card:nth-child(3) .feature-card__icon { background: #FEF3C7; }
+.feature-card:nth-child(4) .feature-card__icon { background: #FDE8E8; }
+.feature-card:nth-child(5) .feature-card__icon { background: #EDE9FE; }
+.feature-card:nth-child(6) .feature-card__icon { background: #E0F2FE; }
+.feature-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+.feature-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+
+/* ═══ BOOKING WIDGET ═══ */
+.booking { background: var(--bg); }
+.booking__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.booking__widget {
+  background: var(--bg-alt); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+}
+.booking__widget h3 { font-size: 1.4rem; margin-bottom: 24px; }
+.booking__slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+.booking__slot {
+  padding: 12px; border: 1px solid var(--border); border-radius: 10px;
+  text-align: center; cursor: pointer; transition: 0.3s; font-size: 0.85rem; font-weight: 500;
+}
+.booking__slot:hover, .booking__slot.active { border-color: var(--primary); background: var(--primary-bg); color: var(--primary); }
+.booking__slot.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.booking__slot small { display: block; font-size: 0.7rem; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+.booking__slot:hover small, .booking__slot.active small { color: inherit; }
+.booking__form { display: flex; flex-direction: column; gap: 12px; }
+.booking__form input, .booking__form select {
+  padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px;
+  font-size: 0.9rem; transition: 0.3s; background: var(--bg);
+}
+.booking__form input:focus, .booking__form select:focus { outline: none; border-color: var(--primary); }
+.booking__form .btn { width: 100%; justify-content: center; border: none; }
+
+/* ═══ TEAM ═══ */
+.team { background: var(--bg-alt); }
+.team__header { text-align: center; margin-bottom: 64px; }
+.team__header .section__sub { margin: 0 auto; }
+.team__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.team-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); overflow: hidden; transition: 0.4s;
+  transform-style: preserve-3d;
+}
+.team-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+.team-card__img {
+  height: 280px; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--primary-bg) 0%, #D6EAFF 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.team-card__img-placeholder { font-size: 4rem; opacity: 0.3; }
+.team-card__info { padding: 24px; text-align: center; }
+.team-card__info h3 { font-size: 1.1rem; margin-bottom: 4px; }
+.team-card__info p { color: var(--primary); font-size: 0.85rem; font-weight: 500; }
+.team-card__info small { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.8rem; }
+
+/* ═══ MAP / CONTACT ═══ */
+.contact { background: var(--bg); }
+.contact__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.contact__map {
+  border-radius: var(--radius-xl); overflow: hidden; min-height: 400px;
+  background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.contact__info { display: flex; flex-direction: column; justify-content: center; gap: 32px; }
+.contact__item { display: flex; gap: 16px; align-items: flex-start; }
+.contact__item-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--primary-bg); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.contact__item h4 { font-size: 0.95rem; margin-bottom: 4px; }
+.contact__item p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ═══ FOOTER ═══ */
+.footer {
+  background: var(--dark); color: #fff; padding: 64px 0 32px;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+.footer__inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer__brand { font-family: 'Space Grotesk'; font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; }
+.footer__brand-sub { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.6; }
+.footer h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; color: rgba(255,255,255,0.5); }
+.footer ul { list-style: none; }
+.footer ul li { margin-bottom: 10px; }
+.footer ul a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+.footer ul a:hover { color: var(--primary-light); }
+.footer__bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+
+/* ═══ REVEAL ═══ */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.4,0,0.2,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .hero__inner { grid-template-columns: 1fr; text-align: center; }
+  .hero__visual { display: none; }
+  .hero__content { max-width: 100%; }
+  .hero__ctas { justify-content: center; }
+  .features__grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+  .booking__inner { grid-template-columns: 1fr; }
+  .team__grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+  .contact__inner { grid-template-columns: 1fr; }
+  .footer__inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav { padding: 10px 20px; gap: 16px; top: 8px; }
+  .nav__links { display: none; }
+  .section { padding: 80px 0; }
+  .booking__slots { grid-template-columns: repeat(2, 1fr); }
+  .footer__inner { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav__logo">&#9677; Alpine Dental</a>
+  <div class="nav__links">
+    <a href="#features">Services</a>
+    <a href="#booking">Book Online</a>
+    <a href="#team">Our Team</a>
+    <a href="#contact">Contact</a>
+    <a href="#booking" class="nav__cta">Book Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__mesh"></div>
+  <div class="float-shape float-shape--1"></div>
+  <div class="float-shape float-shape--2"></div>
+  <div class="float-shape float-shape--3"></div>
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <div class="hero__pill">&#9679; Now accepting new patients</div>
+      <h1 class="hero__title">Modern dental care for the <span>whole family</span></h1>
+      <p class="hero__sub">Gentle, comprehensive dentistry with the latest technology. Book online in seconds and experience the difference.</p>
+      <div class="hero__ctas">
+        <a href="#booking" class="btn btn--primary">Book Appointment &#8594;</a>
+        <a href="#features" class="btn btn--secondary">Learn More</a>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__card hero__card--1">
+        <div class="hero__card-icon">&#128197;</div>
+        <h4>Online Booking</h4>
+        <p>Book 24/7, choose your time</p>
+        <div class="hero__card-bar"><span style="--bar-width:85%"></span></div>
+      </div>
+      <div class="hero__card hero__card--2">
+        <div class="hero__card-icon">&#9989;</div>
+        <h4>Instant Confirmation</h4>
+        <p>Email & SMS reminders</p>
+        <div class="hero__card-bar"><span style="--bar-width:92%"></span></div>
+      </div>
+      <div class="hero__card hero__card--3">
+        <div class="hero__card-icon">&#11088;</div>
+        <h4>4.9 Star Rating</h4>
+        <p>500+ verified reviews</p>
+        <div class="hero__card-bar"><span style="--bar-width:98%"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features" id="features">
+  <div class="container">
+    <div class="features__header">
+      <div class="section__badge section__badge--blue reveal">Our Services</div>
+      <h2 class="section__title reveal">Everything your smile needs</h2>
+      <p class="section__sub reveal">From routine check-ups to advanced procedures, all under one roof.</p>
+    </div>
+    <div class="features__grid">
+      <div class="feature-card reveal reveal-delay-1"><div class="feature-card__icon">&#128300;</div><h3>General Dentistry</h3><p>Comprehensive exams, cleanings, fillings, and preventive care for the whole family.</p></div>
+      <div class="feature-card reveal reveal-delay-2"><div class="feature-card__icon">&#10024;</div><h3>Cosmetic Dentistry</h3><p>Whitening, veneers, and smile makeovers to give you the confidence you deserve.</p></div>
+      <div class="feature-card reveal reveal-delay-3"><div class="feature-card__icon">&#129463;</div><h3>Orthodontics</h3><p>Invisalign and clear aligners for straighter teeth without metal braces.</p></div>
+      <div class="feature-card reveal reveal-delay-1"><div class="feature-card__icon">&#128171;</div><h3>Dental Implants</h3><p>Permanent tooth replacement with natural look and feel. 3D-guided placement.</p></div>
+      <div class="feature-card reveal reveal-delay-2"><div class="feature-card__icon">&#128118;</div><h3>Kids Dentistry</h3><p>Fun, gentle care for children. Building healthy habits from the first tooth.</p></div>
+      <div class="feature-card reveal reveal-delay-3"><div class="feature-card__icon">&#127775;</div><h3>Emergency Care</h3><p>Same-day appointments for dental emergencies. We're here when you need us.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="section booking" id="booking">
+  <div class="container">
+    <div class="booking__inner">
+      <div>
+        <div class="section__badge section__badge--green reveal">Book Online</div>
+        <h2 class="section__title reveal">Schedule in seconds,<br>not phone calls</h2>
+        <p class="section__sub reveal" style="margin-bottom:32px">Choose your preferred time, pick a service, and you're done. Confirmation sent instantly to your email and phone.</p>
+        <div class="reveal" style="display:flex;gap:16px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--mint)">&#9989; No wait times</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--mint)">&#9989; SMS reminders</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--mint)">&#9989; Easy reschedule</div>
+        </div>
+      </div>
+      <div class="booking__widget reveal">
+        <h3>Pick a time</h3>
+        <div class="booking__slots">
+          <div class="booking__slot" onclick="this.parentElement.querySelectorAll('.booking__slot').forEach(s=>s.classList.remove('active'));this.classList.add('active')">Mon<small>9:00 AM</small></div>
+          <div class="booking__slot" onclick="this.parentElement.querySelectorAll('.booking__slot').forEach(s=>s.classList.remove('active'));this.classList.add('active')">Mon<small>2:00 PM</small></div>
+          <div class="booking__slot active">Tue<small>10:00 AM</small></div>
+          <div class="booking__slot" onclick="this.parentElement.querySelectorAll('.booking__slot').forEach(s=>s.classList.remove('active'));this.classList.add('active')">Wed<small>11:00 AM</small></div>
+          <div class="booking__slot" onclick="this.parentElement.querySelectorAll('.booking__slot').forEach(s=>s.classList.remove('active'));this.classList.add('active')">Thu<small>3:00 PM</small></div>
+          <div class="booking__slot" onclick="this.parentElement.querySelectorAll('.booking__slot').forEach(s=>s.classList.remove('active'));this.classList.add('active')">Fri<small>9:30 AM</small></div>
+        </div>
+        <form class="booking__form" onsubmit="event.preventDefault();this.querySelector('.btn').textContent='&#10003; Booked!';this.querySelector('.btn').style.background='#10B981'">
+          <input type="text" placeholder="Full Name" required>
+          <input type="tel" placeholder="Phone Number" required>
+          <select><option>General Check-up</option><option>Teeth Cleaning</option><option>Cosmetic Consultation</option><option>Emergency</option></select>
+          <button type="submit" class="btn btn--primary">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section team" id="team">
+  <div class="container">
+    <div class="team__header">
+      <div class="section__badge section__badge--blue reveal">Our Team</div>
+      <h2 class="section__title reveal">Meet your dental family</h2>
+      <p class="section__sub reveal">Experienced, caring professionals dedicated to your comfort and health.</p>
+    </div>
+    <div class="team__grid">
+      <div class="team-card reveal reveal-delay-1">
+        <div class="team-card__img"><span class="team-card__img-placeholder">&#129489;&#8205;&#9877;</span></div>
+        <div class="team-card__info"><h3>Dr. James Walker</h3><p>Lead Dentist</p><small>DDS, 15+ years experience</small></div>
+      </div>
+      <div class="team-card reveal reveal-delay-2">
+        <div class="team-card__img" style="background:linear-gradient(135deg,#ECFDF5,#A7F3D0)"><span class="team-card__img-placeholder">&#129489;&#8205;&#9877;</span></div>
+        <div class="team-card__info"><h3>Dr. Emily Chen</h3><p>Orthodontist</p><small>DMD, Invisalign Certified</small></div>
+      </div>
+      <div class="team-card reveal reveal-delay-3">
+        <div class="team-card__img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)"><span class="team-card__img-placeholder">&#129489;&#8205;&#9877;</span></div>
+        <div class="team-card__info"><h3>Dr. Maria Santos</h3><p>Pediatric Dentist</p><small>DDS, Child-friendly care</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="contact__inner">
+      <div class="contact__map reveal">&#128205;</div>
+      <div class="contact__info">
+        <div class="reveal"><div class="section__badge section__badge--blue">Visit Us</div><h2 class="section__title">Find us easily</h2></div>
+        <div class="contact__item reveal"><div class="contact__item-icon">&#128205;</div><div><h4>Address</h4><p>123 Alpine Road, Greenville, SC 29601</p></div></div>
+        <div class="contact__item reveal"><div class="contact__item-icon">&#128222;</div><div><h4>Phone</h4><p>(864) 555-0123</p></div></div>
+        <div class="contact__item reveal"><div class="contact__item-icon">&#128337;</div><div><h4>Hours</h4><p>Mon-Fri: 8:00 AM - 6:00 PM<br>Sat: 9:00 AM - 2:00 PM</p></div></div>
+        <div class="contact__item reveal"><div class="contact__item-icon">&#9993;</div><div><h4>Email</h4><p>hello@alpinedental.com</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div><div class="footer__brand">&#9677; Alpine Family Dentistry</div><p class="footer__brand-sub">Modern dental care for your whole family. Gentle, comprehensive, and always welcoming.</p></div>
+      <div><h4>Services</h4><ul><li><a href="#">General Dentistry</a></li><li><a href="#">Cosmetic</a></li><li><a href="#">Orthodontics</a></li><li><a href="#">Implants</a></li></ul></div>
+      <div><h4>Patient Info</h4><ul><li><a href="#">New Patients</a></li><li><a href="#">Insurance</a></li><li><a href="#">Forms</a></li><li><a href="#">FAQ</a></li></ul></div>
+      <div><h4>Connect</h4><ul><li><a href="#">Facebook</a></li><li><a href="#">Instagram</a></li><li><a href="#">Google Reviews</a></li><li><a href="#">Yelp</a></li></ul></div>
+    </div>
+    <div class="footer__bottom">&copy; 2026 Alpine Family Dentistry. Demo by DentalWebPro.</div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// 3D tilt on feature cards
+document.querySelectorAll('.feature-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `translateY(-8px) rotateX(${-y*8}deg) rotateY(${x*8}deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) window.scrollTo({ top: t.offsetTop - 80, behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
