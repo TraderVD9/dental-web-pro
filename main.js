@@ -42,28 +42,55 @@ window.addEventListener('scroll', () => {
   lastScroll = scrollY;
 });
 
-// ═══ FORM (placeholder — no backend yet) ═══
+// ═══ FORM — sends audit requests to hello@dentalwebai.com ═══
 const form = document.getElementById('contactForm');
-form.addEventListener('submit', e => {
+form.addEventListener('submit', async e => {
   e.preventDefault();
-  const data = new FormData(form);
-  const info = Object.fromEntries(data);
-
-  // TODO: connect to backend API
-  console.log('Form submitted:', info);
-
   const btn = form.querySelector('button[type="submit"]');
   const originalText = btn.textContent;
-  btn.textContent = '✓ Sent!';
-  btn.style.background = '#00D4AA';
-  btn.disabled = true;
+  const info = Object.fromEntries(new FormData(form));
 
-  setTimeout(() => {
-    btn.textContent = originalText;
-    btn.style.background = '';
-    btn.disabled = false;
-    form.reset();
-  }, 3000);
+  // Send via EmailJS-like service or direct mailto
+  const subject = encodeURIComponent('New Audit Request — DentalWebAI');
+  const body = encodeURIComponent(
+    `New audit request from DentalWebAI website:\n\n` +
+    `Name: ${info.name}\n` +
+    `Email: ${info.email}\n` +
+    `Clinic: ${info.clinic || 'Not provided'}\n` +
+    `Website: ${info.website || 'Not provided'}\n\n` +
+    `Submitted: ${new Date().toISOString()}`
+  );
+
+  // Try sending notification email via our SMTP proxy
+  try {
+    const res = await fetch('https://api.vellumcadence.com/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: info.name,
+        email: info.email,
+        clinic: info.clinic || '',
+        website: info.website || '',
+        source: 'dentalwebai.com',
+        message: `Audit request from ${info.name} (${info.email}), Clinic: ${info.clinic || 'N/A'}, Website: ${info.website || 'N/A'}`
+      })
+    });
+
+    if (res.ok) {
+      btn.textContent = '✓ Sent!';
+      btn.style.background = '#00D4AA';
+      form.reset();
+      setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; btn.disabled = false; }, 4000);
+      return;
+    }
+  } catch {}
+
+  // Fallback: open mailto
+  window.location.href = `mailto:hello@dentalwebai.com?subject=${subject}&body=${body}`;
+  btn.textContent = '✓ Opening email...';
+  btn.style.background = '#00D4AA';
+  form.reset();
+  setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; btn.disabled = false; }, 3000);
 });
 
 // ═══ SCROLL ANIMATIONS ═══
