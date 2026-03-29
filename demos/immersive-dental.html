@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaDent — Next-Gen Dental Experience</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050508;--surface:#0a0a12;--cyan:#00e5ff;--purple:#a855f7;--gold:#fbbf24;--text:#f0f0f5;--text2:#6b7094;--ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:auto}
+body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Smooth scroll container */
+#smooth-wrap{position:fixed;top:0;left:0;width:100%}
+#smooth-content{will-change:transform}
+.spacer{height:var(--page-height,8000px)}
+
+/* Loading screen */
+.loader{position:fixed;inset:0;background:var(--bg);z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
+.loader.hidden{opacity:0;visibility:hidden}
+.loader__bar{width:200px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-top:24px}
+.loader__fill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .3s}
+.loader__text{font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--text2);margin-top:12px}
+.loader__pct{font-family:monospace;font-size:2rem;color:var(--cyan)}
+
+/* WebGL Canvas */
+#glCanvas{position:fixed;inset:0;z-index:0;width:100%;height:100%}
+
+/* Grain overlay */
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grainAnim .5s steps(6) infinite}
+@keyframes grainAnim{0%{transform:translate(0)}20%{transform:translate(-5%,5%)}40%{transform:translate(5%,-5%)}60%{transform:translate(-2%,-3%)}80%{transform:translate(3%,2%)}100%{transform:translate(0)}}
+
+/* Custom cursor */
+.cursor{position:fixed;width:20px;height:20px;border:1.5px solid rgba(0,229,255,.5);border-radius:50%;pointer-events:none;z-index:9999;transition:width .2s var(--ease),height .2s var(--ease),border-color .2s,background .2s;transform:translate(-50%,-50%);mix-blend-mode:difference}
+.cursor.active{width:60px;height:60px;background:rgba(0,229,255,.06);border-color:var(--purple)}
+
+/* Sections */
+.section{min-height:100vh;position:relative;z-index:2;display:flex;align-items:center;padding:0 48px}
+.container{max-width:1200px;margin:0 auto;width:100%}
+
+/* ═══ HERO ═══ */
+.hero{justify-content:center;text-align:center;min-height:100vh}
+.hero__badge{display:inline-block;border:1px solid rgba(0,229,255,.2);padding:6px 20px;border-radius:100px;font-size:.65rem;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);margin-bottom:32px;opacity:0}
+.hero__title{font-size:clamp(3rem,8vw,7rem);font-weight:700;line-height:.95;letter-spacing:-3px;opacity:0}
+.hero__title .word{display:inline-block;overflow:hidden}
+.hero__title .word span{display:inline-block;transform:translateY(100%)}
+.hero__gradient{background:linear-gradient(135deg,var(--cyan),var(--purple),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:gradShift 4s ease infinite}
+@keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero__sub{font-size:1.1rem;color:var(--text2);max-width:500px;margin:24px auto 40px;line-height:1.7;opacity:0}
+.hero__cta{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);border-radius:100px;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;opacity:0;transition:.4s}
+.hero__cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--cyan),var(--purple));opacity:0;transition:.4s}
+.hero__cta:hover::before{opacity:1}
+.hero__cta:hover{color:#fff;border-color:transparent;transform:scale(1.05)}
+.hero__cta span{position:relative;z-index:1}
+.hero__scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text2);font-size:.6rem;letter-spacing:4px;text-transform:uppercase;opacity:0}
+.hero__scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--cyan),transparent);animation:scrollLine 2s ease infinite}
+@keyframes scrollLine{0%,100%{opacity:.3;height:50px}50%{opacity:1;height:70px}}
+
+/* ═══ SERVICES — Reveal cards ═══ */
+.services{min-height:auto;padding:160px 48px}
+.services__label{font-size:.65rem;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);margin-bottom:20px}
+.services__title{font-size:clamp(2rem,4vw,3.5rem);font-weight:700;letter-spacing:-1px;margin-bottom:64px;max-width:600px}
+.services__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.service-card{background:var(--surface);padding:48px 36px;position:relative;overflow:hidden;cursor:default;border:1px solid rgba(255,255,255,.03)}
+.service-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(0,229,255,.06),transparent 60%);opacity:0;transition:opacity .4s}
+.service-card:hover::before{opacity:1}
+.service-card:hover{border-color:rgba(0,229,255,.15)}
+.service-card__num{font-family:monospace;font-size:3rem;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:.2;margin-bottom:16px}
+.service-card h3{font-size:1.15rem;margin-bottom:10px;font-weight:600}
+.service-card p{font-size:.85rem;color:var(--text2);line-height:1.6}
+.service-card__line{width:30px;height:2px;background:var(--cyan);margin-top:20px;transition:width .4s}
+.service-card:hover .service-card__line{width:60px}
+
+/* ═══ SHOWCASE — horizontal scroll ═══ */
+.showcase{min-height:auto;padding:160px 0;overflow:visible}
+.showcase__header{padding:0 48px;margin-bottom:64px}
+.showcase__label{font-size:.65rem;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);margin-bottom:20px}
+.showcase__title{font-size:clamp(2rem,4vw,3.5rem);font-weight:700;letter-spacing:-1px}
+.showcase__track{display:flex;gap:24px;padding:0 48px;will-change:transform}
+.showcase__item{min-width:500px;flex-shrink:0;position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.06);background:var(--surface);transition:.4s}
+.showcase__item:hover{border-color:rgba(0,229,255,.2);transform:scale(1.02)}
+.showcase__visual{height:320px;position:relative;overflow:hidden}
+.showcase__visual-bg{position:absolute;inset:0;transition:transform .6s}
+.showcase__item:hover .showcase__visual-bg{transform:scale(1.05)}
+.showcase__info{padding:24px 28px}
+.showcase__info h3{font-size:1.2rem;margin-bottom:6px}
+.showcase__info p{font-size:.85rem;color:var(--text2)}
+.showcase__tags{display:flex;gap:6px;margin-top:12px}
+.showcase__tags span{font-size:.65rem;padding:3px 10px;border:1px solid rgba(255,255,255,.1);border-radius:100px;color:var(--text2)}
+
+/* ═══ STATS ═══ */
+.stats{min-height:auto;padding:120px 48px;text-align:center}
+.stats__grid{display:flex;justify-content:center;gap:80px}
+.stats__item{text-align:center}
+.stats__num{font-family:monospace;font-size:4rem;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stats__label{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--text2);margin-top:8px}
+
+/* ═══ PRICING ═══ */
+.pricing{min-height:auto;padding:160px 48px}
+.pricing__header{text-align:center;margin-bottom:64px}
+.pricing__label{font-size:.65rem;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);margin-bottom:20px}
+.pricing__title{font-size:clamp(2rem,4vw,3.5rem);font-weight:700;letter-spacing:-1px}
+.pricing__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.price-card{background:var(--surface);border:1px solid rgba(255,255,255,.03);padding:48px 36px;position:relative;transition:.4s}
+.price-card:hover{border-color:rgba(0,229,255,.15)}
+.price-card--pop{border-color:var(--cyan);box-shadow:0 0 40px rgba(0,229,255,.05)}
+.price-card__badge{position:absolute;top:20px;right:20px;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;padding:3px 12px;border-radius:100px;font-size:.6rem;letter-spacing:1px;text-transform:uppercase}
+.price-card h3{font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--text2);margin-bottom:12px}
+.price-card__price{font-family:monospace;font-size:2.5rem;font-weight:700;margin-bottom:4px}
+.price-card__time{font-size:.75rem;color:var(--text2);margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.06)}
+.price-card ul{list-style:none;margin-bottom:28px}
+.price-card li{padding:6px 0;font-size:.82rem;color:var(--text2);padding-left:18px;position:relative}
+.price-card li::before{content:'→';position:absolute;left:0;color:var(--cyan)}
+.price-card .cta-btn{display:block;text-align:center;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--text);text-decoration:none;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;transition:.3s}
+.price-card .cta-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.price-card--pop .cta-btn{background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;color:#fff}
+
+/* ═══ CTA ═══ */
+.cta-section{min-height:80vh;text-align:center;justify-content:center}
+.cta__title{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;letter-spacing:-2px;margin-bottom:20px}
+.cta__sub{color:var(--text2);font-size:1rem;max-width:400px;margin:0 auto 40px}
+.cta__btn{display:inline-flex;align-items:center;gap:10px;padding:18px 48px;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;border-radius:100px;font-size:.9rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:.4s;box-shadow:0 0 40px rgba(0,229,255,.2)}
+.cta__btn:hover{transform:scale(1.05);box-shadow:0 0 60px rgba(0,229,255,.3)}
+
+/* Footer */
+.footer{padding:48px;text-align:center;border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:2}
+.footer__logo{font-size:1rem;font-weight:700;letter-spacing:2px;margin-bottom:12px}
+.footer__copy{font-size:.65rem;color:var(--text2);letter-spacing:1px}
+
+/* Chromatic aberration transition */
+.chroma-overlay{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0;transition:opacity .3s}
+.chroma-overlay.active{opacity:1}
+
+/* Responsive */
+@media(max-width:900px){
+  .section{padding:80px 24px}
+  .services__grid,.pricing__grid{grid-template-columns:1fr}
+  .showcase__item{min-width:300px}
+  .stats__grid{flex-direction:column;gap:40px}
+  .cursor{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader__pct" id="loaderPct">0</div>
+  <div class="loader__bar"><div class="loader__fill" id="loaderFill"></div></div>
+  <div class="loader__text">Loading experience</div>
+</div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+
+<!-- WEBGL -->
+<canvas id="glCanvas"></canvas>
+<div class="grain"></div>
+
+<!-- CHROMATIC OVERLAY -->
+<canvas id="chromaCanvas" class="chroma-overlay"></canvas>
+
+<!-- SMOOTH SCROLL SPACER -->
+<div class="spacer" id="spacer"></div>
+
+<!-- CONTENT -->
+<div id="smooth-wrap">
+<div id="smooth-content">
+
+<!-- HERO -->
+<section class="section hero" id="hero">
+  <div class="container">
+    <div class="hero__badge" id="heroBadge">AI-Powered Dental Excellence</div>
+    <h1 class="hero__title" id="heroTitle">
+      <div class="word"><span>Websites</span></div>
+      <div class="word"><span>that</span></div>
+      <div class="word"><span class="hero__gradient">book</span></div>
+      <div class="word"><span class="hero__gradient">patients</span></div>
+    </h1>
+    <p class="hero__sub" id="heroSub">Custom dental websites built with AI precision. Delivered in days, not months. Every pixel designed to convert.</p>
+    <a href="#contact" class="hero__cta" id="heroCta"><span>Explore our work ↓</span></a>
+  </div>
+  <div class="hero__scroll" id="heroScroll">
+    SCROLL
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="services__label">What we build</div>
+    <h2 class="services__title">Every feature a modern dental practice needs</h2>
+    <div class="services__grid">
+      <div class="service-card"><div class="service-card__num">01</div><h3>Online Booking</h3><p>Patients book 24/7. Real-time scheduling, SMS reminders, zero phone tag.</p><div class="service-card__line"></div></div>
+      <div class="service-card"><div class="service-card__num">02</div><h3>Local SEO</h3><p>Schema markup, Google Business, geo-targeted pages. Rank #1 for "dentist [your city]".</p><div class="service-card__line"></div></div>
+      <div class="service-card"><div class="service-card__num">03</div><h3>Mobile-First</h3><p>60% of patients search on mobile. Every element designed for touch and speed.</p><div class="service-card__line"></div></div>
+      <div class="service-card"><div class="service-card__num">04</div><h3>Patient Reviews</h3><p>Google Reviews widget builds instant trust. 35% more appointments with visible social proof.</p><div class="service-card__line"></div></div>
+      <div class="service-card"><div class="service-card__num">05</div><h3>Speed Optimized</h3><p>Sub-2-second load times. Core Web Vitals perfect. Fast sites rank higher and convert better.</p><div class="service-card__line"></div></div>
+      <div class="service-card"><div class="service-card__num">06</div><h3>You Own It</h3><p>Full source code. No lock-in. No proprietary platforms. Your site, your rules, forever.</p><div class="service-card__line"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section class="section showcase" id="showcase">
+  <div class="showcase__header">
+    <div class="showcase__label">Portfolio</div>
+    <h2 class="showcase__title">Recent work</h2>
+  </div>
+  <div class="showcase__track" id="showcaseTrack">
+    <div class="showcase__item">
+      <div class="showcase__visual"><div class="showcase__visual-bg" style="background:linear-gradient(135deg,#0a0a1e,#1a0a2e);display:flex;align-items:center;justify-content:center"><span style="font-size:4rem;opacity:.3">&#9830;</span></div></div>
+      <div class="showcase__info"><h3>Bright Smile Dental</h3><p>Premium dark theme with 3D particle effects and animated review carousel.</p><div class="showcase__tags"><span>Dark</span><span>3D</span><span>Premium</span></div></div>
+    </div>
+    <div class="showcase__item">
+      <div class="showcase__visual"><div class="showcase__visual-bg" style="background:linear-gradient(135deg,#0a1a2e,#1a2a4e);display:flex;align-items:center;justify-content:center"><span style="font-size:4rem;opacity:.3">&#10022;</span></div></div>
+      <div class="showcase__info"><h3>Alpine Family Dentistry</h3><p>Clean modern design with glassmorphism nav and inline booking widget.</p><div class="showcase__tags"><span>Clean</span><span>Booking</span><span>Modern</span></div></div>
+    </div>
+    <div class="showcase__item">
+      <div class="showcase__visual"><div class="showcase__visual-bg" style="background:linear-gradient(135deg,#0a1e1a,#1a2e2a);display:flex;align-items:center;justify-content:center"><span style="font-size:4rem;opacity:.3">&#10024;</span></div></div>
+      <div class="showcase__info"><h3>CityDent Berlin</h3><p>Warm European style with bento grid, morphing blobs, multilingual DE/EN.</p><div class="showcase__tags"><span>Warm</span><span>EU</span><span>Bento</span></div></div>
+    </div>
+    <div class="showcase__item">
+      <div class="showcase__visual"><div class="showcase__visual-bg" style="background:linear-gradient(135deg,#1a0a1e,#2a1a3e);display:flex;align-items:center;justify-content:center"><span style="font-size:4rem;opacity:.3">&#9733;</span></div></div>
+      <div class="showcase__info"><h3>VellumCadence Studio</h3><p>AI content studio. Immersive dark theme, animated orbs, horizontal portfolio.</p><div class="showcase__tags"><span>Immersive</span><span>AI</span><span>Dark</span></div></div>
+    </div>
+    <div class="showcase__item">
+      <div class="showcase__visual"><div class="showcase__visual-bg" style="background:linear-gradient(135deg,#0a0a1e,#1a1a3e);display:flex;align-items:center;justify-content:center"><span style="font-size:4rem;opacity:.3">&#9677;</span></div></div>
+      <div class="showcase__info"><h3>NovaDent Concept</h3><p>This site. Immersive WebGL experience with chromatic aberration and smooth scroll.</p><div class="showcase__tags"><span>WebGL</span><span>GSAP</span><span>Immersive</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section stats" id="stats">
+  <div class="container">
+    <div class="stats__grid">
+      <div class="stats__item"><div class="stats__num" data-count="96">0</div><div class="stats__label">PageSpeed Score</div></div>
+      <div class="stats__item"><div class="stats__num" data-count="5">0</div><div class="stats__label">Sites Delivered</div></div>
+      <div class="stats__item"><div class="stats__num" data-count="10">0</div><div class="stats__label">Days Average</div></div>
+      <div class="stats__item"><div class="stats__num" data-count="100">0</div><div class="stats__label">% Code Ownership</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <div class="pricing__header">
+      <div class="pricing__label">Investment</div>
+      <h2 class="pricing__title">Transparent pricing</h2>
+    </div>
+    <div class="pricing__grid">
+      <div class="price-card">
+        <h3>Starter</h3>
+        <div class="price-card__price">€1,400</div>
+        <div class="price-card__time">3-5 business days</div>
+        <ul><li>5-7 pages</li><li>Mobile responsive</li><li>Contact form + Click-to-call</li><li>Basic SEO setup</li><li>Google Maps</li><li>SSL + hosting (1 year)</li></ul>
+        <a href="#contact" class="cta-btn">Get started</a>
+      </div>
+      <div class="price-card price-card--pop">
+        <div class="price-card__badge">Popular</div>
+        <h3>Professional</h3>
+        <div class="price-card__price">€3,200</div>
+        <div class="price-card__time">7-10 business days</div>
+        <ul><li>10-15 pages</li><li>Semi-custom design</li><li>Online booking</li><li>Blog section</li><li>Google Business optimization</li><li>Patient reviews widget</li><li>Core Web Vitals optimized</li></ul>
+        <a href="#contact" class="cta-btn">Get started</a>
+      </div>
+      <div class="price-card">
+        <h3>Premium</h3>
+        <div class="price-card__price">€6,500</div>
+        <div class="price-card__time">14-21 business days</div>
+        <ul><li>Up to 25 pages, full custom</li><li>Video integration</li><li>Patient portal</li><li>Local SEO strategy</li><li>Professional copywriting</li><li>Google Ads landing page</li><li>3 months support</li></ul>
+        <a href="#contact" class="cta-btn">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-section" id="contact">
+  <div class="container">
+    <h2 class="cta__title">Ready to <span class="hero__gradient">transform</span> your practice?</h2>
+    <p class="cta__sub">Get a free website audit. We'll show you exactly what's costing you patients.</p>
+    <a href="mailto:hello@dentalwebai.com" class="cta__btn">Start your project →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer__logo">DentalWebAI</div>
+  <div class="footer__copy">© 2026 DentalWebAI · Netherlands · hello@dentalwebai.com</div>
+</div>
+
+</div>
+</div>
+
+<script>
+// ═══ LOADING SCREEN ═══
+let loadPct = 0;
+const loaderFill = document.getElementById('loaderFill');
+const loaderPct = document.getElementById('loaderPct');
+const loader = document.getElementById('loader');
+const loadInterval = setInterval(() => {
+  loadPct += Math.random() * 15 + 5;
+  if (loadPct >= 100) { loadPct = 100; clearInterval(loadInterval); setTimeout(() => { loader.classList.add('hidden'); startAnimations(); }, 500); }
+  loaderFill.style.width = loadPct + '%';
+  loaderPct.textContent = Math.round(loadPct);
+}, 150);
+
+// ═══ WEBGL BACKGROUND ═══
+const canvas = document.getElementById('glCanvas');
+const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; if(gl) gl.viewport(0,0,canvas.width,canvas.height); }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+if (gl) {
+  const vsrc = `attribute vec2 p;void main(){gl_Position=vec4(p,0,1);}`;
+  const fsrc = `
+    precision mediump float;
+    uniform float t;
+    uniform vec2 r;
+    uniform float scroll;
+
+    float noise(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+
+    void main(){
+      vec2 uv=(gl_FragCoord.xy/r)*2.-1.;
+      uv.x*=r.x/r.y;
+
+      float d=length(uv);
+
+      // Animated gradients
+      float a1=sin(t*.3+uv.x*2.+scroll*.001)*0.5+0.5;
+      float a2=cos(t*.2+uv.y*3.-scroll*.0008)*0.5+0.5;
+      float a3=sin(t*.4+d*4.)*0.5+0.5;
+
+      vec3 c1=vec3(0.,0.9,1.); // cyan
+      vec3 c2=vec3(.66,.33,.97); // purple
+      vec3 c3=vec3(.98,.75,.14); // gold
+
+      vec3 col=mix(c1,c2,a1)*0.08;
+      col+=c3*a3*0.03;
+      col*=smoothstep(2.,0.,d);
+
+      // Particles
+      vec2 grid=floor(uv*20.+t*vec2(.3,.2));
+      float n=noise(grid);
+      if(n>.97){
+        vec2 center=(grid+.5)/20.-t*vec2(.3,.2)/20.;
+        float pd=length(uv-center*2.+1.);
+        col+=vec3(.5,.8,1.)*smoothstep(.02,0.,pd)*0.5;
+      }
+
+      // Vignette
+      col*=1.-d*.4;
+
+      gl_FragColor=vec4(col,1.);
+    }
+  `;
+
+  function createShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, createShader(gl.VERTEX_SHADER, vsrc));
+  gl.attachShader(prog, createShader(gl.FRAGMENT_SHADER, fsrc));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const ploc = gl.getAttribLocation(prog, 'p');
+  gl.enableVertexAttribArray(ploc);
+  gl.vertexAttribPointer(ploc, 2, gl.FLOAT, false, 0, 0);
+
+  const tLoc = gl.getUniformLocation(prog, 't');
+  const rLoc = gl.getUniformLocation(prog, 'r');
+  const sLoc = gl.getUniformLocation(prog, 'scroll');
+
+  function renderGL() {
+    gl.uniform1f(tLoc, performance.now() / 1000);
+    gl.uniform2f(rLoc, canvas.width, canvas.height);
+    gl.uniform1f(sLoc, currentScroll);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(renderGL);
+  }
+  renderGL();
+}
+
+// ═══ SMOOTH SCROLL ═══
+let currentScroll = 0;
+let targetScroll = 0;
+const content = document.getElementById('smooth-content');
+const spacer = document.getElementById('spacer');
+
+function updateHeight() {
+  const h = content.scrollHeight;
+  spacer.style.setProperty('--page-height', h + 'px');
+}
+updateHeight();
+window.addEventListener('resize', updateHeight);
+
+window.addEventListener('scroll', () => { targetScroll = window.scrollY; });
+
+function smoothScroll() {
+  currentScroll += (targetScroll - currentScroll) * 0.08;
+  content.style.transform = `translateY(${-currentScroll}px)`;
+  requestAnimationFrame(smoothScroll);
+}
+smoothScroll();
+
+// ═══ CUSTOM CURSOR ═══
+const cursor = document.getElementById('cursor');
+let mx = 0, my = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function updateCursor() {
+  cx += (mx - cx) * 0.12; cy += (my - cy) * 0.12;
+  cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+  requestAnimationFrame(updateCursor);
+}
+updateCursor();
+
+document.querySelectorAll('a,.service-card,.showcase__item,.price-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+});
+
+// Mouse glow on service cards
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+// ═══ HERO ANIMATIONS ═══
+function startAnimations() {
+  const badge = document.getElementById('heroBadge');
+  const sub = document.getElementById('heroSub');
+  const cta = document.getElementById('heroCta');
+  const scroll = document.getElementById('heroScroll');
+  const title = document.getElementById('heroTitle');
+
+  setTimeout(() => { badge.style.transition = 'opacity .8s'; badge.style.opacity = '1'; }, 200);
+
+  // Word reveal
+  const words = title.querySelectorAll('.word span');
+  words.forEach((w, i) => {
+    setTimeout(() => { w.style.transition = 'transform .8s var(--ease)'; w.style.transform = 'translateY(0)'; }, 400 + i * 150);
+  });
+  setTimeout(() => { title.style.opacity = '1'; }, 300);
+
+  setTimeout(() => { sub.style.transition = 'opacity .8s'; sub.style.opacity = '1'; }, 1200);
+  setTimeout(() => { cta.style.transition = 'opacity .8s'; cta.style.opacity = '1'; }, 1500);
+  setTimeout(() => { scroll.style.transition = 'opacity .8s'; scroll.style.opacity = '1'; }, 1800);
+}
+
+// ═══ SCROLL REVEAL ═══
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.service-card,.showcase__item,.price-card,.stats__item').forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = `opacity .7s ${i % 3 * .1}s var(--ease), transform .7s ${i % 3 * .1}s var(--ease)`;
+  revealObserver.observe(el);
+});
+
+// ═══ HORIZONTAL SCROLL FOR SHOWCASE ═══
+const track = document.getElementById('showcaseTrack');
+const showcase = document.getElementById('showcase');
+
+function updateShowcase() {
+  const rect = showcase.getBoundingClientRect();
+  const viewH = window.innerHeight;
+  if (rect.top < viewH && rect.bottom > 0) {
+    const progress = Math.max(0, Math.min(1, -rect.top / (rect.height - viewH)));
+    const maxScroll = track.scrollWidth - window.innerWidth + 96;
+    track.style.transform = `translateX(${-progress * maxScroll}px)`;
+  }
+  requestAnimationFrame(updateShowcase);
+}
+updateShowcase();
+
+// ═══ COUNTER ANIMATION ═══
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = parseInt(el.dataset.count);
+      let current = 0;
+      const step = target / 50;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.round(current) + (target === 100 ? '%' : target === 96 ? '/100' : '');
+      }, 25);
+      counterObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+// ═══ CHROMATIC ABERRATION on scroll direction change ═══
+const chromaCanvas = document.getElementById('chromaCanvas');
+const chromaCtx = chromaCanvas.getContext('2d');
+let lastDir = 0;
+
+function resizeChroma() { chromaCanvas.width = window.innerWidth; chromaCanvas.height = window.innerHeight; }
+resizeChroma();
+window.addEventListener('resize', resizeChroma);
+
+setInterval(() => {
+  const dir = targetScroll > currentScroll + 2 ? 1 : targetScroll < currentScroll - 2 ? -1 : 0;
+  if (dir !== 0 && dir !== lastDir && lastDir !== 0) {
+    // Direction changed — flash chromatic
+    chromaCanvas.classList.add('active');
+    chromaCtx.clearRect(0, 0, chromaCanvas.width, chromaCanvas.height);
+
+    // Red channel offset
+    chromaCtx.globalCompositeOperation = 'screen';
+    chromaCtx.fillStyle = 'rgba(255,0,0,0.03)';
+    chromaCtx.fillRect(dir * 5, 0, chromaCanvas.width, chromaCanvas.height);
+    chromaCtx.fillStyle = 'rgba(0,255,255,0.03)';
+    chromaCtx.fillRect(-dir * 5, 0, chromaCanvas.width, chromaCanvas.height);
+
+    setTimeout(() => chromaCanvas.classList.remove('active'), 200);
+  }
+  lastDir = dir;
+}, 100);
+</script>
+</body>
+</html>
