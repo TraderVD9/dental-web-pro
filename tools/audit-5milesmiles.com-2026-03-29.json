@@ -1,0 +1,20 @@
+{
+  "url": "https://www.5milesmiles.com",
+  "timestamp": "2026-03-29T07:07:14.564Z",
+  "issues": [
+    {
+      "severity": "medium",
+      "issue": "Slow loading",
+      "detail": "Initial response took 3.1s. Aim for under 2s."
+    }
+  ],
+  "score": 92,
+  "details": {
+    "loadTime": 3137,
+    "statusCode": 200,
+    "mobileViewport": true,
+    "onlineBooking": true,
+    "platform": "WordPress",
+    "copyrightYear": 2026
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "url": "https://kentlandsdentalgroup.godaddysites.com/",
+  "timestamp": "2026-03-29T07:21:27.994Z",
+  "issues": [
+    {
+      "severity": "medium",
+      "issue": "No structured data",
+      "detail": "No schema.org markup found. This helps Google understand your practice and show rich results."
+    },
+    {
+      "severity": "low",
+      "issue": "No Google Maps",
+      "detail": "No embedded Google Maps found. Helps patients find your practice easily."
+    },
+    {
+      "severity": "low",
+      "issue": "Outdated copyright",
+      "detail": "Copyright year is 2017. Signals an unmaintained website to visitors."
+    }
+  ],
+  "score": 89,
+  "details": {
+    "loadTime": 156,
+    "statusCode": 200,
+    "mobileViewport": true,
+    "onlineBooking": true,
+    "platform": "Unknown/Custom",
+    "copyrightYear": 2017
+  }
+}

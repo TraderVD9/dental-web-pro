@@ -1,0 +1,40 @@
+{
+  "url": "https://huntclubfamilydental.godaddysites.com/",
+  "timestamp": "2026-03-29T07:21:29.726Z",
+  "issues": [
+    {
+      "severity": "medium",
+      "issue": "No meta description",
+      "detail": "Missing meta description tag. This is what Google shows in search results."
+    },
+    {
+      "severity": "medium",
+      "issue": "No structured data",
+      "detail": "No schema.org markup found. This helps Google understand your practice and show rich results."
+    },
+    {
+      "severity": "low",
+      "issue": "No Google Maps",
+      "detail": "No embedded Google Maps found. Helps patients find your practice easily."
+    },
+    {
+      "severity": "medium",
+      "issue": "No patient reviews",
+      "detail": "No reviews or testimonials section found. Social proof is critical for dental practices."
+    },
+    {
+      "severity": "low",
+      "issue": "Outdated copyright",
+      "detail": "Copyright year is 2016. Signals an unmaintained website to visitors."
+    }
+  ],
+  "score": 76,
+  "details": {
+    "loadTime": 139,
+    "statusCode": 200,
+    "mobileViewport": true,
+    "onlineBooking": true,
+    "platform": "Unknown/Custom",
+    "copyrightYear": 2016
+  }
+}

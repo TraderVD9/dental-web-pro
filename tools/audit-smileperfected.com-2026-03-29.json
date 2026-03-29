@@ -1,0 +1,19 @@
+{
+  "url": "https://www.smileperfected.com",
+  "timestamp": "2026-03-29T07:07:29.989Z",
+  "issues": [
+    {
+      "severity": "low",
+      "issue": "No Google Maps",
+      "detail": "No embedded Google Maps found. Helps patients find your practice easily."
+    }
+  ],
+  "score": 97,
+  "details": {
+    "loadTime": 459,
+    "statusCode": 200,
+    "mobileViewport": true,
+    "onlineBooking": true,
+    "platform": "WordPress"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "url": "https://www.sandflyfamilydental.com",
+  "timestamp": "2026-03-29T07:09:20.512Z",
+  "issues": [
+    {
+      "severity": "medium",
+      "issue": "No click-to-call",
+      "detail": "No click-to-call phone link found. Mobile users should be able to call with one tap."
+    },
+    {
+      "severity": "low",
+      "issue": "Outdated copyright",
+      "detail": "Copyright year is 2021. Signals an unmaintained website to visitors."
+    }
+  ],
+  "score": 92,
+  "details": {
+    "loadTime": 1474,
+    "statusCode": 200,
+    "mobileViewport": true,
+    "onlineBooking": true,
+    "platform": "WordPress",
+    "copyrightYear": 2021
+  }
+}

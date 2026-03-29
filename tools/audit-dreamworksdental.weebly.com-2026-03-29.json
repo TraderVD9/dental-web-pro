@@ -1,0 +1,29 @@
+{
+  "url": "https://dreamworksdental.weebly.com/",
+  "timestamp": "2026-03-29T07:21:28.999Z",
+  "issues": [
+    {
+      "severity": "medium",
+      "issue": "No structured data",
+      "detail": "No schema.org markup found. This helps Google understand your practice and show rich results."
+    },
+    {
+      "severity": "medium",
+      "issue": "No patient reviews",
+      "detail": "No reviews or testimonials section found. Social proof is critical for dental practices."
+    },
+    {
+      "severity": "medium",
+      "issue": "No contact form",
+      "detail": "No contact form detected. Some patients prefer to send a message rather than call."
+    }
+  ],
+  "score": 85,
+  "details": {
+    "loadTime": 307,
+    "statusCode": 200,
+    "mobileViewport": true,
+    "onlineBooking": true,
+    "platform": "Unknown/Custom"
+  }
+}
