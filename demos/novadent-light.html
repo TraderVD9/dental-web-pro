@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaDent — Premium Dental Websites</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAFBFD;--white:#FFFFFF;--blue:#2563EB;--blue-light:#EFF6FF;--blue-deep:#1E40AF;--mint:#10B981;--mint-light:#ECFDF5;--navy:#0F172A;--text:#1E293B;--text2:#64748B;--border:#E2E8F0;--shadow:0 4px 24px rgba(0,0,0,.04);--shadow-lg:0 20px 60px rgba(0,0,0,.06)}
+html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* Loader */
+.loader{position:fixed;inset:0;background:var(--white);z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s .3s,visibility .8s .3s}
+.loader.done{opacity:0;visibility:hidden}
+.loader__icon{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader__text{font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--text2);margin-top:24px}
+
+/* 3D Canvas */
+#three-canvas{position:fixed;inset:0;z-index:0;opacity:.4}
+
+/* Content */
+.content{position:relative;z-index:2}
+
+/* Nav */
+.nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(24px);border:1px solid rgba(0,0,0,.06);border-radius:100px;padding:10px 32px;display:flex;align-items:center;gap:32px;box-shadow:var(--shadow)}
+.nav__logo{font-family:'Space Grotesk';font-weight:700;font-size:1.1rem;color:var(--navy);text-decoration:none;white-space:nowrap}
+.nav__logo span{color:var(--blue)}
+.nav__links{display:flex;gap:24px}
+.nav__links a{text-decoration:none;color:var(--text2);font-size:.8rem;font-weight:500;transition:.3s}
+.nav__links a:hover{color:var(--blue)}
+.nav__cta{background:var(--blue)!important;color:#fff!important;padding:8px 20px!important;border-radius:100px;font-size:.8rem!important}
+.nav__cta:hover{background:var(--blue-deep)!important}
+
+/* ═══ HERO ═══ */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:80px;overflow:hidden}
+.hero__inner{max-width:1200px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero__pill{display:inline-flex;align-items:center;gap:8px;background:var(--blue-light);color:var(--blue);padding:6px 16px;border-radius:100px;font-size:.75rem;font-weight:600;margin-bottom:24px;opacity:0}
+.hero__pill::before{content:'';width:8px;height:8px;background:var(--mint);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero__title{font-size:clamp(2.8rem,5vw,4.2rem);font-weight:700;line-height:1.05;color:var(--navy);letter-spacing:-2px;opacity:0}
+.hero__title em{font-style:normal;color:var(--blue)}
+.hero__sub{font-size:1.05rem;color:var(--text2);line-height:1.7;margin:24px 0 36px;max-width:460px;font-weight:400;opacity:0}
+.hero__ctas{display:flex;gap:12px;flex-wrap:wrap;opacity:0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;font-weight:600;font-size:.9rem;text-decoration:none;border:2px solid transparent;transition:.3s;cursor:pointer}
+.btn--blue{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn--blue:hover{background:var(--blue-deep);transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.25)}
+.btn--outline{background:var(--white);color:var(--text);border-color:var(--border)}
+.btn--outline:hover{border-color:var(--blue);color:var(--blue)}
+.hero__trust{display:flex;gap:24px;margin-top:32px;opacity:0}
+.hero__trust span{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--mint);font-weight:500}
+
+/* Hero visual */
+.hero__visual{position:relative;height:500px}
+.hero__mockup{position:absolute;background:var(--white);border-radius:16px;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid var(--border)}
+.hero__mockup-bar{height:28px;background:var(--bg);display:flex;align-items:center;gap:5px;padding:0 10px;border-bottom:1px solid var(--border)}
+.hero__mockup-dot{width:7px;height:7px;border-radius:50%}
+.hero__mockup-body{height:calc(100% - 28px);overflow:hidden}
+.hero__mockup-body img{width:100%;height:100%;object-fit:cover}
+.hero__m1{width:380px;height:280px;top:20px;left:0;z-index:3;opacity:0}
+.hero__m2{width:320px;height:240px;top:120px;left:180px;z-index:2;opacity:0}
+.hero__m3{width:260px;height:200px;top:200px;left:60px;z-index:1;opacity:0}
+
+/* ═══ PINNED TEXT ═══ */
+.text-pin{height:300vh;position:relative}
+.text-pin__sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center}
+.text-pin__inner{text-align:center;max-width:800px;padding:0 48px}
+.text-pin__line{font-size:clamp(1.4rem,3vw,2.4rem);font-weight:600;line-height:1.5;letter-spacing:-.5px;color:var(--navy);opacity:0;transform:translateY(30px)}
+.text-pin__line em{font-style:normal;color:var(--blue)}
+.text-pin__line.dim{color:var(--text2)}
+
+/* ═══ FEATURES ═══ */
+.features{padding:160px 48px;max-width:1200px;margin:0 auto}
+.features__header{margin-bottom:72px}
+.features__badge{display:inline-flex;padding:6px 16px;background:var(--blue-light);color:var(--blue);border-radius:100px;font-size:.7rem;font-weight:600;letter-spacing:1px;margin-bottom:16px}
+.features__title{font-size:clamp(2rem,3.5vw,3rem);font-weight:700;letter-spacing:-1.5px;color:var(--navy);max-width:500px}
+.features__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.f-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:40px 32px;transition:.4s;position:relative;overflow:hidden}
+.f-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--mint));transform:scaleX(0);transition:.5s;transform-origin:left}
+.f-card:hover::before{transform:scaleX(1)}
+.f-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--blue)}
+.f-card__icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:20px}
+.f-card:nth-child(1) .f-card__icon{background:var(--blue-light)}
+.f-card:nth-child(2) .f-card__icon{background:var(--mint-light)}
+.f-card:nth-child(3) .f-card__icon{background:#FEF3C7}
+.f-card:nth-child(4) .f-card__icon{background:#FDE8E8}
+.f-card:nth-child(5) .f-card__icon{background:#EDE9FE}
+.f-card:nth-child(6) .f-card__icon{background:#E0F2FE}
+.f-card h3{font-size:1.05rem;margin-bottom:8px;letter-spacing:-.3px}
+.f-card p{font-size:.85rem;color:var(--text2);line-height:1.6}
+
+/* ═══ HORIZONTAL SCROLL ═══ */
+.hscroll{overflow:hidden}
+.hscroll__wrap{height:350vh;position:relative}
+.hscroll__sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
+.hscroll__header{position:absolute;top:48px;left:48px;z-index:3}
+.hscroll__badge{display:inline-flex;padding:6px 16px;background:var(--blue-light);color:var(--blue);border-radius:100px;font-size:.7rem;font-weight:600;margin-bottom:8px}
+.hscroll__title{font-size:1.6rem;font-weight:700;letter-spacing:-.5px;color:var(--navy)}
+.hscroll__track{display:flex;gap:24px;padding:0 48px;will-change:transform}
+.hscroll__card{min-width:420px;flex-shrink:0;border-radius:20px;overflow:hidden;background:var(--white);border:1px solid var(--border);box-shadow:var(--shadow);transition:.4s}
+.hscroll__card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:var(--blue)}
+.hscroll__card-img{height:260px;overflow:hidden;position:relative}
+.hscroll__card-img-inner{width:100%;height:100%;transition:transform .6s}
+.hscroll__card:hover .hscroll__card-img-inner{transform:scale(1.05)}
+.hscroll__card-info{padding:24px 28px}
+.hscroll__card-info h3{font-size:1.1rem;margin-bottom:6px;letter-spacing:-.3px}
+.hscroll__card-info p{font-size:.82rem;color:var(--text2);line-height:1.6}
+.hscroll__card-tags{display:flex;gap:6px;margin-top:10px}
+.hscroll__card-tags span{font-size:.65rem;padding:4px 10px;background:var(--bg);border-radius:100px;color:var(--text2);font-weight:500}
+
+/* ═══ STATS ═══ */
+.stats{padding:120px 48px;background:var(--navy);border-radius:32px;margin:0 24px;color:#fff}
+.stats__inner{max-width:1000px;margin:0 auto;text-align:center}
+.stats__title{font-size:1.8rem;font-weight:700;margin-bottom:64px;letter-spacing:-.5px}
+.stats__grid{display:flex;justify-content:center;gap:80px}
+.stat{text-align:center}
+.stat__num{font-family:'JetBrains Mono';font-size:clamp(2.5rem,5vw,4rem);font-weight:500;color:var(--mint)}
+.stat__label{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:8px}
+
+/* ═══ PRICING ═══ */
+.pricing{padding:160px 48px;max-width:1200px;margin:0 auto}
+.pricing__header{text-align:center;margin-bottom:72px}
+.pricing__badge{display:inline-flex;padding:6px 16px;background:var(--blue-light);color:var(--blue);border-radius:100px;font-size:.7rem;font-weight:600;margin-bottom:16px}
+.pricing__title{font-size:clamp(2rem,3.5vw,3rem);font-weight:700;letter-spacing:-1.5px;color:var(--navy)}
+.pricing__sub{color:var(--text2);margin-top:8px}
+.pricing__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pc{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:40px 32px;display:flex;flex-direction:column;transition:.4s;position:relative}
+.pc:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.pc--pop{border:2px solid var(--blue);box-shadow:var(--shadow)}
+.pc__tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;padding:4px 18px;border-radius:100px;font-size:.65rem;font-weight:700;white-space:nowrap}
+.pc h3{font-size:.9rem;margin-bottom:8px}
+.pc__price{font-family:'JetBrains Mono';font-size:2.5rem;font-weight:500;color:var(--navy);letter-spacing:-2px}
+.pc__time{font-size:.8rem;color:var(--text2);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.pc ul{list-style:none;flex:1;margin-bottom:24px}
+.pc li{padding:6px 0 6px 20px;position:relative;font-size:.85rem;color:var(--text2)}
+.pc li::before{content:"✓";position:absolute;left:0;color:var(--mint);font-weight:700}
+.pc__btn{display:block;text-align:center;padding:14px;border-radius:12px;font-weight:600;font-size:.85rem;text-decoration:none;transition:.3s}
+.pc__btn--outline{border:1px solid var(--border);color:var(--text)}
+.pc__btn--outline:hover{border-color:var(--blue);color:var(--blue)}
+.pc__btn--fill{background:var(--blue);color:#fff;border:none}
+.pc__btn--fill:hover{background:var(--blue-deep)}
+
+/* ═══ CTA ═══ */
+.final-cta{min-height:80vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 48px}
+.final-cta__inner{max-width:600px}
+.final-cta__title{font-size:clamp(2.5rem,5vw,4rem);font-weight:700;line-height:1.05;letter-spacing:-2px;color:var(--navy);margin-bottom:16px}
+.final-cta__title em{font-style:normal;color:var(--blue)}
+.final-cta__sub{color:var(--text2);font-size:1rem;margin-bottom:40px;line-height:1.7}
+.final-cta__btn{display:inline-flex;padding:18px 48px;background:var(--blue);color:#fff;border-radius:14px;text-decoration:none;font-weight:600;font-size:1rem;transition:.3s;box-shadow:0 8px 32px rgba(37,99,235,.2)}
+.final-cta__btn:hover{background:var(--blue-deep);transform:translateY(-3px);box-shadow:0 12px 40px rgba(37,99,235,.3)}
+
+/* Footer */
+.footer{padding:48px;text-align:center;border-top:1px solid var(--border)}
+.footer__logo{font-family:'Space Grotesk';font-weight:700;font-size:1.1rem;color:var(--navy);margin-bottom:8px}
+.footer__logo span{color:var(--blue)}
+.footer p{font-size:.75rem;color:var(--text2)}
+
+@media(max-width:900px){
+  .hero__inner{grid-template-columns:1fr;text-align:center;padding:0 24px}
+  .hero__visual{display:none}
+  .hero__ctas,.hero__trust{justify-content:center}
+  .features__grid,.pricing__grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+  .hscroll__card{min-width:300px}
+  .stats__grid{flex-direction:column;gap:40px}
+  .nav__links{display:none}
+  .features,.pricing{padding:100px 24px}
+  .stats{margin:0 12px;border-radius:20px;padding:80px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><div class="loader__icon"></div><div class="loader__text">Loading</div></div>
+
+<canvas id="three-canvas"></canvas>
+
+<nav class="nav">
+  <a href="#" class="nav__logo">&#9677; <span>Dental</span>WebAI</a>
+  <div class="nav__links">
+    <a href="#features">Features</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact" class="nav__cta">Free Audit</a>
+  </div>
+</nav>
+
+<div class="content">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__inner">
+    <div>
+      <div class="hero__pill" id="hPill">&#9679; Now accepting new clients</div>
+      <h1 class="hero__title" id="hTitle">AI-Powered Websites That <em>Book Patients</em></h1>
+      <p class="hero__sub" id="hSub">Custom dental websites in 10 days. Not 10 weeks. Built with AI precision, designed for patient conversion. You own everything.</p>
+      <div class="hero__ctas" id="hCtas">
+        <a href="#contact" class="btn btn--blue">Get Free Audit &#8594;</a>
+        <a href="#portfolio" class="btn btn--outline">See Our Work</a>
+      </div>
+      <div class="hero__trust" id="hTrust">
+        <span>&#10003; No lock-in</span>
+        <span>&#10003; You own the site</span>
+        <span>&#10003; SEO included</span>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__mockup hero__m1" id="hM1">
+        <div class="hero__mockup-bar"><span class="hero__mockup-dot" style="background:#FF5F56"></span><span class="hero__mockup-dot" style="background:#FFBD2E"></span><span class="hero__mockup-dot" style="background:#27C93F"></span></div>
+        <div class="hero__mockup-body" style="background:linear-gradient(135deg,var(--blue-light),#DBEAFE);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--blue)">&#129463;</div>
+      </div>
+      <div class="hero__mockup hero__m2" id="hM2">
+        <div class="hero__mockup-bar"><span class="hero__mockup-dot" style="background:#FF5F56"></span><span class="hero__mockup-dot" style="background:#FFBD2E"></span><span class="hero__mockup-dot" style="background:#27C93F"></span></div>
+        <div class="hero__mockup-body" style="background:linear-gradient(135deg,var(--mint-light),#A7F3D0);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--mint)">&#128300;</div>
+      </div>
+      <div class="hero__mockup hero__m3" id="hM3">
+        <div class="hero__mockup-bar"><span class="hero__mockup-dot" style="background:#FF5F56"></span><span class="hero__mockup-dot" style="background:#FFBD2E"></span><span class="hero__mockup-dot" style="background:#27C93F"></span></div>
+        <div class="hero__mockup-body" style="background:linear-gradient(135deg,#EDE9FE,#DDD6FE);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#8B5CF6">&#10024;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEXT PIN -->
+<section class="text-pin">
+  <div class="text-pin__sticky">
+    <div class="text-pin__inner">
+      <div class="text-pin__line dim">67% of patients leave slow websites.</div>
+      <div class="text-pin__line dim">70% want to book online.</div>
+      <div class="text-pin__line dim">92% never look past page one.</div>
+      <div class="text-pin__line" style="margin-top:32px">Your website should <em>work</em> for you.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="features__header">
+    <div class="features__badge">Features</div>
+    <h2 class="features__title">Everything a modern dental website needs</h2>
+  </div>
+  <div class="features__grid">
+    <div class="f-card"><div class="f-card__icon">&#128197;</div><h3>Online Booking</h3><p>Patients book 24/7. Integrates with Calendly, Cal.com, or your existing system.</p></div>
+    <div class="f-card"><div class="f-card__icon">&#128269;</div><h3>Local SEO</h3><p>Schema markup, Google Business, geo pages. Rank for "dentist [your city]".</p></div>
+    <div class="f-card"><div class="f-card__icon">&#128241;</div><h3>Mobile-First</h3><p>60% of patients search on mobile. Every element designed for touch and speed.</p></div>
+    <div class="f-card"><div class="f-card__icon">&#11088;</div><h3>Patient Reviews</h3><p>Google Reviews widget. Social proof that converts visitors into appointments.</p></div>
+    <div class="f-card"><div class="f-card__icon">&#9889;</div><h3>Lightning Fast</h3><p>Sub-2-second loads. Core Web Vitals optimized. Fast sites rank higher.</p></div>
+    <div class="f-card"><div class="f-card__icon">&#128274;</div><h3>You Own It</h3><p>Full source code. No lock-in. No proprietary platforms. Your site, forever.</p></div>
+  </div>
+</section>
+
+<!-- HORIZONTAL SCROLL -->
+<section class="hscroll" id="portfolio">
+  <div class="hscroll__wrap">
+    <div class="hscroll__sticky">
+      <div class="hscroll__header">
+        <div class="hscroll__badge">Portfolio</div>
+        <div class="hscroll__title">Our recent work</div>
+      </div>
+      <div class="hscroll__track" id="hTrack">
+        <div class="hscroll__card"><div class="hscroll__card-img"><div class="hscroll__card-img-inner" style="background:linear-gradient(135deg,#1a1a2e,#2a1a3e);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;color:rgba(255,255,255,.2)">&#9830;</div></div><div class="hscroll__card-info"><h3>Bright Smile Dental</h3><p>Premium dark theme. 3D particles, animated carousel, custom cursor.</p><div class="hscroll__card-tags"><span>Dark</span><span>3D</span><span>Premium</span></div></div></div>
+        <div class="hscroll__card"><div class="hscroll__card-img"><div class="hscroll__card-img-inner" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--blue)">&#10022;</div></div><div class="hscroll__card-info"><h3>Alpine Family Dentistry</h3><p>Clean modern. Glassmorphism nav, inline booking, floating shapes.</p><div class="hscroll__card-tags"><span>Clean</span><span>Booking</span><span>Modern</span></div></div></div>
+        <div class="hscroll__card"><div class="hscroll__card-img"><div class="hscroll__card-img-inner" style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--mint)">&#10024;</div></div><div class="hscroll__card-info"><h3>CityDent Berlin</h3><p>Warm European. Bento grid, morphing blobs, multilingual DE/EN.</p><div class="hscroll__card-tags"><span>Warm</span><span>EU</span><span>Bento</span></div></div></div>
+        <div class="hscroll__card"><div class="hscroll__card-img"><div class="hscroll__card-img-inner" style="background:linear-gradient(135deg,#0a0a1e,#1a0a2e);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;color:rgba(0,229,255,.3)">&#9733;</div></div><div class="hscroll__card-info"><h3>NovaDent Immersive</h3><p>WebGL shaders, Three.js, GSAP ScrollTrigger, Lenis smooth scroll.</p><div class="hscroll__card-tags"><span>WebGL</span><span>Three.js</span><span>Immersive</span></div></div></div>
+        <div class="hscroll__card"><div class="hscroll__card-img"><div class="hscroll__card-img-inner" style="background:linear-gradient(135deg,#EDE9FE,#DDD6FE);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;color:#8B5CF6">&#9677;</div></div><div class="hscroll__card-info"><h3>VellumCadence Studio</h3><p>AI content studio. Dark immersive, animated orbs, horizontal gallery.</p><div class="hscroll__card-tags"><span>AI</span><span>Studio</span><span>Dark</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats__inner">
+    <h2 class="stats__title">Results that matter</h2>
+    <div class="stats__grid">
+      <div class="stat"><div class="stat__num" data-count="96">0</div><div class="stat__label">PageSpeed</div></div>
+      <div class="stat"><div class="stat__num" data-count="6">0</div><div class="stat__label">Sites built</div></div>
+      <div class="stat"><div class="stat__num" data-count="10">0</div><div class="stat__label">Days average</div></div>
+      <div class="stat"><div class="stat__num" data-count="100">0</div><div class="stat__label">% Ownership</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing__header">
+    <div class="pricing__badge">Pricing</div>
+    <h2 class="pricing__title">Transparent pricing</h2>
+    <p class="pricing__sub">All packages include SEO, mobile design, SSL, and booking.</p>
+  </div>
+  <div class="pricing__grid">
+    <div class="pc"><h3>Starter</h3><div class="pc__price">&#8364;1,400</div><div class="pc__time">3-5 business days</div><ul><li>5-7 pages</li><li>Mobile responsive</li><li>Contact + click-to-call</li><li>Basic SEO</li><li>Google Maps</li><li>SSL + 1yr hosting</li></ul><a href="#contact" class="pc__btn pc__btn--outline">Get started</a></div>
+    <div class="pc pc--pop"><div class="pc__tag">Most Popular</div><h3>Professional</h3><div class="pc__price">&#8364;3,200</div><div class="pc__time">7-10 business days</div><ul><li>10-15 pages</li><li>Semi-custom design</li><li>Online booking</li><li>Blog section</li><li>Google Business</li><li>Reviews widget</li><li>Core Web Vitals</li></ul><a href="#contact" class="pc__btn pc__btn--fill">Get started</a></div>
+    <div class="pc"><h3>Premium</h3><div class="pc__price">&#8364;6,500</div><div class="pc__time">14-21 business days</div><ul><li>25 pages, full custom</li><li>Video integration</li><li>Patient portal</li><li>Local SEO strategy</li><li>Copywriting</li><li>Google Ads page</li><li>3 months support</li></ul><a href="#contact" class="pc__btn pc__btn--outline">Get started</a></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="final-cta" id="contact">
+  <div class="final-cta__inner">
+    <h2 class="final-cta__title">Ready to get more <em>patients?</em></h2>
+    <p class="final-cta__sub">Get a free 10-minute website audit. We'll show you exactly what's costing you appointments — no obligation.</p>
+    <a href="mailto:hello@dentalwebai.com" class="final-cta__btn">Start Your Project &#8594;</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__logo">&#9677; <span>Dental</span>WebAI</div>
+  <p>&copy; 2026 DentalWebAI &middot; Netherlands &middot; hello@dentalwebai.com</p>
+</footer>
+
+</div>
+
+<script>
+// ═══ LENIS ═══
+const lenis = new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t))});
+function raf(time){lenis.raf(time);requestAnimationFrame(raf)}requestAnimationFrame(raf);
+lenis.on('scroll',ScrollTrigger.update);
+gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
+
+// ═══ LOADER ═══
+setTimeout(()=>{document.getElementById('loader').classList.add('done');initHero()},1500);
+
+// ═══ THREE.JS — Soft floating spheres ═══
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,100);camera.position.z=6;
+const renderer=new THREE.WebGLRenderer({canvas:document.getElementById('three-canvas'),antialias:true,alpha:true});
+renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0xfafbfd,1);
+
+// Soft spheres
+const spheres=[];
+const colors=[0x2563eb,0x10b981,0xa855f7,0x60a5fa,0x34d399];
+for(let i=0;i<5;i++){
+  const geo=new THREE.SphereGeometry(.3+Math.random()*.4,32,32);
+  const mat=new THREE.MeshStandardMaterial({color:colors[i],roughness:.8,metalness:.1,transparent:true,opacity:.08});
+  const mesh=new THREE.Mesh(geo,mat);
+  mesh.position.set((Math.random()-.5)*8,(Math.random()-.5)*4,(Math.random()-.5)*3-2);
+  mesh.userData={speed:Math.random()*.5+.2,offset:Math.random()*Math.PI*2};
+  scene.add(mesh);spheres.push(mesh);
+}
+
+// Particles
+const pGeo=new THREE.BufferGeometry();const pArr=new Float32Array(400*3);
+for(let i=0;i<400*3;i++)pArr[i]=(Math.random()-.5)*15;
+pGeo.setAttribute('position',new THREE.BufferAttribute(pArr,3));
+const pMat=new THREE.PointsMaterial({color:0x2563eb,size:.02,transparent:true,opacity:.15});
+scene.add(new THREE.Points(pGeo,pMat));
+
+const ambLight=new THREE.AmbientLight(0xffffff,.8);scene.add(ambLight);
+const dirLight=new THREE.DirectionalLight(0x2563eb,.3);dirLight.position.set(5,5,5);scene.add(dirLight);
+
+let sy=0;lenis.on('scroll',e=>{sy=e.scroll});
+
+function animateThree(){
+  requestAnimationFrame(animateThree);
+  const t=performance.now()*.001;
+  spheres.forEach(s=>{
+    s.position.y+=Math.sin(t*s.userData.speed+s.userData.offset)*.002;
+    s.position.x+=Math.cos(t*s.userData.speed*.7+s.userData.offset)*.001;
+  });
+  camera.position.y=-sy*.0003;
+  camera.lookAt(0,0,0);
+  renderer.render(scene,camera);
+}
+animateThree();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+
+// ═══ HERO GSAP ═══
+function initHero(){
+  const tl=gsap.timeline({defaults:{ease:'power4.out'}});
+  tl.to('#hPill',{opacity:1,duration:.8})
+    .to('#hTitle',{opacity:1,duration:1},'-=.4')
+    .to('#hSub',{opacity:1,duration:1},'-=.5')
+    .to('#hCtas',{opacity:1,duration:1},'-=.5')
+    .to('#hTrust',{opacity:1,duration:1},'-=.5')
+    .to('#hM1',{opacity:1,x:0,duration:1,delay:.2},'-=1')
+    .to('#hM2',{opacity:1,x:0,duration:1},'-=.7')
+    .to('#hM3',{opacity:1,x:0,duration:1},'-=.7');
+}
+gsap.set(['#hM1','#hM2','#hM3'],{x:60});
+
+// Floating mockups
+gsap.to('#hM1',{y:-15,duration:3,yoyo:true,repeat:-1,ease:'sine.inOut'});
+gsap.to('#hM2',{y:12,duration:3.5,yoyo:true,repeat:-1,ease:'sine.inOut',delay:.5});
+gsap.to('#hM3',{y:-10,duration:4,yoyo:true,repeat:-1,ease:'sine.inOut',delay:1});
+
+// ═══ TEXT PIN ═══
+document.querySelectorAll('.text-pin__line').forEach((line,i)=>{
+  gsap.to(line,{opacity:1,y:0,scrollTrigger:{trigger:'.text-pin',start:`${15+i*20}% top`,end:`${25+i*20}% top`,scrub:1}});
+});
+
+// ═══ FEATURES ═══
+gsap.utils.toArray('.f-card').forEach((c,i)=>{
+  gsap.from(c,{opacity:0,y:50,duration:.8,scrollTrigger:{trigger:c,start:'top 85%'},delay:i%3*.12});
+});
+
+// ═══ HORIZONTAL SCROLL ═══
+const hTrack=document.getElementById('hTrack');
+gsap.to(hTrack,{
+  x:()=>-(hTrack.scrollWidth-innerWidth+96),ease:'none',
+  scrollTrigger:{trigger:'.hscroll__wrap',start:'top top',end:()=>'+='+(hTrack.scrollWidth-innerWidth+96),pin:'.hscroll__sticky',scrub:1,invalidateOnRefresh:true}
+});
+
+// ═══ PRICING ═══
+gsap.utils.toArray('.pc').forEach((c,i)=>{
+  gsap.from(c,{opacity:0,y:40,duration:.8,scrollTrigger:{trigger:c,start:'top 85%'},delay:i*.1});
+});
+
+// ═══ STATS COUNTER ═══
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const target=parseInt(el.dataset.count);
+  ScrollTrigger.create({trigger:el,start:'top 80%',onEnter:()=>{
+    gsap.to({v:0},{v:target,duration:2,ease:'power2.out',onUpdate:function(){
+      const v=Math.round(this.targets()[0].v);
+      el.textContent=v+(target===100?'%':target===96?'/100':'');
+    }});
+  },once:true});
+});
+
+// ═══ FINAL CTA ═══
+gsap.from('.final-cta__title',{opacity:0,y:50,scrollTrigger:{trigger:'.final-cta',start:'top 70%'},duration:1});
+gsap.from('.final-cta__sub',{opacity:0,y:30,scrollTrigger:{trigger:'.final-cta',start:'top 65%'},duration:1,delay:.2});
+gsap.from('.final-cta__btn',{opacity:0,y:20,scrollTrigger:{trigger:'.final-cta',start:'top 60%'},duration:1,delay:.4});
+</script>
+</body>
+</html>
