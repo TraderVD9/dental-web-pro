@@ -122,6 +122,20 @@ https://dentalwebai.com
 | office@zahnarztfuchs.at | Dr. Fuchs Zahnarzt | Vienna, AT | Day 3 follow-up (DE) |
 | thedentistryplacedenver@gmail.com | The Dentistry Place | Denver, CO | Day 3 follow-up |
 | gentledentalcarect@gmail.com | Gentle Dental Care | Plainville, CT | Day 3 follow-up |
+| admin@mouadentistry.com | Moua Family Dentistry | Maplewood, MN | Day 1 sent |
+| rbanik@comcast.net | Carolina Family Dentistry | North Charleston, SC | Day 1 sent |
+| info@hawthornedentalnj.com | Hawthorne Dental Associates | Hawthorne, NJ | Day 1 sent |
+| infopearland@flossdental.com | Floss Dental Pearland | Pearland, TX | Day 1 sent |
+| info@watsondentaldds.com | Douglas A Watson DDS | Greene, NY | Day 1 sent |
+| AgouraDental@gmail.com | Agoura Dental Group | Agoura Hills, CA | Day 1 sent |
+| axiomdental@gmail.com | Axiom Dental Group | Aurora, CO | Day 1 sent |
+| lanudental@gmail.com | L.A.N.U. Dental | West Chester, OH | Day 1 sent |
+| elitesmilenewyork@gmail.com | Elite Smile Dental | Manhattan, NY | Day 1 sent |
+| funtasticpediatric@gmail.com | FUNtastic Pediatric Dental | Long Beach, CA | Day 1 sent |
+| gaddental@yahoo.com | Gad Dental | La Mirada, CA | Day 1 sent |
+| leeorangedental@gmail.com | Orange Dental Care | Orange, CA | Day 1 sent |
+| hondaplazadental@gmail.com | Honda Plaza Dental Clinic | Los Angeles, CA | Day 1 sent |
+| greenfielddental102@gmail.com | Greenfield Dental Corp | West Allis, WI | Day 1 sent |
 
 ## Целевой рынок
 - US: города 50-300K населения, независимые клиники
