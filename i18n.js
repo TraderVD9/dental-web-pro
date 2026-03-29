@@ -126,6 +126,10 @@ const translations = {
     "cta.note": "We'll respond within 24 hours with a personalized audit report of your website.",
 
     "footer.tagline": "Websites that book patients."
+    "ba.title": "The transformation",
+    "ba.sub": "Before and after our redesign — real results",
+    "testimonial.quote": "\"Our online bookings increased by 45% in the first month. The site was delivered in 8 days — faster than any agency we've talked to.\"",
+    "testimonial.author": "— Dr. S. Mitchell, Bright Smile Dental",
   },
 
   de: {
@@ -255,6 +259,10 @@ const translations = {
     "cta.note": "Wir antworten innerhalb von 24 Stunden mit einem personalisierten Audit-Bericht Ihrer Website.",
 
     "footer.tagline": "Websites, die Patienten buchen."
+    "ba.title": "Die Transformation",
+    "ba.sub": "Vorher und nachher — echte Ergebnisse",
+    "testimonial.quote": "\"Unsere Online-Buchungen stiegen im ersten Monat um 45%. Die Website wurde in 8 Tagen geliefert — schneller als jede Agentur.\"",
+    "testimonial.author": "— Dr. S. Mitchell, Bright Smile Dental",
   },
 
   nl: {
@@ -384,6 +392,10 @@ const translations = {
     "cta.note": "Wij reageren binnen 24 uur met een gepersonaliseerde audit report van uw website.",
 
     "footer.tagline": "Websites die patiënten boeken."
+    "ba.title": "De transformatie",
+    "ba.sub": "Voor en na ons herontwerp — echte resultaten",
+    "testimonial.quote": "\"Onze online boekingen stegen met 45% in de eerste maand. De site was binnen 8 dagen klaar — sneller dan elk bureau.\"",
+    "testimonial.author": "— Dr. S. Mitchell, Bright Smile Dental",
   },
 
   ru: {
@@ -513,6 +525,10 @@ const translations = {
     "cta.note": "Мы ответим в течение 24 часов с персональным аудит-отчётом вашего сайта.",
 
     "footer.tagline": "Сайты, которые записывают пациентов."
+    "ba.title": "Трансформация",
+    "ba.sub": "До и после нашего редизайна — реальные результаты",
+    "testimonial.quote": "\"Наши онлайн-записи выросли на 45% в первый месяц. Сайт был готов за 8 дней — быстрее любого агентства.\"",
+    "testimonial.author": "— Др. С. Митчелл, Bright Smile Dental",
   }
 };
 

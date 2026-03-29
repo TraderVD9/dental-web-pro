@@ -28,6 +28,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -365,6 +368,30 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </section>
+
+    <!-- BEFORE/AFTER -->
+    <section class="section ba-section">
+        <div class="ba-inner">
+            <h2 class="section__title" style="color:#fff" data-i18n="ba.title">The transformation</h2>
+            <p class="section__sub" style="color:rgba(255,255,255,.5);margin:0 auto 48px" data-i18n="ba.sub">Before and after our redesign — real results</p>
+            <div class="ba-slider" id="baSlider">
+                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80" alt="Before redesign" class="ba-before" style="filter:grayscale(.8) brightness(.7)">
+                <img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1200&q=80" alt="After redesign" class="ba-after">
+                <div class="ba-line" id="baLine"></div>
+                <div class="ba-handle" id="baHandle">&#8596;</div>
+            </div>
+            <div class="ba-labels"><span>Before — Score 34</span><span>After — Score 96</span></div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="section testimonial-section">
+        <div class="container" style="text-align:center">
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <blockquote class="testimonial-quote" data-i18n="testimonial.quote">"Our online bookings increased by 45% in the first month. The site was delivered in 8 days — faster than any agency we've talked to."</blockquote>
+            <p class="testimonial-author" data-i18n="testimonial.author">— Dr. S. Mitchell, Bright Smile Dental</p>
         </div>
     </section>
 
