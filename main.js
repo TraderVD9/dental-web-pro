@@ -216,86 +216,74 @@ form.addEventListener('submit', async e => {
 
 // ═══ GSAP SCROLL ANIMATIONS ═══
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    // No GSAP — make sure everything is visible
+    document.querySelectorAll('.problem__card, .solution__item, .package-card, .process__step, .portfolio__card, .faq__item, .section__title, .section__sub, .testimonial-quote, .comparison__table, .cta-box, .retainer__inner, .ba-slider').forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    return;
+  }
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero entrance — cinematic
-  const heroTl = gsap.timeline({ delay: 0.3 });
-  heroTl
-    .from('.hero__badge', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' })
-    .from('.hero__title', { opacity: 0, y: 50, duration: 1, ease: 'power3.out' }, '-=0.4')
-    .from('.hero__sub', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' }, '-=0.5')
-    .from('.stat', { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, ease: 'power3.out' }, '-=0.4')
-    .from('.hero__ctas', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.3');
+  // Safe from() — always ensures end state is visible
+  function safeFrom(sel, vars) {
+    gsap.from(sel, { ...vars, clearProps: 'opacity,transform' });
+  }
 
-  // Staggered card reveals
-  const cardSets = [
-    { sel: '.problem__card', trigger: '.problem' },
-    { sel: '.solution__item', trigger: '.solution' },
-    { sel: '.package-card', trigger: '.packages' },
-    { sel: '.process__step', trigger: '.process' },
-    { sel: '.portfolio__card', trigger: '.portfolio' },
+  // Hero entrance
+  gsap.from('.hero__badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.3, clearProps: 'all' });
+  gsap.from('.hero__title', { opacity: 0, y: 30, duration: 1, delay: 0.5, clearProps: 'all' });
+  gsap.from('.hero__sub', { opacity: 0, y: 20, duration: 0.8, delay: 0.7, clearProps: 'all' });
+  gsap.from('.hero__stats', { opacity: 0, y: 20, duration: 0.8, delay: 0.9, clearProps: 'all' });
+  gsap.from('.hero__ctas', { opacity: 0, y: 20, duration: 0.8, delay: 1.1, clearProps: 'all' });
+
+  // Scroll-triggered reveals
+  const reveals = [
+    '.problem__card', '.solution__item', '.package-card',
+    '.process__step', '.portfolio__card', '.faq__item'
   ];
 
-  cardSets.forEach(({ sel, trigger }) => {
-    gsap.from(sel, {
-      opacity: 0, y: 60, duration: 0.8,
-      stagger: 0.12, ease: 'power3.out',
-      scrollTrigger: { trigger, start: 'top 75%' }
+  reveals.forEach(sel => {
+    gsap.utils.toArray(sel).forEach((el, i) => {
+      gsap.from(el, {
+        opacity: 0, y: 40, duration: 0.7,
+        delay: (i % 4) * 0.1,
+        clearProps: 'opacity,transform',
+        scrollTrigger: { trigger: el, start: 'top 88%' }
+      });
     });
   });
 
-  // FAQ items
-  gsap.from('.faq__item', {
-    opacity: 0, y: 30, duration: 0.6,
-    stagger: 0.08, ease: 'power3.out',
-    scrollTrigger: { trigger: '.faq', start: 'top 75%' }
-  });
-
-  // Section titles
-  gsap.utils.toArray('.section__title').forEach(el => {
+  // Section titles & subs
+  gsap.utils.toArray('.section__title, .section__sub').forEach(el => {
     gsap.from(el, {
-      opacity: 0, y: 40, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 80%' }
+      opacity: 0, y: 30, duration: 0.8,
+      clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: el, start: 'top 88%' }
     });
   });
 
-  gsap.utils.toArray('.section__sub').forEach(el => {
+  // Other elements
+  ['.testimonial-quote', '.comparison__table', '.retainer__inner', '.ba-slider'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if (!el) return;
     gsap.from(el, {
-      opacity: 0, y: 30, duration: 0.8, ease: 'power3.out',
+      opacity: 0, y: 30, duration: 0.8,
+      clearProps: 'opacity,transform',
       scrollTrigger: { trigger: el, start: 'top 85%' }
     });
   });
 
-  // Testimonial
-  gsap.from('.testimonial-quote', {
-    opacity: 0, y: 40, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: '.testimonial-section', start: 'top 70%' }
-  });
-
-  // Comparison table
-  gsap.from('.comparison__table', {
-    opacity: 0, y: 40, duration: 0.8,
-    scrollTrigger: { trigger: '.comparison__table', start: 'top 80%' }
-  });
-
   // CTA box
-  gsap.from('.cta-box', {
-    opacity: 0, y: 60, scale: 0.97, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: '.cta-box', start: 'top 75%' }
-  });
-
-  // Retainer
-  gsap.from('.retainer__inner', {
-    opacity: 0, y: 40, duration: 0.8,
-    scrollTrigger: { trigger: '.retainer', start: 'top 80%' }
-  });
-
-  // Before/After
-  gsap.from('.ba-slider', {
-    opacity: 0, scale: 0.95, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: '.ba-section', start: 'top 70%' }
-  });
+  const ctaBox = document.querySelector('.cta-box');
+  if (ctaBox) {
+    gsap.from(ctaBox, {
+      opacity: 0, y: 40, duration: 0.8,
+      clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: ctaBox, start: 'top 80%' }
+    });
+  }
 });
 
 // ═══ BEFORE/AFTER SLIDER ═══
