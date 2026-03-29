@@ -114,8 +114,8 @@ const translations = {
     "faq.a4": "We offer a free website audit. We'll analyze your current site, show what's losing you patients, and build a modern replacement that converts better.",
     "faq.q5": "How does payment work?",
     "faq.a5": "50% deposit before we start, 50% upon completion and approval. We accept credit cards, bank transfers, and PayPal. All payments are processed securely through Stripe.",
-    "faq.q6": "Do you work with practices outside the US?",
-    "faq.a6": "Absolutely. We serve dental practices in the US, Europe (Netherlands, Germany, Austria, Switzerland, UK), and CIS countries. We build multilingual websites and handle local SEO for any market.",
+    "faq.q6": "Where do you work?",
+    "faq.a6": "We work globally — 100% online. Our focus is Tier 1 markets: US, UK, Canada, Australia, Germany, Austria, Switzerland, Netherlands, and Scandinavia. We build multilingual websites and handle local SEO for any market worldwide.",
 
     "cta.title": "Ready to get more patients?",
     "cta.sub": "Get a free 10-minute website audit. We'll show you exactly what's costing you appointments — no obligation.",
@@ -247,8 +247,8 @@ const translations = {
     "faq.a4": "Wir bieten ein kostenloses Audit. Wir analysieren Ihre aktuelle Seite, zeigen was Sie Patienten kostet, und erstellen einen modernen Ersatz.",
     "faq.q5": "Wie funktioniert die Bezahlung?",
     "faq.a5": "50% Anzahlung vor Beginn, 50% nach Fertigstellung und Abnahme. Wir akzeptieren Kreditkarten, Überweisungen und PayPal über Stripe.",
-    "faq.q6": "Arbeiten Sie auch außerhalb der USA?",
-    "faq.a6": "Absolut. Wir betreuen Zahnarztpraxen in den USA, Europa (Deutschland, Österreich, Schweiz, Niederlande, UK) und GUS-Ländern. Mehrsprachige Websites und lokales SEO für jeden Markt.",
+    "faq.q6": "Wo arbeiten Sie?",
+    "faq.a6": "Wir arbeiten weltweit — 100% online. Unser Fokus sind Tier-1-Märkte: USA, UK, Kanada, Australien, Deutschland, Österreich, Schweiz, Niederlande und Skandinavien. Mehrsprachige Websites und lokales SEO für jeden Markt.",
 
     "cta.title": "Bereit für mehr Patienten?",
     "cta.sub": "Fordern Sie ein kostenloses 10-Minuten Website-Audit an. Wir zeigen Ihnen genau, was Sie Termine kostet — unverbindlich.",
@@ -380,8 +380,8 @@ const translations = {
     "faq.a4": "Wij bieden een gratis website audit. Wij analyseren uw huidige site, tonen wat u patiënten kost, en bouwen een moderne vervanging die beter converteert.",
     "faq.q5": "Hoe werkt de betaling?",
     "faq.a5": "50% aanbetaling voor aanvang, 50% na oplevering en goedkeuring. Wij accepteren creditcards, bankoverschrijvingen en PayPal via Stripe.",
-    "faq.q6": "Werken jullie ook buiten de VS?",
-    "faq.a6": "Absoluut. Wij bedienen tandartspraktijken in de VS, Europa (Nederland, Duitsland, Oostenrijk, Zwitserland, VK) en GOS-landen. Meertalige websites en lokale SEO voor elke markt.",
+    "faq.q6": "Waar werken jullie?",
+    "faq.a6": "Wij werken wereldwijd — 100% online. Onze focus zijn Tier 1-markten: VS, VK, Canada, Australië, Duitsland, Oostenrijk, Zwitserland, Nederland en Scandinavië. Meertalige websites en lokale SEO voor elke markt.",
 
     "cta.title": "Klaar voor meer patiënten?",
     "cta.sub": "Vraag een gratis 10-minuten website audit aan. Wij tonen precies wat u afspraken kost — vrijblijvend.",
@@ -513,8 +513,8 @@ const translations = {
     "faq.a4": "Мы предлагаем бесплатный аудит. Проанализируем ваш текущий сайт, покажем что теряет пациентов, и создадим современную замену.",
     "faq.q5": "Как работает оплата?",
     "faq.a5": "50% предоплата до начала работы, 50% после завершения и утверждения. Принимаем карты, банковские переводы и PayPal через Stripe.",
-    "faq.q6": "Вы работаете за пределами США?",
-    "faq.a6": "Конечно. Мы обслуживаем клиники в США, Европе (Нидерланды, Германия, Австрия, Швейцария, Великобритания) и странах СНГ. Создаём мультиязычные сайты и делаем локальное SEO.",
+    "faq.q6": "Где вы работаете?",
+    "faq.a6": "Мы работаем по всему миру — 100% онлайн. Фокус на Tier 1 рынки: США, Великобритания, Канада, Австралия, Германия, Австрия, Швейцария, Нидерланды, Скандинавия. Мультиязычные сайты и локальное SEO для любого рынка.",
 
     "cta.title": "Готовы получить больше пациентов?",
     "cta.sub": "Получите бесплатный 10-минутный аудит сайта. Покажем, что именно стоит вам записей — без обязательств.",

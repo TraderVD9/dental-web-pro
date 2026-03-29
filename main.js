@@ -96,27 +96,8 @@ form.addEventListener('submit', async e => {
 
 // ═══ GSAP + LENIS SCROLL ANIMATIONS ═══
 document.addEventListener('DOMContentLoaded', () => {
-  // Init Lenis smooth scroll
-  if (typeof Lenis !== 'undefined') {
-    const lenis = new Lenis({
-      duration: 1.0,
-      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 0.8,
-      touchMultiplier: 1.5,
-      infinite: false
-    });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-
-    if (typeof ScrollTrigger !== 'undefined') {
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(t => lenis.raf(t * 1000));
-      gsap.ticker.lagSmoothing(0);
-    }
-  }
+  // Lenis disabled — causes jitter on this site type
+  // Native smooth scroll via CSS is sufficient
 
   // GSAP scroll animations
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
