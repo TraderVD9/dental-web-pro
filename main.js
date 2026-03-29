@@ -1,3 +1,106 @@
+// ═══ CUSTOM CURSOR ═══
+(function() {
+  const cursor = document.getElementById('customCursor');
+  const dot = document.getElementById('customCursorDot');
+  if (!cursor || !dot || window.innerWidth < 769) return;
+
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+  });
+
+  document.querySelectorAll('a, button, .portfolio__card, .package-card, .problem__card, .solution__item, .btn').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  document.body.style.cursor = 'none';
+  document.querySelectorAll('a, button').forEach(el => el.style.cursor = 'none');
+})();
+
+// ═══ THREE.JS HERO PARTICLES ═══
+(function() {
+  if (typeof THREE === 'undefined') return;
+  const canvas = document.getElementById('heroParticles');
+  if (!canvas) return;
+  const hero = document.querySelector('.hero');
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, hero.offsetWidth / hero.offsetHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(hero.offsetWidth, hero.offsetHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const count = 800;
+  const pos = new Float32Array(count * 3);
+  const sizes = new Float32Array(count);
+  for (let i = 0; i < count; i++) {
+    pos[i * 3] = (Math.random() - 0.5) * 16;
+    pos[i * 3 + 1] = (Math.random() - 0.5) * 12;
+    pos[i * 3 + 2] = (Math.random() - 0.5) * 10;
+    sizes[i] = Math.random() * 2 + 0.5;
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+  const mat = new THREE.ShaderMaterial({
+    uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color(0x0066FF) } },
+    vertexShader: `
+      attribute float size;
+      uniform float uTime;
+      varying float vAlpha;
+      void main() {
+        vec3 p = position;
+        p.y += sin(uTime * 0.3 + position.x * 0.5) * 0.2;
+        p.x += cos(uTime * 0.2 + position.z * 0.5) * 0.15;
+        vec4 mv = modelViewMatrix * vec4(p, 1.0);
+        gl_PointSize = size * (150.0 / -mv.z);
+        gl_Position = projectionMatrix * mv;
+        vAlpha = smoothstep(12.0, 4.0, -mv.z) * 0.35;
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 uColor;
+      varying float vAlpha;
+      void main() {
+        float d = length(gl_PointCoord - vec2(0.5));
+        if (d > 0.5) discard;
+        gl_FragColor = vec4(uColor, smoothstep(0.5, 0.0, d) * vAlpha);
+      }
+    `,
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+  });
+
+  scene.add(new THREE.Points(geo, mat));
+  camera.position.z = 6;
+
+  let mx = 0, my = 0;
+  document.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  function tick() {
+    requestAnimationFrame(tick);
+    mat.uniforms.uTime.value += 0.008;
+    camera.position.x += (mx * 0.3 - camera.position.x) * 0.02;
+    camera.position.y += (-my * 0.3 - camera.position.y) * 0.02;
+    camera.lookAt(0, 0, 0);
+    renderer.render(scene, camera);
+  }
+  tick();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = hero.offsetWidth / hero.offsetHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(hero.offsetWidth, hero.offsetHeight);
+  });
+})();
+
 // ═══ BURGER MENU ═══
 const burger = document.getElementById('burger');
 const navLinks = document.getElementById('navLinks');

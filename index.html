@@ -26,12 +26,12 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230066FF'/><text x='50' y='70' text-anchor='middle' font-family='sans-serif' font-size='50' font-weight='bold' fill='white'>D</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-    <!-- Lenis removed — caused scroll jitter -->
 
     <script type="application/ld+json">
     {
@@ -63,6 +63,13 @@
     </script>
 </head>
 <body>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="customCursor"></div>
+    <div class="cursor-dot" id="customCursorDot"></div>
+    <!-- GRAIN OVERLAY -->
+    <div class="grain-overlay"></div>
+    <!-- THREE.JS HERO PARTICLES -->
+    <canvas id="heroParticles"></canvas>
     <!-- NAV -->
     <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
         <div class="nav__inner">
@@ -310,6 +317,11 @@
                     <div class="portfolio__img" style="background:url('screenshots/novadent.webp') center/cover" role="img" aria-label="NovaDent - immersive dental website with Three.js and GSAP"></div>
                     <h3>NovaDent Premium</h3>
                     <p>Immersive experience. Three.js 3D, GSAP animations, before/after slider, real photos.</p>
+                </a>
+                <a href="demos/premium-dental.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
+                    <div class="portfolio__img" style="background:linear-gradient(135deg, #1a1a1a, #0a0a0a);display:flex;align-items:center;justify-content:center;color:#c9a96e;font-family:serif;font-size:1.5rem;font-style:italic" role="img" aria-label="Luxe Dental Studio - Awwwards-level premium design">Luxe Dental</div>
+                    <h3>Luxe Dental Studio</h3>
+                    <p>Awwwards-level. 3D particles, custom cursor, GSAP scroll animations, luxury aesthetic.</p>
                 </a>
             </div>
         </div>
