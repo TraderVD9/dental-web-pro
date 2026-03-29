@@ -61,18 +61,19 @@ form.addEventListener('submit', async e => {
     `Submitted: ${new Date().toISOString()}`
   );
 
-  // Try sending notification email via our SMTP proxy
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  // Send to API → Telegram bot notification + lead saved
   try {
-    const res = await fetch('https://api.vellumcadence.com/lead', {
+    const res = await fetch('https://api.vellumcadence.com/dental-audit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: info.name,
         email: info.email,
         clinic: info.clinic || '',
-        website: info.website || '',
-        source: 'dentalwebai.com',
-        message: `Audit request from ${info.name} (${info.email}), Clinic: ${info.clinic || 'N/A'}, Website: ${info.website || 'N/A'}`
+        website: info.website || ''
       })
     });
 
