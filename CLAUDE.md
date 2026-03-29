@@ -28,6 +28,12 @@ Dmytro V., Netherlands. Email: hello@dentalwebai.com
 - Reply-To: hello@dentalwebai.com
 - Входящие: hello@dentalwebai.com → vellumcadence@gmail.com (Cloudflare Email Routing)
 
+## Telegram Bot
+- Bot: @Dentalwebai_bot
+- Token: 8693133133:AAFQN6_-Htsn44SW2jKKFeomLAm8ipWw5_I
+- Chat ID: 6035609381 (Dmytro @DKV_09)
+- Используется для: уведомления об аудит-заявках, ответах, follow-up напоминания
+
 ## Cloudflare
 - Zone ID: f91af21f6a9cea0d97fbdb8ef651afeb
 - Account ID: 14abd0f6cefad62bf9dfd45fa3d671fd
