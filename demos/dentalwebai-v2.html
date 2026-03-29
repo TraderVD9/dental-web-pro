@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentalWebAI — AI-Powered Websites That Bring Patients to Your Door</title>
+<meta name="description" content="Custom dental websites in 10 days. Not 10 weeks. AI-powered design, SEO included, you own everything.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2563EB;--blue-light:#EFF6FF;--green:#10B981;--green-light:#ECFDF5;--amber:#F59E0B;--navy:#0F172A;--text:#0F172A;--text2:#64748B;--bg:#FFFFFF;--bg2:#F8FAFC;--border:#E2E8F0;--shadow:0 4px 24px rgba(0,0,0,0.06);--shadow-lg:0 20px 60px rgba(0,0,0,0.08);--r:16px;--r2:24px;--ease:cubic-bezier(.4,0,.2,1)}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.15}
+.mono{font-family:'JetBrains Mono',monospace}
+.container{max-width:1140px;margin:0 auto;padding:0 24px}
+.section{padding:120px 0;position:relative}
+.section--alt{background:var(--bg2)}
+.section--dark{background:var(--navy);color:#fff}
+.section__badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:100px;font-size:.8rem;font-weight:600;margin-bottom:16px}
+.section__badge--blue{background:var(--blue-light);color:var(--blue)}
+.section__badge--green{background:var(--green-light);color:var(--green)}
+.section__title{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;margin-bottom:16px}
+.section__sub{color:var(--text2);font-size:1.05rem;line-height:1.7;max-width:560px}
+.section__header{text-align:center;margin-bottom:64px}
+.section__header .section__sub{margin:0 auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:12px;font-weight:600;font-size:.95rem;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:.3s var(--ease)}
+.btn--blue{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn--blue:hover{background:#1D4ED8;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.3)}
+.btn--amber{background:var(--amber);color:var(--navy);border-color:var(--amber)}
+.btn--amber:hover{background:#D97706;transform:translateY(-2px)}
+.btn--outline{background:transparent;color:var(--text);border-color:var(--border)}
+.btn--outline:hover{border-color:var(--blue);color:var(--blue)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:.3s}
+.nav__inner{max-width:1140px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav__logo{font-family:'Space Grotesk';font-weight:700;font-size:1.2rem;color:var(--navy);text-decoration:none}
+.nav__logo span{color:var(--blue)}
+.nav__links{display:flex;gap:28px;align-items:center}
+.nav__links a{text-decoration:none;color:var(--text2);font-size:.85rem;font-weight:500;transition:.3s}
+.nav__links a:hover{color:var(--blue)}
+.nav__cta{background:var(--blue)!important;color:#fff!important;padding:8px 20px!important;border-radius:10px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:64px;overflow:hidden;background:linear-gradient(180deg,#F0F6FF 0%,#fff 60%)}
+.hero__inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.hero__content{max-width:520px}
+.hero__pill{display:inline-flex;align-items:center;gap:8px;background:var(--blue-light);color:var(--blue);padding:6px 16px;border-radius:100px;font-size:.8rem;font-weight:600;margin-bottom:24px}
+.hero__pill::before{content:'';width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero__title{font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:700;color:var(--navy);margin-bottom:20px;line-height:1.1}
+.hero__title em{font-style:normal;color:var(--blue)}
+.hero__sub{font-size:1.1rem;color:var(--text2);line-height:1.7;margin-bottom:32px}
+.hero__ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.hero__trust{display:flex;gap:24px;flex-wrap:wrap}
+.hero__trust-item{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--green);font-weight:500}
+
+/* Hero visual — browser mockups */
+.hero__visual{position:relative;perspective:1200px}
+.browser-frame{background:#fff;border-radius:12px;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid var(--border);transition:.6s var(--ease)}
+.browser-frame__bar{height:32px;background:var(--bg2);display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid var(--border)}
+.browser-frame__dot{width:8px;height:8px;border-radius:50%}
+.browser-frame__dot--r{background:#FF5F56}
+.browser-frame__dot--y{background:#FFBD2E}
+.browser-frame__dot--g{background:#27C93F}
+.browser-frame__body{height:300px;background:linear-gradient(135deg,var(--blue-light),#D6EAFF);display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--blue);overflow:hidden}
+.browser-frame__body img{width:100%;height:100%;object-fit:cover}
+.hero__frame-1{transform:rotateY(-5deg) rotateX(2deg);z-index:2;position:relative}
+.hero__frame-2{position:absolute;top:40px;right:-30px;width:80%;transform:rotateY(-8deg) rotateX(3deg) scale(.9);opacity:.7;z-index:1}
+.hero__frame-1:hover{transform:rotateY(0) scale(1.02)}
+
+/* PROBLEM */
+.problem__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.problem__card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r2);padding:36px 28px;text-align:center;transition:.3s var(--ease)}
+.problem__card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--blue)}
+.problem__stat{font-family:'JetBrains Mono';font-size:2.5rem;font-weight:700;color:var(--blue);margin-bottom:8px}
+.problem__card h3{font-size:1.1rem;margin-bottom:8px}
+.problem__card p{font-size:.9rem;color:var(--text2);line-height:1.6}
+
+/* WHAT'S INSIDE — interactive hotspots */
+.inside{position:relative}
+.inside__visual{position:relative;max-width:800px;margin:0 auto;background:var(--bg2);border-radius:var(--r2);padding:60px;min-height:500px;border:1px solid var(--border)}
+.inside__screen{background:var(--bg);border-radius:12px;box-shadow:var(--shadow);padding:24px;position:relative;min-height:380px}
+.hotspot{position:absolute;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;cursor:pointer;transition:.3s;z-index:2;box-shadow:0 0 0 0 rgba(37,99,235,.4);animation:hotspotPulse 2s infinite}
+@keyframes hotspotPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.4)}50%{box-shadow:0 0 0 12px rgba(37,99,235,0)}}
+.hotspot:hover{transform:scale(1.2);background:#1D4ED8}
+.hotspot--1{top:10%;left:15%}
+.hotspot--2{top:10%;right:20%}
+.hotspot--3{top:45%;left:8%}
+.hotspot--4{top:45%;right:10%}
+.hotspot--5{bottom:15%;left:30%}
+.hotspot--6{bottom:15%;right:25%}
+.hotspot__popup{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:16px 20px;border-radius:12px;font-size:.85rem;line-height:1.5;width:240px;opacity:0;pointer-events:none;transition:.3s;z-index:10;box-shadow:var(--shadow-lg)}
+.hotspot__popup::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--navy)}
+.hotspot:hover .hotspot__popup{opacity:1;pointer-events:auto}
+.hotspot__popup strong{color:var(--amber);display:block;margin-bottom:4px}
+
+/* PORTFOLIO */
+.portfolio__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.portfolio__item{border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);transition:.4s var(--ease);cursor:pointer;text-decoration:none;color:inherit}
+.portfolio__item:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.portfolio__preview{height:240px;overflow:hidden;position:relative}
+.portfolio__preview img{width:100%;height:100%;object-fit:cover;transition:.6s}
+.portfolio__item:hover .portfolio__preview img{transform:scale(1.05)}
+.portfolio__info{padding:20px 24px}
+.portfolio__info h3{font-size:1.1rem;margin-bottom:4px}
+.portfolio__info p{font-size:.85rem;color:var(--text2)}
+.portfolio__link{color:var(--blue);font-size:.85rem;font-weight:600;margin-top:8px;display:inline-block}
+
+/* PRICING */
+.pricing__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.price-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r2);padding:40px 32px;display:flex;flex-direction:column;transition:.3s}
+.price-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.price-card--pop{border:2px solid var(--blue);position:relative}
+.price-card__badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;padding:4px 20px;border-radius:100px;font-size:.75rem;font-weight:700;white-space:nowrap}
+.price-card h3{font-size:1.2rem;margin-bottom:8px}
+.price-card__price{font-family:'JetBrains Mono';font-size:2.5rem;font-weight:700;color:var(--navy)}
+.price-card__time{font-size:.85rem;color:var(--text2);margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.price-card ul{list-style:none;flex:1;margin-bottom:24px}
+.price-card li{padding:6px 0 6px 24px;position:relative;font-size:.9rem}
+.price-card li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+
+/* PROCESS */
+.process__timeline{max-width:700px;margin:0 auto;position:relative}
+.process__timeline::before{content:'';position:absolute;left:28px;top:0;bottom:0;width:2px;background:var(--border)}
+.process__step{display:flex;gap:24px;margin-bottom:48px;position:relative}
+.process__num{width:56px;height:56px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-weight:700;font-size:1.1rem;flex-shrink:0;z-index:1}
+.process__step-content h3{font-size:1.1rem;margin-bottom:4px}
+.process__step-content p{color:var(--text2);font-size:.9rem;line-height:1.6}
+.process__day{font-family:'JetBrains Mono';font-size:.75rem;color:var(--blue);font-weight:600;margin-bottom:4px}
+
+/* RESULTS */
+.results__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.result-card{text-align:center;padding:40px 24px;background:rgba(255,255,255,.05);border-radius:var(--r2);border:1px solid rgba(255,255,255,.1)}
+.result-card__before{font-family:'JetBrains Mono';font-size:1.5rem;color:rgba(255,255,255,.4);text-decoration:line-through;margin-bottom:4px}
+.result-card__after{font-family:'JetBrains Mono';font-size:3rem;font-weight:700;color:var(--green)}
+.result-card__label{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:8px}
+
+/* AUDIT CTA */
+.audit-cta{text-align:center}
+.audit-input{display:flex;gap:12px;max-width:500px;margin:32px auto 0}
+.audit-input input{flex:1;padding:16px 20px;border:2px solid var(--border);border-radius:12px;font-size:1rem}
+.audit-input input:focus{outline:none;border-color:var(--blue)}
+
+/* FAQ */
+.faq__list{max-width:700px;margin:0 auto}
+.faq__item{border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;overflow:hidden;background:var(--bg)}
+.faq__item summary{padding:20px 24px;font-weight:600;cursor:pointer;list-style:none;position:relative;padding-right:48px}
+.faq__item summary::after{content:"+";position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:1.4rem;color:var(--blue);transition:.3s}
+.faq__item[open] summary::after{content:"−"}
+.faq__item summary::-webkit-details-marker{display:none}
+.faq__item p{padding:0 24px 20px;color:var(--text2);line-height:1.7;font-size:.95rem}
+
+/* FOOTER */
+.footer{background:var(--navy);color:#fff;padding:48px 0;text-align:center;border-radius:var(--r2) var(--r2) 0 0}
+.footer__logo{font-family:'Space Grotesk';font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.footer__links{display:flex;justify-content:center;gap:24px;margin:16px 0;flex-wrap:wrap}
+.footer__links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.85rem;transition:.3s}
+.footer__links a:hover{color:#fff}
+.footer__copy{font-size:.75rem;color:rgba(255,255,255,.3);margin-top:16px}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:all .7s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+.hero__inner{grid-template-columns:1fr;text-align:center}
+.hero__visual{display:none}
+.hero__ctas{justify-content:center}
+.hero__trust{justify-content:center}
+.problem__grid,.portfolio__grid,.pricing__grid,.results__grid{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}
+.inside__visual{padding:24px}
+.hotspot__popup{width:180px;font-size:.75rem}
+}
+@media(max-width:600px){
+.nav__links{display:none}
+.section{padding:80px 0}
+.audit-input{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+<div class="nav__inner">
+<a href="#" class="nav__logo">&#9677; <span>Dental</span>WebAI</a>
+<div class="nav__links">
+<a href="#problem">Why Change</a>
+<a href="#inside">Features</a>
+<a href="#portfolio">Portfolio</a>
+<a href="#pricing">Pricing</a>
+<a href="#faq">FAQ</a>
+<a href="#audit" class="nav__cta">Free Audit</a>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+<div class="container hero__inner">
+<div class="hero__content">
+<div class="hero__pill">&#9679; Now accepting new clients</div>
+<h1 class="hero__title">AI-Powered Websites That <em>Bring Patients</em> to Your Door</h1>
+<p class="hero__sub">Custom dental websites in 10 days. Not 10 weeks. Built with AI precision, designed for patient conversion. You own everything.</p>
+<div class="hero__ctas">
+<a href="#audit" class="btn btn--blue">Get Your Free Audit &#8594;</a>
+<a href="#portfolio" class="btn btn--outline">See Our Work</a>
+</div>
+<div class="hero__trust">
+<span class="hero__trust-item">&#10003; No lock-in</span>
+<span class="hero__trust-item">&#10003; You own the site</span>
+<span class="hero__trust-item">&#10003; SEO included</span>
+</div>
+</div>
+<div class="hero__visual">
+<div class="browser-frame hero__frame-1">
+<div class="browser-frame__bar"><span class="browser-frame__dot browser-frame__dot--r"></span><span class="browser-frame__dot browser-frame__dot--y"></span><span class="browser-frame__dot browser-frame__dot--g"></span></div>
+<div class="browser-frame__body"><img src="/screenshots/bright-smile.png" alt="Bright Smile Dental demo" onerror="this.style.display='none';this.parentElement.textContent='&#129463;'"></div>
+</div>
+<div class="browser-frame hero__frame-2">
+<div class="browser-frame__bar"><span class="browser-frame__dot browser-frame__dot--r"></span><span class="browser-frame__dot browser-frame__dot--y"></span><span class="browser-frame__dot browser-frame__dot--g"></span></div>
+<div class="browser-frame__body"><img src="/screenshots/alpine-dental.png" alt="Alpine Dental demo" onerror="this.style.display='none';this.parentElement.textContent='&#128300;'"></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section section--alt" id="problem">
+<div class="container">
+<div class="section__header">
+<div class="section__badge section__badge--blue reveal">The Problem</div>
+<h2 class="section__title reveal">76% of dental websites look good but don't convert</h2>
+<p class="section__sub reveal">Your website might be costing you patients right now. Here's what we see when we audit dental sites:</p>
+</div>
+<div class="problem__grid">
+<div class="problem__card reveal"><div class="problem__stat">67%</div><h3>Leave After 3 Seconds</h3><p>If your site loads slowly on mobile, two-thirds of patients go to your competitor instead.</p></div>
+<div class="problem__card reveal"><div class="problem__stat">70%</div><h3>Prefer Online Booking</h3><p>No booking button means patients pick the practice that lets them book with one tap.</p></div>
+<div class="problem__card reveal"><div class="problem__stat">92%</div><h3>Never See Page 2</h3><p>If you're not on Google's first page for "[city] dentist," you effectively don't exist.</p></div>
+</div>
+</div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="section inside" id="inside">
+<div class="container">
+<div class="section__header">
+<div class="section__badge section__badge--green reveal">What's Inside</div>
+<h2 class="section__title reveal">Everything a modern dental website needs</h2>
+<p class="section__sub reveal">Hover over each feature to see why it matters for your practice.</p>
+</div>
+<div class="inside__visual reveal">
+<div class="inside__screen">
+<div class="hotspot hotspot--1">1<div class="hotspot__popup"><strong>Online Booking</strong>Patients book appointments 24/7. Integrates with Calendly, Cal.com, or your existing system. 70% of patients prefer this.</div></div>
+<div class="hotspot hotspot--2">2<div class="hotspot__popup"><strong>Patient Reviews</strong>Google Reviews widget builds instant trust. Practices with visible reviews get 35% more appointment requests.</div></div>
+<div class="hotspot hotspot--3">3<div class="hotspot__popup"><strong>Mobile-First Design</strong>60% of patients search on mobile. Every element is designed for touch and small screens first.</div></div>
+<div class="hotspot hotspot--4">4<div class="hotspot__popup"><strong>Local SEO & Schema</strong>Structured data helps Google show your practice in local results with hours, reviews, and directions.</div></div>
+<div class="hotspot hotspot--5">5<div class="hotspot__popup"><strong>Speed Optimized</strong>Sub-2-second load time. Core Web Vitals optimized. Fast sites rank higher and convert better.</div></div>
+<div class="hotspot hotspot--6">6<div class="hotspot__popup"><strong>Click-to-Call</strong>One tap to call your practice. Mobile users don't want to copy-paste phone numbers.</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="section section--alt" id="portfolio">
+<div class="container">
+<div class="section__header">
+<div class="section__badge section__badge--blue reveal">Portfolio</div>
+<h2 class="section__title reveal">Websites we've built</h2>
+<p class="section__sub reveal">Click any project to explore the live demo.</p>
+</div>
+<div class="portfolio__grid">
+<a href="demos/bright-smile.html" target="_blank" class="portfolio__item reveal">
+<div class="portfolio__preview"><img src="/screenshots/bright-smile.png" alt="Bright Smile Dental" onerror="this.parentElement.style.background='linear-gradient(135deg,#1a1a2e,#2a1a3e)'"></div>
+<div class="portfolio__info"><h3>Bright Smile Dental</h3><p>Premium dark theme. 3D effects, particle background, animated reviews carousel.</p><span class="portfolio__link">View Demo &#8594;</span></div>
+</a>
+<a href="demos/alpine-dental.html" target="_blank" class="portfolio__item reveal">
+<div class="portfolio__preview"><img src="/screenshots/alpine-dental.png" alt="Alpine Family Dentistry" onerror="this.parentElement.style.background='linear-gradient(135deg,#EFF6FF,#DBEAFE)'"></div>
+<div class="portfolio__info"><h3>Alpine Family Dentistry</h3><p>Clean modern design. Glassmorphism, inline booking widget, 3D card stack.</p><span class="portfolio__link">View Demo &#8594;</span></div>
+</a>
+<a href="demos/citydent.html" target="_blank" class="portfolio__item reveal">
+<div class="portfolio__preview"><img src="/screenshots/citydent.png" alt="CityDent Clinic Berlin" onerror="this.parentElement.style.background='linear-gradient(135deg,#F0FDFA,#D1FAE5)'"></div>
+<div class="portfolio__info"><h3>CityDent Clinic Berlin</h3><p>Warm European style. Bento grid, morphing blobs, multilingual (EN/DE).</p><span class="portfolio__link">View Demo &#8594;</span></div>
+</a>
+</div>
+</div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+<div class="container">
+<div class="section__header">
+<div class="section__badge section__badge--blue reveal">Pricing</div>
+<h2 class="section__title reveal">Transparent pricing. No surprises.</h2>
+<p class="section__sub reveal">All packages include SEO, mobile design, SSL, and booking integration.</p>
+</div>
+<div class="pricing__grid">
+<div class="price-card reveal">
+<h3>Starter</h3>
+<div class="price-card__price">&#8364;1,400</div>
+<div class="price-card__time">3-5 business days</div>
+<ul><li>5-7 pages</li><li>Mobile-responsive</li><li>Contact form + Click-to-call</li><li>Basic SEO setup</li><li>Google Maps</li><li>SSL certificate</li><li>1 year hosting</li></ul>
+<a href="#audit" class="btn btn--outline" style="width:100%">Get Started</a>
+</div>
+<div class="price-card price-card--pop reveal">
+<div class="price-card__badge">Most Popular</div>
+<h3>Professional</h3>
+<div class="price-card__price">&#8364;3,200</div>
+<div class="price-card__time">7-10 business days</div>
+<ul><li>10-15 pages</li><li>Semi-custom design</li><li>Online appointment booking</li><li>Blog section</li><li>Google Business optimization</li><li>Patient reviews widget</li><li>Core Web Vitals optimized</li></ul>
+<a href="#audit" class="btn btn--blue" style="width:100%">Get Started</a>
+</div>
+<div class="price-card reveal">
+<h3>Premium</h3>
+<div class="price-card__price">&#8364;6,500</div>
+<div class="price-card__time">14-21 business days</div>
+<ul><li>Up to 25 pages, full custom</li><li>Video integration</li><li>Patient portal & intake forms</li><li>Local SEO strategy (10 geo pages)</li><li>Professional copywriting</li><li>Google Ads landing page</li><li>3 months post-launch support</li></ul>
+<a href="#audit" class="btn btn--outline" style="width:100%">Get Started</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PROCESS -->
+<section class="section section--alt" id="process">
+<div class="container">
+<div class="section__header">
+<div class="section__badge section__badge--green reveal">Process</div>
+<h2 class="section__title reveal">From brief to launch in 10 days</h2>
+</div>
+<div class="process__timeline">
+<div class="process__step reveal"><div class="process__num">1</div><div class="process__step-content"><div class="process__day">Day 1</div><h3>Brief & Audit</h3><p>We audit your current site, analyze competitors, and collect your logo, photos, and preferences.</p></div></div>
+<div class="process__step reveal"><div class="process__num">2</div><div class="process__step-content"><div class="process__day">Day 2-3</div><h3>AI Design</h3><p>AI generates multiple design options. You pick the direction, we refine. No back-and-forth for weeks.</p></div></div>
+<div class="process__step reveal"><div class="process__num">3</div><div class="process__step-content"><div class="process__day">Day 4-7</div><h3>Build & Optimize</h3><p>Development, mobile optimization, SEO setup, booking integration. Every feature connected and tested.</p></div></div>
+<div class="process__step reveal"><div class="process__num">4</div><div class="process__step-content"><div class="process__day">Day 8-9</div><h3>Review & Revise</h3><p>You review the site, request changes. 2 rounds of revisions included in every package.</p></div></div>
+<div class="process__step reveal"><div class="process__num">5</div><div class="process__step-content"><div class="process__day">Day 10</div><h3>Launch</h3><p>Site goes live. DNS configured, SSL activated, Google Search Console connected. You're online.</p></div></div>
+</div>
+</div>
+</section>
+
+<!-- RESULTS -->
+<section class="section section--dark">
+<div class="container">
+<div class="section__header">
+<div class="section__badge" style="background:rgba(255,255,255,.1);color:var(--green)">Results</div>
+<h2 class="section__title">The numbers speak for themselves</h2>
+</div>
+<div class="results__grid">
+<div class="result-card reveal"><div class="result-card__before">34</div><div class="result-card__after">96</div><div class="result-card__label">PageSpeed Score</div></div>
+<div class="result-card reveal"><div class="result-card__before">2.1%</div><div class="result-card__after">+44%</div><div class="result-card__label">Mobile Engagement</div></div>
+<div class="result-card reveal"><div class="result-card__before">3/mo</div><div class="result-card__after">4x</div><div class="result-card__label">More Patient Leads</div></div>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="section section--alt" id="faq">
+<div class="container">
+<div class="section__header">
+<h2 class="section__title reveal">Frequently asked questions</h2>
+</div>
+<div class="faq__list">
+<details class="faq__item reveal"><summary>How long does it take?</summary><p>Starter in 3-5 days, Professional in 7-10, Premium in 14-21 business days. We're 3-5x faster than agencies thanks to AI-powered design.</p></details>
+<details class="faq__item reveal"><summary>Do I own my website?</summary><p>Yes, 100%. You get the full source code. No lock-in, no proprietary platforms. Host it anywhere.</p></details>
+<details class="faq__item reveal"><summary>What if I already have a website?</summary><p>We offer a free instant audit. Enter your URL and see exactly what's costing you patients. Then we build a modern replacement.</p></details>
+<details class="faq__item reveal"><summary>Is SEO included?</summary><p>Yes, every package includes local SEO setup: meta tags, schema markup, sitemap, Google Maps, Google Business optimization.</p></details>
+<details class="faq__item reveal"><summary>How does payment work?</summary><p>50% deposit before we start, 50% after you approve the final site. Credit cards, bank transfer, PayPal accepted via Stripe.</p></details>
+<details class="faq__item reveal"><summary>Do you work outside the US?</summary><p>Yes — we serve practices in the US, Europe (DE, AT, CH, NL, UK), and globally. Multilingual websites and local SEO for any market.</p></details>
+</div>
+</div>
+</section>
+
+<!-- AUDIT CTA -->
+<section class="section audit-cta" id="audit">
+<div class="container">
+<div class="section__header">
+<div class="section__badge section__badge--blue reveal">Free Audit</div>
+<h2 class="section__title reveal">Check your website in 30 seconds</h2>
+<p class="section__sub reveal">Enter your URL — we'll analyze speed, mobile, SEO, booking, and more. Instant results.</p>
+</div>
+<div class="audit-input reveal">
+<input type="url" placeholder="https://your-dental-practice.com" id="auditUrl">
+<a href="audit.html" class="btn btn--amber" onclick="if(document.getElementById('auditUrl').value){this.href='audit.html?url='+encodeURIComponent(document.getElementById('auditUrl').value)}">Audit My Site &#8594;</a>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="container">
+<div class="footer__logo">&#9677; DentalWebAI</div>
+<div class="footer__links">
+<a href="#portfolio">Portfolio</a>
+<a href="#pricing">Pricing</a>
+<a href="#faq">FAQ</a>
+<a href="audit.html">Free Audit</a>
+<a href="mailto:hello@dentalwebai.com">hello@dentalwebai.com</a>
+</div>
+<p class="footer__copy">&copy; 2026 DentalWebAI. Netherlands. All rights reserved.</p>
+</div>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) window.scrollTo({top:t.offsetTop-64,behavior:'smooth'}); });
+});
+
+// Nav shadow on scroll
+window.addEventListener('scroll', () => { document.querySelector('.nav').style.boxShadow = window.scrollY > 50 ? '0 2px 20px rgba(0,0,0,.06)' : 'none'; });
+</script>
+</body>
+</html>
