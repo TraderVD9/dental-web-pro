@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxe Dental Studio — Premium Dental Experience</title>
+<meta name="description" content="Where artistry meets dentistry. Premium cosmetic dental studio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --charcoal: #1a1a1a;
+  --gold: #c9a96e;
+  --gold-light: #e8d5a8;
+  --gold-dim: #8a7245;
+  --cream: #f5f0e8;
+  --white: #fafafa;
+  --text-muted: #666;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* === CUSTOM CURSOR === */
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transition: transform 0.15s ease, border-color 0.3s;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+.cursor-dot {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10001;
+  transform: translate(-50%, -50%);
+}
+.cursor.hover {
+  transform: translate(-50%, -50%) scale(2.5);
+  border-color: var(--gold-light);
+  background: rgba(201, 169, 110, 0.08);
+}
+
+/* === GRAIN OVERLAY === */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px;
+}
+
+/* === LOADER === */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+}
+.loader-text {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.loader-line {
+  width: 120px;
+  height: 1px;
+  background: var(--gold-dim);
+  position: relative;
+  overflow: hidden;
+}
+.loader-line::after {
+  content: '';
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gold);
+  animation: loaderSlide 1.2s ease-in-out infinite;
+}
+@keyframes loaderSlide {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* === THREE.JS CANVAS === */
+#canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* === NAV === */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.nav-links a:hover::after { width: 100%; }
+
+/* === SECTIONS === */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+/* === HERO === */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+}
+.hero-content { max-width: 900px; }
+.hero-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  opacity: 0;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: 32px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero h1 .line {
+  display: block;
+  overflow: hidden;
+}
+.hero h1 .line-inner {
+  display: block;
+  transform: translateY(110%);
+}
+.hero-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 32px;
+  transform: scaleX(0);
+}
+.hero-sub {
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto;
+  opacity: 0;
+  line-height: 1.7;
+}
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+}
+.scroll-indicator span {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* === ABOUT === */
+.about {
+  padding: 200px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 120px;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.about-left .section-label {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+.about-left h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 64px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 40px;
+}
+.about-left h2 em { font-style: italic; color: var(--gold); }
+.about-left p {
+  font-size: 15px;
+  font-weight: 200;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 420px;
+}
+.about-image {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.about-image-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--charcoal) 0%, var(--dark) 50%, #1e1915 100%);
+  position: relative;
+}
+.about-image-border {
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 2px;
+  opacity: 0.4;
+}
+.about-image-text {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+}
+.about-image-year {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 300;
+  color: rgba(201, 169, 110, 0.08);
+  line-height: 1;
+}
+
+/* === SERVICES === */
+.services {
+  padding: 160px 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.services .section-header {
+  text-align: center;
+  margin-bottom: 120px;
+}
+.services .section-label {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.services h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.service-card {
+  padding: 56px 40px;
+  background: var(--dark);
+  border: 1px solid rgba(201, 169, 110, 0.06);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.5s;
+}
+.service-card:hover {
+  background: var(--charcoal);
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0);
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.service-card:hover::before { transform: scaleX(1); }
+.service-number {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 300;
+  color: rgba(201, 169, 110, 0.12);
+  margin-bottom: 32px;
+  line-height: 1;
+}
+.service-card h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 16px;
+  color: var(--cream);
+}
+.service-card p {
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* === MARQUEE === */
+.marquee-section {
+  padding: 80px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(201, 169, 110, 0.08);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.08);
+}
+.marquee {
+  display: flex;
+  animation: marqueeScroll 30s linear infinite;
+}
+.marquee-item {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 300;
+  white-space: nowrap;
+  padding: 0 48px;
+  color: rgba(201, 169, 110, 0.1);
+  font-style: italic;
+}
+.marquee-item .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  margin: 0 48px;
+  vertical-align: middle;
+  opacity: 0.3;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* === STATS === */
+.stats {
+  padding: 160px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  text-align: center;
+}
+.stat-item { padding: 40px 0; }
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* === TESTIMONIAL === */
+.testimonial {
+  padding: 200px 48px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.testimonial-quote {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--cream);
+  margin-bottom: 48px;
+}
+.testimonial-author {
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.testimonial-role {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* === CTA === */
+.cta {
+  padding: 200px 48px;
+  text-align: center;
+}
+.cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 48px;
+}
+.cta h2 em { font-style: italic; color: var(--gold); }
+.cta-button {
+  display: inline-block;
+  padding: 20px 56px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s;
+}
+.cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.cta-button:hover { color: var(--black); }
+.cta-button:hover::before { transform: translateY(0); }
+.cta-button span { position: relative; z-index: 1; }
+
+/* === FOOTER === */
+footer {
+  padding: 64px 48px;
+  border-top: 1px solid rgba(201, 169, 110, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.footer-right {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .about { grid-template-columns: 1fr; gap: 64px; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .about { padding: 100px 24px; }
+  .services { padding: 100px 24px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; gap: 24px; padding: 100px 24px; }
+  .testimonial { padding: 100px 24px; }
+  .cta { padding: 100px 24px; }
+  footer { padding: 40px 24px; flex-direction: column; gap: 16px; }
+  .cursor, .cursor-dot { display: none; }
+  body { cursor: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
+<!-- Grain -->
+<div class="grain"></div>
+
+<!-- Loader -->
+<div class="loader">
+  <div class="loader-text">Luxe Dental</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- Three.js Background -->
+<div id="canvas-container"></div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">Luxe Dental</a>
+  <ul class="nav-links">
+    <li><a href="#about" data-hover>About</a></li>
+    <li><a href="#services" data-hover>Services</a></li>
+    <li><a href="#contact" data-hover>Contact</a></li>
+    <li><a href="#" class="cta-nav" data-hover>Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Premium Cosmetic Dentistry</div>
+    <h1>
+      <span class="line"><span class="line-inner">Where <em>Artistry</em></span></span>
+      <span class="line"><span class="line-inner">Meets Dentistry</span></span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Crafting confident smiles with precision, care, and an unwavering commitment to aesthetic excellence.</p>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div class="about-left">
+    <div class="section-label">Our Philosophy</div>
+    <h2>Dentistry is an <em>art form</em></h2>
+    <p>We believe every smile tells a story. Our studio combines cutting-edge technology with a refined aesthetic sensibility, ensuring each patient receives care that is as beautiful as it is precise.</p>
+  </div>
+  <div class="about-image">
+    <div class="about-image-bg"></div>
+    <div class="about-image-border"></div>
+    <span class="about-image-text">Est. Studio</span>
+    <span class="about-image-year">26</span>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div class="section-label">What We Offer</div>
+    <h2>Tailored to Perfection</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card" data-hover>
+      <div class="service-number">01</div>
+      <h3>Porcelain Veneers</h3>
+      <p>Ultra-thin, custom-crafted shells that transform your smile with natural translucency and strength.</p>
+    </div>
+    <div class="service-card" data-hover>
+      <div class="service-number">02</div>
+      <h3>Invisible Aligners</h3>
+      <p>Discreet orthodontic treatment using AI-planned precision movements for a perfectly aligned smile.</p>
+    </div>
+    <div class="service-card" data-hover>
+      <div class="service-number">03</div>
+      <h3>Teeth Whitening</h3>
+      <p>Professional-grade whitening with custom trays, delivering results up to 8 shades brighter.</p>
+    </div>
+    <div class="service-card" data-hover>
+      <div class="service-number">04</div>
+      <h3>Dental Implants</h3>
+      <p>Titanium-grade implants with hand-crafted crowns, indistinguishable from natural teeth.</p>
+    </div>
+    <div class="service-card" data-hover>
+      <div class="service-number">05</div>
+      <h3>Smile Design</h3>
+      <p>Digital smile architecture — visualize your perfect smile before any treatment begins.</p>
+    </div>
+    <div class="service-card" data-hover>
+      <div class="service-number">06</div>
+      <h3>Preventive Care</h3>
+      <p>Comprehensive check-ups and cleaning in a spa-like environment designed for your comfort.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<section class="marquee-section">
+  <div class="marquee">
+    <span class="marquee-item">Confidence <span class="dot"></span> Precision <span class="dot"></span> Artistry <span class="dot"></span> Excellence <span class="dot"></span> Beauty <span class="dot"></span></span>
+    <span class="marquee-item">Confidence <span class="dot"></span> Precision <span class="dot"></span> Artistry <span class="dot"></span> Excellence <span class="dot"></span> Beauty <span class="dot"></span></span>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="stat-item">
+    <div class="stat-number" data-count="15">0</div>
+    <div class="stat-label">Years of Excellence</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-count="4200">0</div>
+    <div class="stat-label">Smiles Transformed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-count="98">0</div>
+    <div class="stat-label">% Satisfaction</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-count="12">0</div>
+    <div class="stat-label">Award-Winning Dentists</div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section class="testimonial">
+  <p class="testimonial-quote">"They didn't just fix my smile — they gave me back my confidence. The attention to detail is unlike anything I've experienced in dentistry."</p>
+  <div class="testimonial-author">Sarah Mitchell</div>
+  <div class="testimonial-role">Patient since 2019</div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <h2>Ready to <em>transform</em><br>your smile?</h2>
+  <a href="#" class="cta-button" data-hover><span>Book a Consultation</span></a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">Luxe Dental Studio</div>
+  <div class="footer-right">Crafted with precision &mdash; DentalWebAI</div>
+</footer>
+
+<script>
+// === THREE.JS PARTICLE BACKGROUND ===
+(function() {
+  const container = document.getElementById('canvas-container');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Particles
+  const particleCount = 1500;
+  const positions = new Float32Array(particleCount * 3);
+  const velocities = new Float32Array(particleCount * 3);
+  const sizes = new Float32Array(particleCount);
+
+  for (let i = 0; i < particleCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 20;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+    velocities[i * 3] = (Math.random() - 0.5) * 0.002;
+    velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.002;
+    velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.002;
+    sizes[i] = Math.random() * 2 + 0.5;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0 },
+      uMouse: { value: new THREE.Vector2(0, 0) },
+      uColor: { value: new THREE.Color(0xc9a96e) },
+      uScroll: { value: 0 }
+    },
+    vertexShader: `
+      attribute float size;
+      uniform float uTime;
+      uniform float uScroll;
+      varying float vAlpha;
+      void main() {
+        vec3 pos = position;
+        pos.y += sin(uTime * 0.3 + position.x * 0.5) * 0.3;
+        pos.x += cos(uTime * 0.2 + position.z * 0.5) * 0.2;
+        pos.z += uScroll * 0.003;
+        vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+        gl_PointSize = size * (200.0 / -mvPosition.z);
+        gl_Position = projectionMatrix * mvPosition;
+        vAlpha = smoothstep(15.0, 5.0, -mvPosition.z) * 0.6;
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 uColor;
+      varying float vAlpha;
+      void main() {
+        float dist = length(gl_PointCoord - vec2(0.5));
+        if (dist > 0.5) discard;
+        float alpha = smoothstep(0.5, 0.0, dist) * vAlpha;
+        gl_FragColor = vec4(uColor, alpha);
+      }
+    `,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  });
+
+  const particles = new THREE.Points(geometry, material);
+  scene.add(particles);
+  camera.position.z = 8;
+
+  let mouseX = 0, mouseY = 0;
+  let scrollY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  window.addEventListener('scroll', () => {
+    scrollY = window.scrollY;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    material.uniforms.uTime.value += 0.01;
+    material.uniforms.uScroll.value = scrollY;
+
+    camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.02;
+    camera.lookAt(scene.position);
+
+    const pos = geometry.attributes.position.array;
+    for (let i = 0; i < particleCount; i++) {
+      pos[i * 3] += velocities[i * 3];
+      pos[i * 3 + 1] += velocities[i * 3 + 1];
+      pos[i * 3 + 2] += velocities[i * 3 + 2];
+      if (Math.abs(pos[i * 3]) > 10) velocities[i * 3] *= -1;
+      if (Math.abs(pos[i * 3 + 1]) > 10) velocities[i * 3 + 1] *= -1;
+      if (Math.abs(pos[i * 3 + 2]) > 10) velocities[i * 3 + 2] *= -1;
+    }
+    geometry.attributes.position.needsUpdate = true;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
+
+// === CUSTOM CURSOR ===
+const cursor = document.querySelector('.cursor');
+const cursorDot = document.querySelector('.cursor-dot');
+
+document.addEventListener('mousemove', (e) => {
+  gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.5, ease: 'power3.out' });
+  gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
+});
+
+document.querySelectorAll('[data-hover]').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// === LOADER & INTRO ANIMATION ===
+window.addEventListener('load', () => {
+  const tl = gsap.timeline();
+
+  tl.to('.loader', {
+    opacity: 0,
+    duration: 0.8,
+    delay: 1.5,
+    ease: 'power2.inOut',
+    onComplete: () => document.querySelector('.loader').style.display = 'none'
+  })
+  .to('.hero-label', { opacity: 1, y: 0, duration: 0.8 }, '-=0.3')
+  .to('.line-inner', {
+    y: 0,
+    duration: 1.2,
+    stagger: 0.15,
+    ease: 'power4.out'
+  }, '-=0.5')
+  .to('.hero-divider', { scaleX: 1, duration: 0.8, ease: 'power2.out' }, '-=0.6')
+  .to('.hero-sub', { opacity: 1, y: 0, duration: 0.8 }, '-=0.4')
+  .to('.scroll-indicator', { opacity: 1, duration: 0.6 }, '-=0.2');
+});
+
+// === SCROLL ANIMATIONS ===
+gsap.registerPlugin(ScrollTrigger);
+
+// About section
+gsap.from('.about-left', {
+  scrollTrigger: { trigger: '.about', start: 'top 70%' },
+  x: -80, opacity: 0, duration: 1.2, ease: 'power3.out'
+});
+gsap.from('.about-image', {
+  scrollTrigger: { trigger: '.about', start: 'top 70%' },
+  x: 80, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.2
+});
+
+// Services
+gsap.from('.service-card', {
+  scrollTrigger: { trigger: '.services-grid', start: 'top 75%' },
+  y: 60, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out'
+});
+
+// Stats counter
+document.querySelectorAll('.stat-number').forEach(el => {
+  const target = parseInt(el.dataset.count);
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 80%',
+    onEnter: () => {
+      gsap.to(el, {
+        innerHTML: target,
+        duration: 2,
+        snap: { innerHTML: 1 },
+        ease: 'power2.out'
+      });
+    },
+    once: true
+  });
+});
+
+// Testimonial
+gsap.from('.testimonial-quote', {
+  scrollTrigger: { trigger: '.testimonial', start: 'top 70%' },
+  y: 40, opacity: 0, duration: 1, ease: 'power3.out'
+});
+
+// CTA
+gsap.from('.cta h2', {
+  scrollTrigger: { trigger: '.cta', start: 'top 70%' },
+  y: 60, opacity: 0, duration: 1, ease: 'power3.out'
+});
+gsap.from('.cta-button', {
+  scrollTrigger: { trigger: '.cta', start: 'top 60%' },
+  y: 30, opacity: 0, duration: 0.8, delay: 0.3, ease: 'power3.out'
+});
+</script>
+</body>
+</html>
