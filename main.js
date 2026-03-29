@@ -4,20 +4,25 @@
   const dot = document.getElementById('customCursorDot');
   if (!cursor || !dot || window.innerWidth < 769) return;
 
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    dot.style.left = e.clientX + 'px';
-    dot.style.top = e.clientY + 'px';
-  });
+  let cx = 0, cy = 0, dx = 0, dy = 0;
+  document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; });
 
-  document.querySelectorAll('a, button, .portfolio__card, .package-card, .problem__card, .solution__item, .btn').forEach(el => {
+  function animate() {
+    dx += (cx - dx) * 0.12;
+    dy += (cy - dy) * 0.12;
+    cursor.style.left = dx + 'px';
+    cursor.style.top = dy + 'px';
+    dot.style.left = cx + 'px';
+    dot.style.top = cy + 'px';
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  const hoverEls = 'a, button, .portfolio__card, .package-card, .problem__card, .solution__item, .process__step, .btn, .faq__item summary, .lang-btn';
+  document.querySelectorAll(hoverEls).forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
-
-  document.body.style.cursor = 'none';
-  document.querySelectorAll('a, button').forEach(el => el.style.cursor = 'none');
 })();
 
 // ═══ THREE.JS HERO PARTICLES ═══
@@ -33,14 +38,18 @@
   renderer.setSize(hero.offsetWidth, hero.offsetHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  const count = 800;
+  const count = 1200;
   const pos = new Float32Array(count * 3);
+  const vel = new Float32Array(count * 3);
   const sizes = new Float32Array(count);
   for (let i = 0; i < count; i++) {
-    pos[i * 3] = (Math.random() - 0.5) * 16;
-    pos[i * 3 + 1] = (Math.random() - 0.5) * 12;
-    pos[i * 3 + 2] = (Math.random() - 0.5) * 10;
-    sizes[i] = Math.random() * 2 + 0.5;
+    pos[i * 3] = (Math.random() - 0.5) * 20;
+    pos[i * 3 + 1] = (Math.random() - 0.5) * 14;
+    pos[i * 3 + 2] = (Math.random() - 0.5) * 12;
+    vel[i * 3] = (Math.random() - 0.5) * 0.003;
+    vel[i * 3 + 1] = (Math.random() - 0.5) * 0.003;
+    vel[i * 3 + 2] = (Math.random() - 0.5) * 0.003;
+    sizes[i] = Math.random() * 2.5 + 0.5;
   }
 
   const geo = new THREE.BufferGeometry();
@@ -48,35 +57,46 @@
   geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
   const mat = new THREE.ShaderMaterial({
-    uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color(0x0066FF) } },
+    uniforms: {
+      uTime: { value: 0 },
+      uColor1: { value: new THREE.Color(0x4E8AFF) },
+      uColor2: { value: new THREE.Color(0x00D4AA) }
+    },
     vertexShader: `
       attribute float size;
       uniform float uTime;
       varying float vAlpha;
+      varying float vMix;
       void main() {
         vec3 p = position;
-        p.y += sin(uTime * 0.3 + position.x * 0.5) * 0.2;
-        p.x += cos(uTime * 0.2 + position.z * 0.5) * 0.15;
+        p.y += sin(uTime * 0.25 + position.x * 0.4) * 0.25;
+        p.x += cos(uTime * 0.2 + position.z * 0.3) * 0.2;
+        p.z += sin(uTime * 0.15 + position.y * 0.5) * 0.15;
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
-        gl_PointSize = size * (150.0 / -mv.z);
+        gl_PointSize = size * (180.0 / -mv.z);
         gl_Position = projectionMatrix * mv;
-        vAlpha = smoothstep(12.0, 4.0, -mv.z) * 0.35;
+        vAlpha = smoothstep(14.0, 4.0, -mv.z) * 0.4;
+        vMix = sin(position.x * 0.3 + uTime * 0.1) * 0.5 + 0.5;
       }
     `,
     fragmentShader: `
-      uniform vec3 uColor;
+      uniform vec3 uColor1;
+      uniform vec3 uColor2;
       varying float vAlpha;
+      varying float vMix;
       void main() {
         float d = length(gl_PointCoord - vec2(0.5));
         if (d > 0.5) discard;
-        gl_FragColor = vec4(uColor, smoothstep(0.5, 0.0, d) * vAlpha);
+        vec3 col = mix(uColor1, uColor2, vMix);
+        gl_FragColor = vec4(col, smoothstep(0.5, 0.0, d) * vAlpha);
       }
     `,
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
   });
 
-  scene.add(new THREE.Points(geo, mat));
-  camera.position.z = 6;
+  const particles = new THREE.Points(geo, mat);
+  scene.add(particles);
+  camera.position.z = 7;
 
   let mx = 0, my = 0;
   document.addEventListener('mousemove', e => {
@@ -87,9 +107,19 @@
   function tick() {
     requestAnimationFrame(tick);
     mat.uniforms.uTime.value += 0.008;
-    camera.position.x += (mx * 0.3 - camera.position.x) * 0.02;
-    camera.position.y += (-my * 0.3 - camera.position.y) * 0.02;
+    camera.position.x += (mx * 0.4 - camera.position.x) * 0.015;
+    camera.position.y += (-my * 0.4 - camera.position.y) * 0.015;
     camera.lookAt(0, 0, 0);
+
+    const p = geo.attributes.position.array;
+    for (let i = 0; i < count; i++) {
+      p[i*3] += vel[i*3]; p[i*3+1] += vel[i*3+1]; p[i*3+2] += vel[i*3+2];
+      if (Math.abs(p[i*3]) > 10) vel[i*3] *= -1;
+      if (Math.abs(p[i*3+1]) > 7) vel[i*3+1] *= -1;
+      if (Math.abs(p[i*3+2]) > 6) vel[i*3+2] *= -1;
+    }
+    geo.attributes.position.needsUpdate = true;
+
     renderer.render(scene, camera);
   }
   tick();
@@ -110,7 +140,6 @@ burger.addEventListener('click', () => {
   navLinks.classList.toggle('open');
 });
 
-// Close menu on link click
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     burger.classList.remove('open');
@@ -133,19 +162,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // ═══ NAV SCROLL EFFECT ═══
 const nav = document.getElementById('nav');
-let lastScroll = 0;
-
 window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  if (scrollY > 50) {
-    nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
+  if (window.scrollY > 50) {
+    nav.style.boxShadow = '0 4px 32px rgba(0,0,0,0.3)';
+    nav.style.borderBottomColor = 'rgba(78, 138, 255, 0.1)';
   } else {
     nav.style.boxShadow = 'none';
+    nav.style.borderBottomColor = 'rgba(78, 138, 255, 0.08)';
   }
-  lastScroll = scrollY;
 });
 
-// ═══ FORM — sends audit requests to hello@dentalwebai.com ═══
+// ═══ FORM ═══
 const form = document.getElementById('contactForm');
 form.addEventListener('submit', async e => {
   e.preventDefault();
@@ -153,12 +180,10 @@ form.addEventListener('submit', async e => {
   const originalText = btn.textContent;
   const info = Object.fromEntries(new FormData(form));
 
-  // Send via EmailJS-like service or direct mailto
   const subject = encodeURIComponent('New Audit Request — DentalWebAI');
   const body = encodeURIComponent(
     `New audit request from DentalWebAI website:\n\n` +
-    `Name: ${info.name}\n` +
-    `Email: ${info.email}\n` +
+    `Name: ${info.name}\nEmail: ${info.email}\n` +
     `Clinic: ${info.clinic || 'Not provided'}\n` +
     `Website: ${info.website || 'Not provided'}\n\n` +
     `Submitted: ${new Date().toISOString()}`
@@ -167,107 +192,110 @@ form.addEventListener('submit', async e => {
   btn.textContent = 'Sending...';
   btn.disabled = true;
 
-  // Send to API → Telegram bot notification + lead saved
   try {
     const res = await fetch('https://api.vellumcadence.com/dental-audit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: info.name,
-        email: info.email,
-        clinic: info.clinic || '',
-        website: info.website || ''
-      })
+      body: JSON.stringify({ name: info.name, email: info.email, clinic: info.clinic || '', website: info.website || '' })
     });
-
     if (res.ok) {
       btn.textContent = '✓ Sent!';
-      btn.style.background = '#00D4AA';
+      btn.style.background = 'linear-gradient(135deg, #00D4AA, #00B894)';
       form.reset();
       setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; btn.disabled = false; }, 4000);
       return;
     }
   } catch {}
 
-  // Fallback: open mailto
   window.location.href = `mailto:hello@dentalwebai.com?subject=${subject}&body=${body}`;
   btn.textContent = '✓ Opening email...';
-  btn.style.background = '#00D4AA';
+  btn.style.background = 'linear-gradient(135deg, #00D4AA, #00B894)';
   form.reset();
   setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; btn.disabled = false; }, 3000);
 });
 
-// ═══ GSAP + LENIS SCROLL ANIMATIONS ═══
+// ═══ GSAP SCROLL ANIMATIONS ═══
 document.addEventListener('DOMContentLoaded', () => {
-  // Lenis disabled — causes jitter on this site type
-  // Native smooth scroll via CSS is sufficient
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
 
-  // GSAP scroll animations
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
+  // Hero entrance — cinematic
+  const heroTl = gsap.timeline({ delay: 0.3 });
+  heroTl
+    .from('.hero__badge', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' })
+    .from('.hero__title', { opacity: 0, y: 50, duration: 1, ease: 'power3.out' }, '-=0.4')
+    .from('.hero__sub', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+    .from('.stat', { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, ease: 'power3.out' }, '-=0.4')
+    .from('.hero__ctas', { opacity: 0, y: 20, duration: 0.6, ease: 'power3.out' }, '-=0.3');
 
-    // Staggered card reveals
-    const cards = '.problem__card, .solution__item, .package-card, .process__step, .portfolio__card, .faq__item, .f-card';
-    gsap.utils.toArray(cards).forEach((el, i) => {
-      gsap.from(el, {
-        opacity: 0, y: 40, duration: 0.8,
-        scrollTrigger: { trigger: el, start: 'top 85%' },
-        delay: (i % 3) * 0.12
-      });
+  // Staggered card reveals
+  const cardSets = [
+    { sel: '.problem__card', trigger: '.problem' },
+    { sel: '.solution__item', trigger: '.solution' },
+    { sel: '.package-card', trigger: '.packages' },
+    { sel: '.process__step', trigger: '.process' },
+    { sel: '.portfolio__card', trigger: '.portfolio' },
+  ];
+
+  cardSets.forEach(({ sel, trigger }) => {
+    gsap.from(sel, {
+      opacity: 0, y: 60, duration: 0.8,
+      stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger, start: 'top 75%' }
     });
+  });
 
-    // Section titles
-    gsap.utils.toArray('.section__title, .section__sub').forEach(el => {
-      gsap.from(el, {
-        opacity: 0, y: 30, duration: 0.8,
-        scrollTrigger: { trigger: el, start: 'top 85%' }
-      });
+  // FAQ items
+  gsap.from('.faq__item', {
+    opacity: 0, y: 30, duration: 0.6,
+    stagger: 0.08, ease: 'power3.out',
+    scrollTrigger: { trigger: '.faq', start: 'top 75%' }
+  });
+
+  // Section titles
+  gsap.utils.toArray('.section__title').forEach(el => {
+    gsap.from(el, {
+      opacity: 0, y: 40, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 80%' }
     });
+  });
 
-    // Hero entrance
-    gsap.from('.hero__badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.3 });
-    gsap.from('.hero__title', { opacity: 0, y: 30, duration: 1, delay: 0.5 });
-    gsap.from('.hero__sub', { opacity: 0, y: 20, duration: 0.8, delay: 0.7 });
-    gsap.from('.hero__stats', { opacity: 0, y: 20, duration: 0.8, delay: 0.9 });
-    gsap.from('.hero__ctas', { opacity: 0, y: 20, duration: 0.8, delay: 1.1 });
-
-    // Testimonial
-    gsap.from('.testimonial-quote', {
-      opacity: 0, y: 40, duration: 1,
-      scrollTrigger: { trigger: '.testimonial-section', start: 'top 70%' }
+  gsap.utils.toArray('.section__sub').forEach(el => {
+    gsap.from(el, {
+      opacity: 0, y: 30, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 85%' }
     });
+  });
 
-    // Comparison table
-    gsap.from('.comparison__table', {
-      opacity: 0, y: 30, duration: 0.8,
-      scrollTrigger: { trigger: '.comparison__table', start: 'top 80%' }
-    });
+  // Testimonial
+  gsap.from('.testimonial-quote', {
+    opacity: 0, y: 40, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.testimonial-section', start: 'top 70%' }
+  });
 
-    // CTA box
-    gsap.from('.cta-box', {
-      opacity: 0, scale: 0.95, duration: 0.8,
-      scrollTrigger: { trigger: '.cta-box', start: 'top 75%' }
-    });
+  // Comparison table
+  gsap.from('.comparison__table', {
+    opacity: 0, y: 40, duration: 0.8,
+    scrollTrigger: { trigger: '.comparison__table', start: 'top 80%' }
+  });
 
-  } else {
-    // Fallback: IntersectionObserver (no GSAP)
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  // CTA box
+  gsap.from('.cta-box', {
+    opacity: 0, y: 60, scale: 0.97, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.cta-box', start: 'top 75%' }
+  });
 
-    document.querySelectorAll('.problem__card, .solution__item, .package-card, .process__step, .portfolio__card, .faq__item').forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(24px)';
-      el.style.transition = `opacity 0.5s ease ${i % 4 * 0.1}s, transform 0.5s ease ${i % 4 * 0.1}s`;
-      observer.observe(el);
-    });
-  }
+  // Retainer
+  gsap.from('.retainer__inner', {
+    opacity: 0, y: 40, duration: 0.8,
+    scrollTrigger: { trigger: '.retainer', start: 'top 80%' }
+  });
+
+  // Before/After
+  gsap.from('.ba-slider', {
+    opacity: 0, scale: 0.95, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.ba-section', start: 'top 70%' }
+  });
 });
 
 // ═══ BEFORE/AFTER SLIDER ═══
