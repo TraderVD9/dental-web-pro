@@ -6,6 +6,11 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="alternate" hreflang="en" href="https://dentalwebai.com/">
+    <link rel="alternate" hreflang="de" href="https://dentalwebai.com/?lang=de">
+    <link rel="alternate" hreflang="nl" href="https://dentalwebai.com/?lang=nl">
+    <link rel="alternate" hreflang="ru" href="https://dentalwebai.com/?lang=ru">
+    <link rel="alternate" hreflang="x-default" href="https://dentalwebai.com/">
     <title>DentalWebAI — AI-Powered Dental Websites</title>
     <meta name="description" content="High-converting dental websites built with AI. Delivered in days, not months. Starting at €1,400.">
     <meta property="og:title" content="DentalWebAI — Websites That Book Patients">
@@ -55,7 +60,7 @@
 </head>
 <body>
     <!-- NAV -->
-    <nav class="nav" id="nav">
+    <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
         <div class="nav__inner">
             <a href="#" class="nav__logo">
                 <span class="logo-icon">&#9677;</span> DentalWebAI
@@ -283,27 +288,27 @@
             <p class="section__sub" data-i18n="portfolio.sub">Modern dental websites that convert visitors into patients.</p>
             <div class="portfolio__grid">
                 <a href="demos/bright-smile.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
-                    <div class="portfolio__img" style="background:url('screenshots/bright-smile.png') center/cover"></div>
+                    <div class="portfolio__img" style="background:url('screenshots/bright-smile.png') center/cover" role="img" aria-label="Bright Smile Dental website - premium dark theme"></div>
                     <h3>Bright Smile Dental</h3>
                     <p data-i18n="portfolio.p1.desc">Full redesign. Online booking increased by 45%.</p>
                 </a>
                 <a href="demos/alpine-dental.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
-                    <div class="portfolio__img" style="background:url('screenshots/alpine-dental.png') center/cover"></div>
+                    <div class="portfolio__img" style="background:url('screenshots/alpine-dental.png') center/cover" role="img" aria-label="Alpine Family Dentistry website - clean modern design"></div>
                     <h3>Alpine Family Dentistry</h3>
                     <p data-i18n="portfolio.p2.desc">New website from scratch. Page 1 Google in 30 days.</p>
                 </a>
                 <a href="demos/citydent.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
-                    <div class="portfolio__img" style="background:url('screenshots/citydent.png') center/cover"></div>
+                    <div class="portfolio__img" style="background:url('screenshots/citydent.png') center/cover" role="img" aria-label="CityDent Clinic Berlin - warm European design"></div>
                     <h3>CityDent Clinic</h3>
                     <p data-i18n="portfolio.p3.desc">Multilingual site (EN/DE). 60% more appointment requests.</p>
                 </a>
                 <a href="demos/vellumcadence-v2.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
-                    <div class="portfolio__img" style="background:url('screenshots/vellumcadence-v2.png') center/cover"></div>
+                    <div class="portfolio__img" style="background:url('screenshots/vellumcadence-v2.png') center/cover" role="img" aria-label="VellumCadence Studio - dark immersive AI content studio"></div>
                     <h3>VellumCadence Studio</h3>
                     <p>AI content studio. Dark immersive theme, animated orbs, horizontal scroll gallery.</p>
                 </a>
                 <a href="demos/dentalwebai-v2.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
-                    <div class="portfolio__img" style="background:url('screenshots/dentalwebai-v2.png') center/cover"></div>
+                    <div class="portfolio__img" style="background:url('screenshots/dentalwebai-v2.png') center/cover" role="img" aria-label="DentalWebAI v2 - professional dental agency website"></div>
                     <h3>DentalWebAI v2</h3>
                     <p>Professional dental agency site. Interactive hotspots, browser mockups, timeline process.</p>
                 </a>
@@ -407,14 +412,18 @@
             <div class="cta-box">
                 <h2 data-i18n="cta.title">Ready to get more patients?</h2>
                 <p data-i18n="cta.sub">Get a free 10-minute website audit. We'll show you exactly what's costing you appointments — no obligation.</p>
-                <form class="cta-form" id="contactForm">
+                <form class="cta-form" id="contactForm" role="form" aria-label="Request free website audit">
                     <div class="cta-form__row">
-                        <input type="text" name="name" placeholder="Dr. John Smith" required data-i18n-placeholder="cta.name">
-                        <input type="email" name="email" placeholder="doctor@clinic.com" required>
+                        <label for="audit-name" class="sr-only">Your name</label>
+                        <input type="text" id="audit-name" name="name" placeholder="Dr. John Smith" required data-i18n-placeholder="cta.name" aria-required="true">
+                        <label for="audit-email" class="sr-only">Email address</label>
+                        <input type="email" id="audit-email" name="email" placeholder="doctor@clinic.com" required aria-required="true">
                     </div>
                     <div class="cta-form__row">
-                        <input type="text" name="clinic" placeholder="Clinic name" data-i18n-placeholder="cta.clinic">
-                        <input type="url" name="website" placeholder="Current website URL (optional)" data-i18n-placeholder="cta.website">
+                        <label for="audit-clinic" class="sr-only">Clinic name</label>
+                        <input type="text" id="audit-clinic" name="clinic" placeholder="Clinic name" data-i18n-placeholder="cta.clinic">
+                        <label for="audit-website" class="sr-only">Website URL</label>
+                        <input type="url" id="audit-website" name="website" placeholder="Current website URL (optional)" data-i18n-placeholder="cta.website">
                     </div>
                     <button type="submit" class="btn btn--primary btn--full" data-i18n="cta.submit">Get My Free Audit</button>
                 </form>
@@ -424,7 +433,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container footer__inner">
             <div class="footer__brand">
                 <span class="logo-icon">&#9677;</span> DentalWebAI
@@ -441,7 +450,19 @@
         </div>
     </footer>
 
+    <!-- CLICK-TO-CALL FLOATING BUTTON -->
+    <a href="tel:+31000000000" class="click-to-call" aria-label="Call DentalWebAI" title="Call us">
+        &#128222;
+    </a>
+
+    <!-- COOKIE CONSENT -->
+    <div class="cookie-banner" id="cookieBanner" role="alert" aria-live="polite">
+        <p>We use essential cookies for language preferences only. No tracking. <a href="privacy.html">Privacy Policy</a></p>
+        <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('dwai-cookies','1')" aria-label="Accept cookies">Accept</button>
+    </div>
+
     <script src="i18n.js"></script>
     <script src="main.js"></script>
+    <script>if(localStorage.getItem('dwai-cookies'))document.getElementById('cookieBanner').style.display='none';</script>
 </body>
 </html>
