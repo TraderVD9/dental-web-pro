@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaDent Pro — Immersive Dental Experience</title>
+
+<!-- Three.js + GSAP + Lenis CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#030306;--cyan:#00e5ff;--purple:#a855f7;--gold:#fbbf24;--text:#f0f0f5;--text2:#5a5f80;--ease:cubic-bezier(.16,1,.3,1)}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,'Helvetica Neue',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Loader */
+.loader{position:fixed;inset:0;background:var(--bg);z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s .3s,visibility 1s .3s}
+.loader.done{opacity:0;visibility:hidden}
+.loader__pct{font-family:monospace;font-size:5rem;font-weight:200;letter-spacing:-4px;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.loader__bar{width:240px;height:1px;background:rgba(255,255,255,.08);margin-top:32px;position:relative;overflow:hidden}
+.loader__fill{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple))}
+.loader__label{font-size:.6rem;letter-spacing:6px;text-transform:uppercase;color:var(--text2);margin-top:16px}
+
+/* 3D Canvas */
+#three-canvas{position:fixed;inset:0;z-index:0}
+
+/* Grain */
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.03;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* Cursor */
+.cursor{position:fixed;width:16px;height:16px;border:1px solid rgba(0,229,255,.4);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .3s,height .3s,border-color .3s}
+.cursor.lg{width:64px;height:64px;border-color:rgba(168,85,247,.4)}
+
+/* Content */
+.content{position:relative;z-index:2}
+
+/* ═══ HERO ═══ */
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
+.hero__inner{position:relative;z-index:2}
+.hero__over{font-size:.55rem;letter-spacing:8px;text-transform:uppercase;color:var(--cyan);margin-bottom:40px;opacity:0}
+.hero__title{font-size:clamp(3.5rem,10vw,9rem);font-weight:700;line-height:.88;letter-spacing:-5px;overflow:hidden}
+.hero__line{display:block;overflow:hidden}
+.hero__word{display:inline-block;transform:translateY(110%)}
+.hero__gradient{background:linear-gradient(90deg,var(--cyan),var(--purple),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:300% 100%;animation:gradMove 5s ease infinite}
+@keyframes gradMove{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero__sub{font-size:1rem;color:var(--text2);max-width:420px;margin:32px auto 0;line-height:1.8;font-weight:300;letter-spacing:.3px;opacity:0}
+.hero__cta-wrap{margin-top:48px;opacity:0}
+.hero__cta{display:inline-flex;align-items:center;gap:12px;padding:18px 40px;border:1px solid rgba(0,229,255,.3);color:var(--cyan);border-radius:100px;text-decoration:none;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;position:relative;overflow:hidden;transition:.5s}
+.hero__cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--cyan),var(--purple));opacity:0;transition:.5s}
+.hero__cta:hover{border-color:transparent;color:#fff;transform:scale(1.05)}
+.hero__cta:hover::before{opacity:1}
+.hero__cta span{position:relative;z-index:1}
+.hero__scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);opacity:0}
+.hero__scroll-dot{width:20px;height:32px;border:1px solid rgba(255,255,255,.2);border-radius:10px;position:relative}
+.hero__scroll-dot::after{content:'';width:4px;height:8px;background:var(--cyan);border-radius:2px;position:absolute;top:6px;left:50%;transform:translateX(-50%);animation:scrollDot 2s ease infinite}
+@keyframes scrollDot{0%,100%{transform:translateX(-50%) translateY(0);opacity:1}50%{transform:translateX(-50%) translateY(10px);opacity:.3}}
+
+/* ═══ PINNED TEXT REVEAL ═══ */
+.text-reveal{height:300vh;position:relative}
+.text-reveal__sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.text-reveal__content{text-align:center;max-width:900px;padding:0 48px}
+.text-reveal__line{font-size:clamp(1.5rem,3.5vw,3rem);font-weight:600;line-height:1.4;letter-spacing:-1px;opacity:0;transform:translateY(40px)}
+
+/* ═══ SERVICES — Staggered cards ═══ */
+.services{padding:200px 48px;position:relative}
+.services__label{font-size:.55rem;letter-spacing:8px;text-transform:uppercase;color:var(--cyan);margin-bottom:24px}
+.services__title{font-size:clamp(2rem,4vw,3.5rem);font-weight:700;letter-spacing:-2px;margin-bottom:80px;max-width:500px}
+.services__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px}
+.s-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);padding:56px 40px;position:relative;overflow:hidden;transition:.5s}
+.s-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .6s var(--ease)}
+.s-card:hover::after{width:100%}
+.s-card:hover{background:rgba(255,255,255,.03);border-color:rgba(0,229,255,.1)}
+.s-card__icon{font-size:2rem;margin-bottom:24px;opacity:.6}
+.s-card h3{font-size:1.05rem;font-weight:600;margin-bottom:10px;letter-spacing:-.3px}
+.s-card p{font-size:.82rem;color:var(--text2);line-height:1.7}
+
+/* ═══ HORIZONTAL SCROLL PINNED ═══ */
+.hscroll{overflow:hidden}
+.hscroll__wrap{height:400vh;position:relative}
+.hscroll__sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
+.hscroll__header{position:absolute;top:48px;left:48px;z-index:3}
+.hscroll__label{font-size:.55rem;letter-spacing:8px;text-transform:uppercase;color:var(--cyan)}
+.hscroll__title{font-size:1.8rem;font-weight:700;letter-spacing:-1px;margin-top:8px}
+.hscroll__track{display:flex;gap:32px;padding:0 48px;will-change:transform}
+.hscroll__card{min-width:450px;height:65vh;flex-shrink:0;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.05);position:relative;background:rgba(255,255,255,.02);transition:.4s}
+.hscroll__card:hover{border-color:rgba(0,229,255,.2)}
+.hscroll__card-visual{height:60%;position:relative;overflow:hidden}
+.hscroll__card-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:5rem;opacity:.15;transition:transform .6s,opacity .6s}
+.hscroll__card:hover .hscroll__card-bg{transform:scale(1.1);opacity:.25}
+.hscroll__card-info{padding:28px 32px}
+.hscroll__card-info h3{font-size:1.15rem;margin-bottom:6px;letter-spacing:-.3px}
+.hscroll__card-info p{font-size:.8rem;color:var(--text2);line-height:1.6}
+.hscroll__card-tags{display:flex;gap:6px;margin-top:12px}
+.hscroll__card-tags span{font-size:.6rem;padding:3px 10px;border:1px solid rgba(255,255,255,.08);border-radius:100px;color:var(--text2);letter-spacing:1px}
+
+/* ═══ STATS — counter ═══ */
+.stats-section{padding:160px 48px;text-align:center}
+.stats-row{display:flex;justify-content:center;gap:100px}
+.stat-item{text-align:center}
+.stat-num{font-family:monospace;font-size:clamp(3rem,6vw,5rem);font-weight:200;letter-spacing:-3px;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:var(--text2);margin-top:8px}
+
+/* ═══ PRICING ═══ */
+.pricing-section{padding:200px 48px}
+.pricing-header{text-align:center;margin-bottom:80px}
+.pricing-label{font-size:.55rem;letter-spacing:8px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+.pricing-title{font-size:clamp(2rem,4vw,3.5rem);font-weight:700;letter-spacing:-2px}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:1000px;margin:0 auto}
+.p-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);padding:48px 36px;transition:.4s;position:relative}
+.p-card:hover{border-color:rgba(0,229,255,.15)}
+.p-card--pop{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.02)}
+.p-card__tag{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--cyan),var(--purple));padding:2px 10px;border-radius:100px;font-size:.5rem;letter-spacing:2px;text-transform:uppercase}
+.p-card h3{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--text2);margin-bottom:12px}
+.p-card__price{font-family:monospace;font-size:2.5rem;font-weight:300;letter-spacing:-2px;margin-bottom:4px}
+.p-card__sub{font-size:.7rem;color:var(--text2);margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.06)}
+.p-card ul{list-style:none;margin-bottom:28px}
+.p-card li{font-size:.78rem;color:var(--text2);padding:5px 0 5px 16px;position:relative}
+.p-card li::before{content:'→';position:absolute;left:0;color:var(--cyan);font-size:.7rem}
+.p-card__cta{display:block;text-align:center;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:8px;color:var(--text);text-decoration:none;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;transition:.3s}
+.p-card__cta:hover{border-color:var(--cyan);color:var(--cyan)}
+.p-card--pop .p-card__cta{background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;color:#fff}
+
+/* ═══ CTA ═══ */
+.final-cta{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative}
+.final-cta__title{font-size:clamp(3rem,8vw,7rem);font-weight:700;line-height:.9;letter-spacing:-4px;margin-bottom:32px}
+.final-cta__sub{color:var(--text2);font-size:.95rem;margin-bottom:48px;font-weight:300}
+.final-cta__btn{display:inline-flex;padding:20px 56px;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;border-radius:100px;text-decoration:none;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;transition:.4s;box-shadow:0 0 60px rgba(0,229,255,.15)}
+.final-cta__btn:hover{transform:scale(1.08);box-shadow:0 0 80px rgba(0,229,255,.25)}
+
+/* Footer */
+.footer{padding:48px;text-align:center;border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:2}
+.footer p{font-size:.6rem;color:var(--text2);letter-spacing:2px}
+
+/* Responsive */
+@media(max-width:900px){
+  .services__grid,.pricing-grid{grid-template-columns:1fr}
+  .hscroll__card{min-width:320px;height:55vh}
+  .stats-row{flex-direction:column;gap:48px}
+  .services,.pricing-section{padding:100px 24px}
+  .cursor{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader__pct" id="lPct">0</div>
+  <div class="loader__bar"><div class="loader__fill" id="lFill"></div></div>
+  <div class="loader__label">Initializing experience</div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<canvas id="three-canvas"></canvas>
+<div class="grain"></div>
+
+<div class="content">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__over" id="heroOver">AI-Powered Dental Websites</div>
+    <h1 class="hero__title">
+      <span class="hero__line"><span class="hero__word">Websites</span></span>
+      <span class="hero__line"><span class="hero__word">that <span class="hero__gradient">book</span></span></span>
+      <span class="hero__line"><span class="hero__word hero__gradient">patients</span></span>
+    </h1>
+    <p class="hero__sub" id="heroSub">Built with AI. Delivered in days. Designed to convert every visitor into a booked appointment.</p>
+    <div class="hero__cta-wrap" id="heroCta"><a href="#" class="hero__cta"><span>Explore ↓</span></a></div>
+  </div>
+  <div class="hero__scroll" id="heroScroll"><div class="hero__scroll-dot"></div></div>
+</section>
+
+<!-- TEXT REVEAL (pinned) -->
+<section class="text-reveal">
+  <div class="text-reveal__sticky">
+    <div class="text-reveal__content">
+      <div class="text-reveal__line">76% of dental websites fail to convert.</div>
+      <div class="text-reveal__line">Not because they look bad —</div>
+      <div class="text-reveal__line">but because they weren't built to book patients.</div>
+      <div class="text-reveal__line" style="margin-top:40px;color:var(--cyan)">We fix that.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="container" style="max-width:1200px;margin:0 auto">
+    <div class="services__label">Capabilities</div>
+    <h2 class="services__title">Everything your practice needs, nothing it doesn't</h2>
+    <div class="services__grid">
+      <div class="s-card"><div class="s-card__icon">◈</div><h3>Online Booking</h3><p>24/7 scheduling. SMS reminders. Zero phone tag. Patients book while you sleep.</p></div>
+      <div class="s-card"><div class="s-card__icon">◉</div><h3>Local SEO</h3><p>Schema markup. Google Business. Geo pages. Rank #1 for "dentist [your city]".</p></div>
+      <div class="s-card"><div class="s-card__icon">◎</div><h3>Mobile-First</h3><p>60% of patients search on mobile. Every pixel designed for touch and speed.</p></div>
+      <div class="s-card"><div class="s-card__icon">✦</div><h3>Patient Reviews</h3><p>Google Reviews integration. Social proof that converts visitors into appointments.</p></div>
+      <div class="s-card"><div class="s-card__icon">⬡</div><h3>Lightning Speed</h3><p>Sub-2-second loads. Core Web Vitals perfect. Fast sites rank higher.</p></div>
+      <div class="s-card"><div class="s-card__icon">◇</div><h3>Full Ownership</h3><p>Your code. Your hosting. No lock-in. No proprietary platforms. Forever.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HORIZONTAL SCROLL (pinned) -->
+<section class="hscroll">
+  <div class="hscroll__wrap">
+    <div class="hscroll__sticky">
+      <div class="hscroll__header">
+        <div class="hscroll__label">Portfolio</div>
+        <div class="hscroll__title">Selected work</div>
+      </div>
+      <div class="hscroll__track" id="hTrack">
+        <div class="hscroll__card"><div class="hscroll__card-visual"><div class="hscroll__card-bg" style="background:linear-gradient(135deg,#08081e,#180828)">◆</div></div><div class="hscroll__card-info"><h3>Bright Smile Dental</h3><p>Premium dark theme. 3D particle effects, custom cursor, animated review carousel.</p><div class="hscroll__card-tags"><span>Dark</span><span>3D</span><span>Premium</span></div></div></div>
+        <div class="hscroll__card"><div class="hscroll__card-visual"><div class="hscroll__card-bg" style="background:linear-gradient(135deg,#081828,#082838)">◈</div></div><div class="hscroll__card-info"><h3>Alpine Family Dentistry</h3><p>Clean modern design. Glassmorphism navigation, inline booking widget, 3D cards.</p><div class="hscroll__card-tags"><span>Clean</span><span>Booking</span><span>Glass</span></div></div></div>
+        <div class="hscroll__card"><div class="hscroll__card-visual"><div class="hscroll__card-bg" style="background:linear-gradient(135deg,#081e18,#082e28)">✦</div></div><div class="hscroll__card-info"><h3>CityDent Berlin</h3><p>Warm European style. Bento grid, morphing gradients, multilingual DE/EN.</p><div class="hscroll__card-tags"><span>Warm</span><span>EU</span><span>Bento</span></div></div></div>
+        <div class="hscroll__card"><div class="hscroll__card-visual"><div class="hscroll__card-bg" style="background:linear-gradient(135deg,#18081e,#280838)">★</div></div><div class="hscroll__card-info"><h3>VellumCadence Studio</h3><p>AI content studio. Immersive dark theme, animated orbs, horizontal gallery.</p><div class="hscroll__card-tags"><span>Immersive</span><span>AI</span><span>Dark</span></div></div></div>
+        <div class="hscroll__card"><div class="hscroll__card-visual"><div class="hscroll__card-bg" style="background:linear-gradient(135deg,#06060e,#101020)">☉</div></div><div class="hscroll__card-info"><h3>NovaDent Pro</h3><p>This site. WebGL shaders, Three.js, GSAP ScrollTrigger, Lenis smooth scroll.</p><div class="hscroll__card-tags"><span>WebGL</span><span>Three.js</span><span>GSAP</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num" data-count="96">0</div><div class="stat-label">PageSpeed Score</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="6">0</div><div class="stat-label">Sites delivered</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="10">0</div><div class="stat-label">Days average</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="100">0</div><div class="stat-label">% ownership</div></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section">
+  <div class="pricing-header">
+    <div class="pricing-label">Investment</div>
+    <h2 class="pricing-title">Clear pricing</h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="p-card"><h3>Starter</h3><div class="p-card__price">€1,400</div><div class="p-card__sub">3–5 days</div><ul><li>5-7 pages</li><li>Mobile responsive</li><li>Contact + click-to-call</li><li>Basic SEO</li><li>Google Maps</li><li>SSL + 1yr hosting</li></ul><a href="#" class="p-card__cta">Start</a></div>
+    <div class="p-card p-card--pop"><div class="p-card__tag">Popular</div><h3>Professional</h3><div class="p-card__price">€3,200</div><div class="p-card__sub">7–10 days</div><ul><li>10-15 pages</li><li>Semi-custom design</li><li>Online booking</li><li>Blog</li><li>Google Business</li><li>Reviews widget</li><li>Core Web Vitals</li></ul><a href="#" class="p-card__cta">Start</a></div>
+    <div class="p-card"><h3>Premium</h3><div class="p-card__price">€6,500</div><div class="p-card__sub">14–21 days</div><ul><li>25 pages, full custom</li><li>Video integration</li><li>Patient portal</li><li>Local SEO strategy</li><li>Copywriting</li><li>Google Ads page</li><li>3 months support</li></ul><a href="#" class="p-card__cta">Start</a></div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div>
+    <h2 class="final-cta__title">Let's <span class="hero__gradient">build.</span></h2>
+    <p class="final-cta__sub">Free website audit. 10 minutes. No obligation.</p>
+    <a href="mailto:hello@dentalwebai.com" class="final-cta__btn">Start your project →</a>
+  </div>
+</section>
+
+<div class="footer"><p>DentalWebAI © 2026 · Netherlands · hello@dentalwebai.com</p></div>
+
+</div>
+
+<script>
+// ═══ LENIS SMOOTH SCROLL ═══
+const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(time => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+// ═══ LOADER ═══
+let pct = 0;
+const lFill = document.getElementById('lFill');
+const lPct = document.getElementById('lPct');
+const loaderEl = document.getElementById('loader');
+const li = setInterval(() => {
+  pct += Math.random() * 12 + 3;
+  if (pct >= 100) { pct = 100; clearInterval(li); setTimeout(() => { loaderEl.classList.add('done'); initHero(); }, 600); }
+  lFill.style.width = pct + '%';
+  lPct.textContent = Math.round(pct);
+}, 120);
+
+// ═══ THREE.JS — Abstract geometry ═══
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.z = 4;
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x030306, 1);
+
+// Torus knot (abstract dental shape)
+const torusGeo = new THREE.TorusKnotGeometry(1.2, 0.35, 200, 32, 2, 3);
+const torusMat = new THREE.MeshStandardMaterial({
+  color: 0x0a0a18,
+  roughness: 0.3,
+  metalness: 0.9,
+  wireframe: false,
+});
+const torus = new THREE.Mesh(torusGeo, torusMat);
+torus.position.set(2.5, 0, -1);
+scene.add(torus);
+
+// Particles
+const pCount = 800;
+const pGeo = new THREE.BufferGeometry();
+const pPos = new Float32Array(pCount * 3);
+for (let i = 0; i < pCount * 3; i++) pPos[i] = (Math.random() - 0.5) * 12;
+pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const pMat = new THREE.PointsMaterial({ color: 0x00e5ff, size: 0.015, transparent: true, opacity: 0.4 });
+const particles = new THREE.Points(pGeo, pMat);
+scene.add(particles);
+
+// Lights
+const ambLight = new THREE.AmbientLight(0x222244, 0.5);
+scene.add(ambLight);
+const dirLight = new THREE.DirectionalLight(0x00e5ff, 0.8);
+dirLight.position.set(5, 3, 5);
+scene.add(dirLight);
+const purpleLight = new THREE.PointLight(0xa855f7, 1, 10);
+purpleLight.position.set(-3, 2, 2);
+scene.add(purpleLight);
+
+let scrollY = 0;
+lenis.on('scroll', e => { scrollY = e.scroll; });
+
+function animateThree() {
+  requestAnimationFrame(animateThree);
+  const t = performance.now() * 0.001;
+
+  torus.rotation.x = t * 0.15 + scrollY * 0.0003;
+  torus.rotation.y = t * 0.1 + scrollY * 0.0002;
+  torus.position.y = Math.sin(t * 0.3) * 0.3;
+
+  // Color shift based on scroll
+  const hue = (scrollY * 0.0001) % 1;
+  torusMat.color.setHSL(hue * 0.15 + 0.6, 0.5, 0.08);
+
+  particles.rotation.y = t * 0.02;
+  particles.rotation.x = t * 0.01;
+
+  camera.position.y = -scrollY * 0.0005;
+  camera.lookAt(torus.position);
+
+  renderer.render(scene, camera);
+}
+animateThree();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ═══ CURSOR ═══
+const cur = document.getElementById('cursor');
+let mx=0,my=0,cx2=0,cy2=0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function updateCur() {
+  cx2 += (mx-cx2)*.1; cy2 += (my-cy2)*.1;
+  cur.style.left = cx2+'px'; cur.style.top = cy2+'px';
+  requestAnimationFrame(updateCur);
+})();
+document.querySelectorAll('a,.s-card,.hscroll__card,.p-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('lg'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('lg'));
+});
+
+// ═══ HERO ANIMATION ═══
+function initHero() {
+  const tl = gsap.timeline({ defaults: { ease: 'power4.out' }});
+  tl.to('#heroOver', { opacity: 1, duration: 1, delay: .2 })
+    .to('.hero__word', { y: 0, duration: 1.2, stagger: .15 }, '-=.8')
+    .to('#heroSub', { opacity: 1, duration: 1 }, '-=.6')
+    .to('#heroCta', { opacity: 1, duration: 1 }, '-=.5')
+    .to('#heroScroll', { opacity: 1, duration: 1 }, '-=.3');
+}
+
+// ═══ TEXT REVEAL — GSAP Pinned ═══
+const textLines = gsap.utils.toArray('.text-reveal__line');
+textLines.forEach((line, i) => {
+  gsap.to(line, {
+    opacity: 1,
+    y: 0,
+    scrollTrigger: {
+      trigger: '.text-reveal',
+      start: `${15 + i * 20}% top`,
+      end: `${25 + i * 20}% top`,
+      scrub: 1,
+    }
+  });
+});
+
+// ═══ SERVICE CARDS — Stagger reveal ═══
+gsap.utils.toArray('.s-card').forEach((card, i) => {
+  gsap.from(card, {
+    opacity: 0,
+    y: 60,
+    duration: 1,
+    scrollTrigger: {
+      trigger: card,
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    },
+    delay: i % 3 * 0.15
+  });
+});
+
+// ═══ HORIZONTAL SCROLL — GSAP Pinned ═══
+const hTrack = document.getElementById('hTrack');
+const hWrap = document.querySelector('.hscroll__wrap');
+
+gsap.to(hTrack, {
+  x: () => -(hTrack.scrollWidth - window.innerWidth + 96),
+  ease: 'none',
+  scrollTrigger: {
+    trigger: hWrap,
+    start: 'top top',
+    end: () => '+=' + (hTrack.scrollWidth - window.innerWidth + 96),
+    pin: '.hscroll__sticky',
+    scrub: 1,
+    invalidateOnRefresh: true
+  }
+});
+
+// ═══ PRICING — Reveal ═══
+gsap.utils.toArray('.p-card').forEach((card, i) => {
+  gsap.from(card, {
+    opacity: 0,
+    y: 40,
+    duration: .8,
+    scrollTrigger: { trigger: card, start: 'top 85%' },
+    delay: i * .1
+  });
+});
+
+// ═══ STATS COUNTER ═══
+document.querySelectorAll('[data-count]').forEach(el => {
+  const target = parseInt(el.dataset.count);
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 80%',
+    onEnter: () => {
+      gsap.to({ val: 0 }, {
+        val: target,
+        duration: 2,
+        ease: 'power2.out',
+        onUpdate: function() {
+          const v = Math.round(this.targets()[0].val);
+          el.textContent = v + (target===100?'%':target===96?'/100':'');
+        }
+      });
+    },
+    once: true
+  });
+});
+
+// ═══ FINAL CTA — Reveal ═══
+gsap.from('.final-cta__title', { opacity: 0, y: 60, scrollTrigger: { trigger: '.final-cta', start: 'top 70%' }, duration: 1 });
+gsap.from('.final-cta__sub', { opacity: 0, y: 40, scrollTrigger: { trigger: '.final-cta', start: 'top 65%' }, duration: 1, delay: .2 });
+gsap.from('.final-cta__btn', { opacity: 0, y: 30, scrollTrigger: { trigger: '.final-cta', start: 'top 60%' }, duration: 1, delay: .4 });
+</script>
+</body>
+</html>
