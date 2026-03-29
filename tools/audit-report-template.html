@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Audit Report — {{CLINIC_NAME}} | DentalWebAI</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2563EB;--blue-l:#EFF6FF;--green:#10B981;--green-l:#ECFDF5;--red:#EF4444;--red-l:#FEE2E2;--amber:#F59E0B;--amber-l:#FEF3C7;--navy:#0F172A;--text:#1E293B;--text2:#64748B;--bg:#FAFBFD;--white:#FFF;--border:#E2E8F0}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif}
+.mono{font-family:'JetBrains Mono',monospace}
+.container{max-width:900px;margin:0 auto;padding:40px 24px}
+
+/* Header */
+.report-header{text-align:center;padding:60px 24px;background:var(--navy);color:#fff;border-radius:0 0 32px 32px}
+.report-header__logo{font-family:'Space Grotesk';font-size:1rem;opacity:.5;margin-bottom:24px}
+.report-header h1{font-size:2rem;font-weight:700;margin-bottom:8px}
+.report-header__url{font-family:'JetBrains Mono';font-size:.85rem;opacity:.5;margin-bottom:32px}
+.report-header__date{font-size:.75rem;opacity:.3}
+
+/* Score section */
+.score-section{display:flex;gap:32px;align-items:center;justify-content:center;padding:48px 24px;background:var(--white);border-radius:24px;margin:-40px auto 32px;max-width:800px;box-shadow:0 20px 60px rgba(0,0,0,.06);position:relative;z-index:2}
+.score-ring{width:160px;height:160px;position:relative;flex-shrink:0}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring__val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-ring__num{font-family:'JetBrains Mono';font-size:3.5rem;font-weight:700;line-height:1}
+.score-ring__label{font-size:.7rem;color:var(--text2);margin-top:4px}
+.score-info h2{font-size:1.5rem;margin-bottom:8px;letter-spacing:-.5px}
+.score-info p{color:var(--text2);font-size:.9rem;line-height:1.6}
+
+/* Category scores */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+.cat{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center}
+.cat__score{font-family:'JetBrains Mono';font-size:2rem;font-weight:700}
+.cat__score--good{color:var(--green)}
+.cat__score--avg{color:var(--amber)}
+.cat__score--poor{color:var(--red)}
+.cat__name{font-size:.75rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.cat__bar{height:4px;background:var(--border);border-radius:4px;margin-top:12px;overflow:hidden}
+.cat__bar-fill{height:100%;border-radius:4px;transition:width 1s}
+
+/* Checks */
+.section-title{font-size:1.3rem;font-weight:700;margin:48px 0 20px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
+.check{display:flex;gap:12px;align-items:flex-start;padding:16px;background:var(--white);border:1px solid var(--border);border-radius:12px}
+.check--pass{border-left:3px solid var(--green)}
+.check--fail{border-left:3px solid var(--red)}
+.check--warn{border-left:3px solid var(--amber)}
+.check__icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
+.check__icon--pass{background:var(--green-l);color:var(--green)}
+.check__icon--fail{background:var(--red-l);color:var(--red)}
+.check__icon--warn{background:var(--amber-l);color:var(--amber)}
+.check h4{font-size:.85rem;margin-bottom:2px}
+.check p{font-size:.75rem;color:var(--text2);line-height:1.4}
+
+/* Recommendations */
+.recs{margin-bottom:48px}
+.rec{display:flex;gap:16px;padding:20px;background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:12px}
+.rec__priority{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff;flex-shrink:0}
+.rec__priority--high{background:var(--red)}
+.rec__priority--med{background:var(--amber)}
+.rec__priority--low{background:var(--blue)}
+.rec h4{font-size:.9rem;margin-bottom:4px}
+.rec p{font-size:.8rem;color:var(--text2);line-height:1.5}
+
+/* CTA */
+.cta-box{background:var(--navy);color:#fff;padding:48px;border-radius:24px;text-align:center;margin:48px 0}
+.cta-box h2{font-size:1.8rem;margin-bottom:12px}
+.cta-box p{color:rgba(255,255,255,.6);margin-bottom:28px}
+.cta-box__btn{display:inline-flex;padding:14px 36px;background:var(--blue);color:#fff;border-radius:12px;text-decoration:none;font-weight:600;font-size:.9rem;transition:.3s}
+.cta-box__btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.3)}
+
+.footer{text-align:center;padding:32px;font-size:.7rem;color:var(--text2)}
+.footer a{color:var(--blue);text-decoration:none}
+
+@media(max-width:700px){
+  .score-section{flex-direction:column;text-align:center}
+  .cats{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff}
+  .cta-box{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="report-header__logo">&#9677; DentalWebAI</div>
+  <h1>Website Audit Report</h1>
+  <div class="report-header__url" id="reportUrl">{{URL}}</div>
+  <div class="report-header__date" id="reportDate">{{DATE}}</div>
+</div>
+
+<!-- OVERALL SCORE -->
+<div class="score-section">
+  <div class="score-ring">
+    <svg width="160" height="160">
+      <circle cx="80" cy="80" r="68" fill="none" stroke="#E2E8F0" stroke-width="8"/>
+      <circle cx="80" cy="80" r="68" fill="none" stroke-width="8" stroke-linecap="round" id="scoreCircle" stroke-dasharray="427" stroke-dashoffset="427"/>
+    </svg>
+    <div class="score-ring__val">
+      <div class="score-ring__num" id="scoreNum">0</div>
+      <div class="score-ring__label">out of 100</div>
+    </div>
+  </div>
+  <div class="score-info">
+    <h2 id="scoreLabel">Analyzing...</h2>
+    <p id="scoreDesc">Your website has been analyzed across 6 categories covering 40+ checkpoints including performance, SEO, mobile experience, conversion optimization, security, and accessibility.</p>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- CATEGORY SCORES -->
+<div class="cats" id="catScores">
+  <!-- Filled by JS -->
+</div>
+
+<!-- PERFORMANCE CHECKS -->
+<div class="section-title"><div class="section-icon" style="background:var(--blue-l);color:var(--blue)">&#9889;</div> Performance</div>
+<div class="checks" id="perfChecks"></div>
+
+<!-- SEO CHECKS -->
+<div class="section-title"><div class="section-icon" style="background:var(--green-l);color:var(--green)">&#128269;</div> SEO</div>
+<div class="checks" id="seoChecks"></div>
+
+<!-- MOBILE CHECKS -->
+<div class="section-title"><div class="section-icon" style="background:var(--amber-l);color:var(--amber)">&#128241;</div> Mobile & UX</div>
+<div class="checks" id="mobileChecks"></div>
+
+<!-- CONVERSION CHECKS -->
+<div class="section-title"><div class="section-icon" style="background:var(--red-l);color:var(--red)">&#128197;</div> Conversion</div>
+<div class="checks" id="convChecks"></div>
+
+<!-- SECURITY CHECKS -->
+<div class="section-title"><div class="section-icon" style="background:#EDE9FE;color:#8B5CF6">&#128274;</div> Security</div>
+<div class="checks" id="secChecks"></div>
+
+<!-- ACCESSIBILITY CHECKS -->
+<div class="section-title"><div class="section-icon" style="background:#E0F2FE;color:#0EA5E9">&#9855;</div> Accessibility</div>
+<div class="checks" id="a11yChecks"></div>
+
+<!-- RECOMMENDATIONS -->
+<div class="section-title" style="border:none">&#128161; Priority Recommendations</div>
+<div class="recs" id="recs"></div>
+
+<!-- CTA -->
+<div class="cta-box">
+  <h2>Want us to fix all this?</h2>
+  <p>We build modern dental websites with all issues resolved — starting at €1,400, delivered in 3-10 days.</p>
+  <a href="https://dentalwebai.com/#pricing" class="cta-box__btn">View Our Packages &#8594;</a>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>Report generated by <a href="https://dentalwebai.com">DentalWebAI</a> &middot; hello@dentalwebai.com &middot; &copy; 2026</p>
+</div>
+
+<script>
+// This template is populated by the audit script
+// Example data structure:
+const AUDIT_DATA = {
+  url: "{{URL}}",
+  date: "{{DATE}}",
+  clinic: "{{CLINIC_NAME}}",
+  overall: 0, // 0-100
+  categories: {
+    performance: { score: 0, checks: [] },
+    seo: { score: 0, checks: [] },
+    mobile: { score: 0, checks: [] },
+    conversion: { score: 0, checks: [] },
+    security: { score: 0, checks: [] },
+    accessibility: { score: 0, checks: [] }
+  },
+  recommendations: []
+};
+
+function scoreColor(s){return s>=90?'#10B981':s>=70?'#F59E0B':s>=50?'#F97316':'#EF4444'}
+function scoreClass(s){return s>=90?'good':s>=50?'avg':'poor'}
+function scoreLabel(s){return s>=90?'Excellent — Your website is well-built':s>=70?'Good — Room for improvement':s>=50?'Needs Work — Losing potential patients':'Critical — Significant issues detected'}
+
+function renderReport(data) {
+  // Header
+  document.getElementById('reportUrl').textContent = data.url;
+  document.getElementById('reportDate').textContent = 'Generated: ' + data.date;
+  document.title = `Audit Report — ${data.clinic} | DentalWebAI`;
+
+  // Score ring
+  const circle = document.getElementById('scoreCircle');
+  const offset = 427 - (427 * data.overall / 100);
+  circle.style.stroke = scoreColor(data.overall);
+  setTimeout(() => { circle.style.strokeDashoffset = offset; circle.style.transition = 'stroke-dashoffset 1.5s ease'; }, 100);
+
+  const scoreNum = document.getElementById('scoreNum');
+  let c = 0;
+  const ci = setInterval(() => { c += 2; if (c >= data.overall) { c = data.overall; clearInterval(ci); } scoreNum.textContent = c; scoreNum.style.color = scoreColor(data.overall); }, 25);
+
+  document.getElementById('scoreLabel').textContent = scoreLabel(data.overall);
+
+  // Category scores
+  const catNames = { performance: 'Performance', seo: 'SEO', mobile: 'Mobile & UX', conversion: 'Conversion', security: 'Security', accessibility: 'Accessibility' };
+  const catContainer = document.getElementById('catScores');
+  Object.entries(data.categories).forEach(([key, cat]) => {
+    catContainer.innerHTML += `
+      <div class="cat">
+        <div class="cat__score cat__score--${scoreClass(cat.score)}">${cat.score}</div>
+        <div class="cat__name">${catNames[key]}</div>
+        <div class="cat__bar"><div class="cat__bar-fill" style="width:${cat.score}%;background:${scoreColor(cat.score)}"></div></div>
+      </div>`;
+  });
+
+  // Checks
+  const checkContainers = { performance: 'perfChecks', seo: 'seoChecks', mobile: 'mobileChecks', conversion: 'convChecks', security: 'secChecks', accessibility: 'a11yChecks' };
+  Object.entries(data.categories).forEach(([key, cat]) => {
+    const el = document.getElementById(checkContainers[key]);
+    cat.checks.forEach(ch => {
+      const status = ch.pass ? 'pass' : (ch.warn ? 'warn' : 'fail');
+      el.innerHTML += `
+        <div class="check check--${status}">
+          <div class="check__icon check__icon--${status}">${ch.pass ? '✓' : (ch.warn ? '!' : '✕')}</div>
+          <div><h4>${ch.title}</h4><p>${ch.desc}</p></div>
+        </div>`;
+    });
+  });
+
+  // Recommendations
+  const recsEl = document.getElementById('recs');
+  data.recommendations.forEach((rec, i) => {
+    const pClass = rec.priority === 'high' ? 'high' : rec.priority === 'medium' ? 'med' : 'low';
+    recsEl.innerHTML += `
+      <div class="rec">
+        <div class="rec__priority rec__priority--${pClass}">${i + 1}</div>
+        <div><h4>${rec.title}</h4><p>${rec.desc}</p></div>
+      </div>`;
+  });
+}
+
+// If data is embedded, render immediately
+if (AUDIT_DATA.overall > 0) renderReport(AUDIT_DATA);
+</script>
+</body>
+</html>
