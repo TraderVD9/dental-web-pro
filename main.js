@@ -186,32 +186,152 @@ window.addEventListener('load', () => {
   }
   gsap.registerPlugin(ScrollTrigger);
 
-  // Loader out + hero entrance
+  // === CINEMATIC ENTRANCE ===
   const tl = gsap.timeline();
-  tl.to(loader, { opacity: 0, duration: 0.6, delay: 1.2, ease: 'power2.inOut', onComplete: () => loader.style.display = 'none' })
-    .from('.hero__badge', { opacity: 0, y: 20, duration: 0.7, clearProps: 'all' }, '-=0.2')
-    .from('.hero__title', { opacity: 0, y: 40, duration: 0.9, ease: 'power3.out', clearProps: 'all' }, '-=0.4')
-    .from('.hero__sub', { opacity: 0, y: 20, duration: 0.7, clearProps: 'all' }, '-=0.4')
-    .from('.hero__stats', { opacity: 0, y: 20, duration: 0.7, clearProps: 'all' }, '-=0.3')
-    .from('.hero__ctas', { opacity: 0, y: 20, duration: 0.7, clearProps: 'all' }, '-=0.2');
 
-  // Scroll reveals — each element individually for reliability
-  const revealEls = '.problem__card, .solution__item, .package-card, .process__step, .portfolio__card, .faq__item, .section__title, .section__sub';
-  gsap.utils.toArray(revealEls).forEach((el, i) => {
+  // Loader fade out
+  tl.to(loader, {
+    opacity: 0, duration: 0.8, delay: 1.4,
+    ease: 'power2.inOut',
+    onComplete: () => loader.style.display = 'none'
+  })
+
+  // Hero elements slide up one by one — like opening credits
+  .from('.hero__badge', {
+    opacity: 0, y: 30, duration: 1,
+    ease: 'power4.out', clearProps: 'all'
+  }, '-=0.3')
+  .from('.hero__title', {
+    opacity: 0, y: 60, duration: 1.2,
+    ease: 'power4.out', clearProps: 'all'
+  }, '-=0.6')
+  .from('.hero__sub', {
+    opacity: 0, y: 30, duration: 1,
+    ease: 'power3.out', clearProps: 'all'
+  }, '-=0.6')
+  .from('.stat', {
+    opacity: 0, y: 25, duration: 0.8,
+    stagger: 0.15, ease: 'power3.out', clearProps: 'all'
+  }, '-=0.5')
+  .from('.hero__ctas .btn', {
+    opacity: 0, y: 20, duration: 0.8,
+    stagger: 0.12, ease: 'power3.out', clearProps: 'all'
+  }, '-=0.4')
+  .from('.scroll-indicator', {
+    opacity: 0, duration: 0.8, clearProps: 'all'
+  }, '-=0.2');
+
+  // === CINEMATIC SCROLL REVEALS ===
+
+  // Section titles — slide up with fade
+  gsap.utils.toArray('.section__title').forEach(el => {
     gsap.from(el, {
-      opacity: 0, y: 40, duration: 0.7,
-      delay: (i % 4) * 0.08,
-      ease: 'power3.out',
+      opacity: 0, y: 50, duration: 1, ease: 'power3.out',
+      clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: el, start: 'top 85%' }
+    });
+  });
+
+  gsap.utils.toArray('.section__sub').forEach(el => {
+    gsap.from(el, {
+      opacity: 0, y: 30, duration: 0.8, ease: 'power3.out',
+      delay: 0.15, clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+  // Cards — staggered cascade (like dominoes)
+  const cardGroups = [
+    { sel: '.problem__card', parent: '.problem' },
+    { sel: '.solution__item', parent: '.solution' },
+    { sel: '.package-card', parent: '.packages' },
+    { sel: '.process__step', parent: '.process' },
+    { sel: '.portfolio__card', parent: '.portfolio' },
+  ];
+
+  cardGroups.forEach(({ sel, parent }) => {
+    const cards = document.querySelectorAll(sel);
+    if (!cards.length) return;
+    cards.forEach((card, i) => {
+      gsap.from(card, {
+        opacity: 0, y: 60, scale: 0.97,
+        duration: 0.9,
+        delay: i * 0.12,
+        ease: 'power3.out',
+        clearProps: 'opacity,transform',
+        scrollTrigger: { trigger: parent, start: 'top 75%' }
+      });
+    });
+  });
+
+  // FAQ — accordion slide in
+  document.querySelectorAll('.faq__item').forEach((el, i) => {
+    gsap.from(el, {
+      opacity: 0, x: -40, duration: 0.7,
+      delay: i * 0.08, ease: 'power3.out',
       clearProps: 'opacity,transform',
       scrollTrigger: { trigger: el, start: 'top 90%' }
     });
   });
 
-  // Single elements
-  ['.testimonial-quote', '.testimonial-stars', '.comparison__table', '.retainer__inner', '.ba-slider', '.cta-box'].forEach(sel => {
+  // Big elements — dramatic scale entrance
+  ['.comparison__table', '.ba-slider'].forEach(sel => {
     const el = document.querySelector(sel);
     if (!el) return;
-    gsap.from(el, { opacity: 0, y: 30, duration: 0.8, clearProps: 'opacity,transform', scrollTrigger: { trigger: el, start: 'top 88%' } });
+    gsap.from(el, {
+      opacity: 0, scale: 0.92, y: 40,
+      duration: 1.2, ease: 'power3.out',
+      clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: el, start: 'top 80%' }
+    });
+  });
+
+  // Testimonial — fade in slow (emotional)
+  const tq = document.querySelector('.testimonial-quote');
+  if (tq) {
+    gsap.from(tq, {
+      opacity: 0, y: 50, duration: 1.4,
+      ease: 'power2.out', clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: tq, start: 'top 75%' }
+    });
+  }
+  const ts = document.querySelector('.testimonial-stars');
+  if (ts) {
+    gsap.from(ts, {
+      opacity: 0, scale: 0.5, duration: 0.8,
+      ease: 'back.out(2)', clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: ts, start: 'top 80%' }
+    });
+  }
+
+  // Retainer
+  const ret = document.querySelector('.retainer__inner');
+  if (ret) {
+    gsap.from(ret, {
+      opacity: 0, y: 40, duration: 0.9,
+      clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: ret, start: 'top 85%' }
+    });
+  }
+
+  // CTA box — scale up like it's coming toward you
+  const cta = document.querySelector('.cta-box');
+  if (cta) {
+    gsap.from(cta, {
+      opacity: 0, scale: 0.9, y: 60,
+      duration: 1.2, ease: 'power3.out',
+      clearProps: 'opacity,transform',
+      scrollTrigger: { trigger: cta, start: 'top 80%' }
+    });
+  }
+
+  // Hide scroll indicator on scroll
+  ScrollTrigger.create({
+    start: 'top -100',
+    onUpdate: (self) => {
+      const si = document.querySelector('.scroll-indicator');
+      if (si) si.style.opacity = self.progress > 0.01 ? '0' : '1';
+    }
   });
 });
 
