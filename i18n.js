@@ -123,7 +123,7 @@ const translations = {
     "cta.clinic": "Clinic name",
     "cta.website": "Current website URL (optional)",
     "cta.submit": "Get My Free Audit",
-    "cta.note": "We'll respond within 24 hours with a personalized video audit of your website.",
+    "cta.note": "We'll respond within 24 hours with a personalized audit report of your website.",
 
     "footer.tagline": "Websites that book patients."
   },
@@ -252,7 +252,7 @@ const translations = {
     "cta.clinic": "Praxisname",
     "cta.website": "Aktuelle Website-URL (optional)",
     "cta.submit": "Kostenloses Audit anfordern",
-    "cta.note": "Wir antworten innerhalb von 24 Stunden mit einem personalisierten Video-Audit Ihrer Website.",
+    "cta.note": "Wir antworten innerhalb von 24 Stunden mit einem personalisierten Audit-Bericht Ihrer Website.",
 
     "footer.tagline": "Websites, die Patienten buchen."
   },
@@ -381,7 +381,7 @@ const translations = {
     "cta.clinic": "Praktijknaam",
     "cta.website": "Huidige website URL (optioneel)",
     "cta.submit": "Gratis Audit Aanvragen",
-    "cta.note": "Wij reageren binnen 24 uur met een gepersonaliseerde video-audit van uw website.",
+    "cta.note": "Wij reageren binnen 24 uur met een gepersonaliseerde audit report van uw website.",
 
     "footer.tagline": "Websites die patiënten boeken."
   },
@@ -510,7 +510,7 @@ const translations = {
     "cta.clinic": "Название клиники",
     "cta.website": "URL текущего сайта (необязательно)",
     "cta.submit": "Получить бесплатный аудит",
-    "cta.note": "Мы ответим в течение 24 часов с персональным видео-аудитом вашего сайта.",
+    "cta.note": "Мы ответим в течение 24 часов с персональным аудит-отчётом вашего сайта.",
 
     "footer.tagline": "Сайты, которые записывают пациентов."
   }
