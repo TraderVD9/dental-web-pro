@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self' https://api.vellumcadence.com; frame-ancestors 'none';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DentalWebAI — AI-Powered Websites That Book Patients</title>
 <meta name="description" content="High-converting dental websites built with AI. Custom design in days, not months. PageSpeed 95+. You own everything. Free website audit.">
@@ -11,8 +14,23 @@
 <meta property="og:description" content="High-converting dental websites built with AI. Custom design in days. Free audit.">
 <meta property="og:image" content="https://dentalwebai.com/og-image.jpg">
 <meta property="og:url" content="https://dentalwebai.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DentalWebAI — AI-Powered Dental Websites">
+<meta name="twitter:description" content="High-converting dental websites. Custom design in days. Free audit.">
+<meta name="twitter:image" content="https://dentalwebai.com/og-image.jpg">
 <link rel="canonical" href="https://dentalwebai.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"DentalWebAI","url":"https://dentalwebai.com","description":"AI-powered dental website design. Custom websites in days.","offers":{"@type":"AggregateOffer","lowPrice":"1400","highPrice":"6500","priceCurrency":"EUR"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How long does it take?","acceptedAnswer":{"@type":"Answer","text":"Starter 3-5 days, Professional 7-10, Premium 14-21. 3-5x faster than agencies."}},{"@type":"Question","name":"Do I own the website?","acceptedAnswer":{"@type":"Answer","text":"Yes 100%. Full source code, no lock-in, host anywhere."}},{"@type":"Question","name":"What if I already have a website?","acceptedAnswer":{"@type":"Answer","text":"Free audit first. We analyze, show issues, build a modern replacement."}},{"@type":"Question","name":"How does payment work?","acceptedAnswer":{"@type":"Answer","text":"50% deposit, 50% on completion. Cards, bank transfer, PayPal via Stripe."}},{"@type":"Question","name":"Where do you work?","acceptedAnswer":{"@type":"Answer","text":"Globally, 100% online. US, UK, EU, Australia. Multilingual + local SEO."}}]}</script>
+<link rel="alternate" hreflang="en" href="https://dentalwebai.com/">
+<link rel="alternate" hreflang="de" href="https://dentalwebai.com/?lang=de">
+<link rel="alternate" hreflang="nl" href="https://dentalwebai.com/?lang=nl">
+<link rel="alternate" hreflang="ru" href="https://dentalwebai.com/?lang=ru">
+<link rel="alternate" hreflang="x-default" href="https://dentalwebai.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#FAFBFE;
@@ -27,7 +45,7 @@
   --ac3:#F59E0B;
   --tx:#0F1A2E;
   --tx2:#526280;
-  --mt:#94A3B8;
+  --mt:#6B7A8D;
   --grd:linear-gradient(135deg,#2563EB,#0EA371);
   --grd2:linear-gradient(135deg,#2563EB,#6366F1);
   --glow:rgba(37,99,235,0.08);
@@ -336,9 +354,28 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
   .dental-3d{display:none}
 }
 @media(min-width:901px) and (max-width:1100px){.sg{grid-template-columns:repeat(2,1fr)}.prg{grid-template-columns:repeat(2,1fr)}}
+/* a11y: focus-visible */
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:4px}
+/* a11y: skip link */
+.skip-link{position:absolute;top:-100px;left:0;background:var(--ac);color:#fff;padding:12px 24px;z-index:100000;font-size:.9rem;transition:top .3s;text-decoration:none;font-weight:600;border-radius:0 0 8px 0}
+.skip-link:focus{top:0}
+/* a11y: reduced motion */
+@media(prefers-reduced-motion:reduce){.ab,.mock,.d3,.grid-bg,.pd,.ld-ring svg,.ptc,canvas{animation:none!important;transition:none!important}.rv{opacity:1!important;transform:none!important}canvas#ptc{display:none!important}}
+/* mobile burger */
+.burger-m{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px}
+.burger-m span{display:block;width:22px;height:2px;background:var(--tx);transition:.3s;border-radius:1px}
+.burger-m.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.burger-m.open span:nth-child(2){opacity:0}
+.burger-m.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+@media(max-width:900px){.burger-m{display:flex!important}.nl{display:none!important;position:absolute;top:60px;left:0;right:0;background:var(--bg);flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--brd);box-shadow:0 12px 40px rgba(15,30,80,0.1);z-index:999}.nl.open{display:flex!important}}
+/* perf: content-visibility */
+section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"DentalWebAI","description":"AI-powered dental website design agency","url":"https://dentalwebai.com","offers":{"@type":"AggregateOffer","lowPrice":"1400","highPrice":"6500","priceCurrency":"EUR"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How long does it take?","acceptedAnswer":{"@type":"Answer","text":"Starter: 3-5 days. Professional: 7-10. Premium: 14-21. 3-5x faster than agencies."}},{"@type":"Question","name":"Do I own the website?","acceptedAnswer":{"@type":"Answer","text":"Yes, 100%. Full source code. No lock-in. Host anywhere."}},{"@type":"Question","name":"What's in the free audit?","acceptedAnswer":{"@type":"Answer","text":"Mobile speed, SEO, booking, SSL, competitor comparison. Report in 24h."}},{"@type":"Question","name":"How does payment work?","acceptedAnswer":{"@type":"Answer","text":"50% deposit, 50% on completion. Cards, bank transfer, PayPal via Stripe."}},{"@type":"Question","name":"Work outside the US?","acceptedAnswer":{"@type":"Answer","text":"US, UK, Europe, globally. Multilingual + local SEO."}}]}</script>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 <div class="sp" id="sp"></div>
 
@@ -411,8 +448,10 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
   <a href="#" class="logo-svg"><div class="logo-mark"><svg viewBox="0 0 32 32" fill="none"><path d="M16 2C13.2 2 11 4.5 10.2 8.5C9.5 12.5 9.5 16.5 10.2 20C11 23.5 13 27 16 30C19 27 21 23.5 21.8 20C22.5 16.5 22.5 12.5 21.8 8.5C21 4.5 18.8 2 16 2Z" stroke="url(#nlg2)" stroke-width="1.5" fill="none"/><path d="M12 13L15 16L21 10" stroke="url(#nlg2)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/><defs><linearGradient id="nlg2" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#2563EB"/><stop offset="1" stop-color="#0EA371"/></linearGradient></defs></svg></div><div class="logo-text">Dental<span>WebAI</span></div></a>
   <ul class="nl"><li><a href="#problem" data-i18n="nav.problem">Why Change</a></li><li><a href="#packages" data-i18n="nav.packages">Packages</a></li><li><a href="#process" data-i18n="nav.process">Process</a></li><li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li><li><a href="#faq" data-i18n="nav.faq">FAQ</a></li><li><a href="#contact" class="ncta" data-i18n="nav.cta">Free Audit</a></li></ul>
   <div class="lang-sw" style="display:flex;gap:4px;margin-left:12px"><button class="lbtn active" data-lang="en" style="background:none;border:1px solid var(--brd);padding:3px 9px;border-radius:100px;font-size:.7rem;font-weight:500;cursor:pointer;color:var(--tx2);transition:.3s">EN</button><button class="lbtn" data-lang="de" style="background:none;border:1px solid var(--brd);padding:3px 9px;border-radius:100px;font-size:.7rem;font-weight:500;cursor:pointer;color:var(--tx2);transition:.3s">DE</button><button class="lbtn" data-lang="nl" style="background:none;border:1px solid var(--brd);padding:3px 9px;border-radius:100px;font-size:.7rem;font-weight:500;cursor:pointer;color:var(--tx2);transition:.3s">NL</button><button class="lbtn" data-lang="ru" style="background:none;border:1px solid var(--brd);padding:3px 9px;border-radius:100px;font-size:.7rem;font-weight:500;cursor:pointer;color:var(--tx2);transition:.3s">RU</button></div>
+<button class="burger-m" id="burgerM" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
+<main id="main-content">
 <section class="hero">
   <div class="hb"><span class="pd"></span> <span data-i18n="hero.badge">AI-Powered Dental Websites</span></div>
   <h1 data-i18n="hero.title">Websites that <span class="gt">book patients</span> while you sleep</h1>
@@ -488,8 +527,8 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
 <section style="padding:100px 40px;max-width:1200px;margin:0 auto;position:relative;z-index:2">
 <div class="rv" style="text-align:center"><div class="sl">Transformation</div><div class="st" data-i18n="ba.title">Before & After</div><div class="ss" data-i18n="ba.sub">Real results from our redesigns</div></div>
 <div style="position:relative;max-width:800px;margin:0 auto;border-radius:14px;overflow:hidden;height:420px;cursor:col-resize;user-select:none;border:1px solid var(--brd);box-shadow:var(--shadow)" id="baSlider">
-<img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80" alt="Before" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.8) brightness(.7)">
-<img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1200&q=80" alt="After" class="ba-after" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 50% 0 0)">
+<img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80" alt="Dental website before redesign — slow, outdated design" loading="lazy" width="1200" height="800" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.8) brightness(.7)">
+<img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1200&q=80" alt="Dental website after DentalWebAI redesign — modern, fast, mobile-friendly" loading="lazy" width="1200" height="800" class="ba-after" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 50% 0 0)">
 <div id="baLine" style="position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--ac);z-index:5;transform:translateX(-50%)"></div>
 <div id="baHandle" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:var(--ac);border-radius:50%;z-index:6;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;font-weight:700;box-shadow:0 4px 20px rgba(37,99,235,.3)">↔</div>
 </div>
@@ -514,10 +553,11 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
 </section><div class="sdv"></div>
 
 <section class="cta" id="contact"><div class="rv"><div class="sl">Get Started</div><div class="st" data-i18n="cta.title">Ready for more patients?</div><div class="ss" style="margin:0 auto 10px" data-i18n="cta.sub">Free audit. We show what's costing you appointments.</div></div>
-  <form class="ctaf rv" id="contactForm" onsubmit="hs(event)"><input type="text" name="clinic" placeholder="Practice Name" data-i18n-placeholder="cta.clinic" required><input type="email" name="email" placeholder="Your Email" required><input type="url" name="website" placeholder="Website URL (https://...)" data-i18n-placeholder="cta.website" required><button type="submit" class="bp" style="width:100%;justify-content:center" data-i18n="cta.submit">Get My Free Audit <span class="aw">→</span></button></form>
+  <form class="ctaf rv" id="contactForm" onsubmit="hs(event)"><input type="text" name="clinic" placeholder="Practice Name" data-i18n-placeholder="cta.clinic" required aria-label="Practice name"><input type="email" name="email" placeholder="Your Email" required aria-label="Email address"><input type="url" name="website" placeholder="Website URL (https://...)" data-i18n-placeholder="cta.website" required aria-label="Website URL"><button type="submit" class="bp" style="width:100%;justify-content:center" data-i18n="cta.submit">Get My Free Audit <span class="aw">→</span></button></form>
   <div class="ctat rv"><span><span class="ck">✓</span> No cost</span><span><span class="ck">✓</span> No obligation</span><span><span class="ck">✓</span> 24h report</span></div>
 </section>
 
+</main>
 <footer><p><span data-i18n="footer.tagline">Websites that book patients.</span> © 2026 DentalWebAI. Netherlands.</p><div style="display:flex;gap:22px"><a href="mailto:hello@dentalwebai.com">hello@dentalwebai.com</a><a href="#">Privacy</a></div></footer>
 
 <script>
@@ -527,8 +567,8 @@ const li=setInterval(()=>{lp+=Math.random()*18+8;if(lp>=100){lp=100;clearInterva
 const cv=document.getElementById('pc'),cx=cv.getContext('2d');let pts=[];
 function rs(){cv.width=innerWidth;cv.height=document.documentElement.scrollHeight}rs();addEventListener('resize',rs);
 class P{constructor(){this.r()}r(){this.x=Math.random()*cv.width;this.y=Math.random()*cv.height;this.s=Math.random()*.8+.2;this.sx=(Math.random()-.5)*.12;this.sy=(Math.random()-.5)*.12;this.o=Math.random()*.12+.02}u(){this.x+=this.sx;this.y+=this.sy;if(this.x<0||this.x>cv.width)this.sx*=-1;if(this.y<0||this.y>cv.height)this.sy*=-1}d(){cx.beginPath();cx.arc(this.x,this.y,this.s,0,Math.PI*2);cx.fillStyle=`rgba(37,99,235,${this.o})`;cx.fill()}}
-for(let i=0;i<80;i++)pts.push(new P);
-function dl(){for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<80){cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.strokeStyle=`rgba(37,99,235,${.02*(1-d/80)})`;cx.lineWidth=.3;cx.stroke()}}}
+for(let i=0;i<50;i++)pts.push(new P);
+function dl(){for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<60){cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.strokeStyle=`rgba(37,99,235,${.02*(1-d/60)})`;cx.lineWidth=.3;cx.stroke()}}}
 function ap(){cx.clearRect(0,0,cv.width,cv.height);pts.forEach(p=>{p.u();p.d()});dl();requestAnimationFrame(ap)}ap();
 new ResizeObserver(()=>{cv.height=document.documentElement.scrollHeight}).observe(document.body);
 
@@ -575,6 +615,10 @@ document.querySelectorAll('.lbtn').forEach(b=>{b.addEventListener('click',()=>{d
 
 <div id="ckb" style="position:fixed;bottom:0;left:0;right:0;z-index:9995;background:rgba(250,251,254,0.95);backdrop-filter:blur(12px);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:.8rem;border-top:1px solid var(--brd);box-shadow:0 -2px 12px rgba(15,30,80,0.04)"><p style="color:var(--tx2);flex:1">We use essential cookies for language preferences only. No tracking. <a href="privacy.html" style="color:var(--ac)">Privacy Policy</a></p><button onclick="document.getElementById('ckb').style.display='none';localStorage.setItem('dwai-cookies','1')" style="background:var(--grd);color:#fff;border:none;padding:7px 18px;border-radius:100px;font-weight:600;cursor:pointer;font-size:.8rem;white-space:nowrap">Accept</button></div>
 <script src="i18n.js"></script>
-<script>if(localStorage.getItem('dwai-cookies'))document.getElementById('ckb').style.display='none'</script>
+<script>
+if(localStorage.getItem('dwai-cookies'))document.getElementById('ckb').style.display='none';
+// Burger menu
+const burgM=document.getElementById('burgerM');if(burgM){const nlM=document.querySelector('.nl');burgM.addEventListener('click',()=>{nlM.classList.toggle('open');burgM.classList.toggle('open');burgM.setAttribute('aria-expanded',nlM.classList.contains('open'))});nlM.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nlM.classList.remove('open');burgM.classList.remove('open');burgM.setAttribute('aria-expanded','false')}))}
+</script>
 </body>
 </html>
