@@ -53,7 +53,9 @@
   --shadow-h:0 12px 40px rgba(15,30,80,0.1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:hidden}
+html{overflow-x:hidden}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 /* ═══ ANIMATED BACKGROUND LAYERS ═══ */
@@ -171,9 +173,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);overfl
 /* ═══ LOADER ═══ */
 .ld{position:fixed;inset:0;background:var(--bg);z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s cubic-bezier(.4,0,.2,1),visibility 1s}
 .ld.hid{opacity:0;visibility:hidden}
-.ld-ring{width:48px;height:48px}
-.ld-ring svg{animation:spin 1s linear infinite;width:48px;height:48px}
-@keyframes spin{to{transform:rotate(360deg)}}
+.ld-ring{width:64px;height:80px}
+.ld-ring svg{width:64px;height:80px}
+.ld-ring svg path{stroke-dasharray:200;stroke-dashoffset:200;animation:drawTooth 2s ease forwards}
+@keyframes drawTooth{to{stroke-dashoffset:0}}
 .ld-pct{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--mt);margin-top:18px;letter-spacing:.12em}
 
 /* ═══ REVEAL ═══ */
@@ -426,6 +429,9 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
 .ctc-float:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,99,235,0.4)}
 @keyframes ctcPulse{0%,100%{box-shadow:0 4px 20px rgba(37,99,235,0.3)}50%{box-shadow:0 4px 20px rgba(37,99,235,0.1)}}
 @media(max-width:600px){.ctc-float{bottom:80px}}
+/* Page transition */
+body{animation:pageIn .6s ease both}
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
 /* a11y: focus-visible */
 :focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:4px}
 /* a11y: skip link */
@@ -457,7 +463,7 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
     </div>
     <div class="logo-text">Dental<span>WebAI</span></div>
   </div>
-  <div class="ld-ring"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" stroke="rgba(37,99,235,0.08)" stroke-width="2" fill="none"/><circle cx="24" cy="24" r="20" stroke="url(#lgr)" stroke-width="2" fill="none" stroke-dasharray="35 100" stroke-linecap="round"/><defs><linearGradient id="lgr"><stop stop-color="#2563EB"/><stop offset="1" stop-color="#0EA371"/></linearGradient></defs></svg></div>
+  <div class="ld-ring"><svg viewBox="0 0 64 80" fill="none"><path d="M32 4C25 4 20 10 18 20C16 30 16 42 18 50C20 58 26 68 32 76C38 68 44 58 46 50C48 42 48 30 46 20C44 10 39 4 32 4Z" stroke="url(#lgr)" stroke-width="1.5" stroke-linecap="round"/><path d="M24 28L30 34L42 22" stroke="url(#lgr)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawTooth 1.5s ease 0.8s forwards"/><defs><linearGradient id="lgr" x1="0" y1="0" x2="64" y2="80"><stop stop-color="#2563EB"/><stop offset="1" stop-color="#0EA371"/></linearGradient></defs></svg></div>
   <div class="ld-pct" id="lp">0%</div>
 </div>
 
@@ -728,6 +734,20 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 <footer><p><span data-i18n="footer.tagline">Websites that book patients.</span> © 2026 DentalWebAI. Netherlands.</p><div style="display:flex;gap:22px;flex-wrap:wrap;justify-content:center"><a href="tel:+31208080888">+31 20 808 0888</a><a href="mailto:hello@dentalwebai.com">hello@dentalwebai.com</a><a href="blog/dental-website-design.html">Blog: Design</a><a href="blog/dental-website-cost.html">Blog: Cost</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></footer>
 
 <script>
+// ═══ LENIS SMOOTH SCROLL ═══
+const lenis=new Lenis({lerp:0.07,wheelMultiplier:0.9,touchMultiplier:1.5});
+function lenisRaf(t){lenis.raf(t);requestAnimationFrame(lenisRaf)}
+requestAnimationFrame(lenisRaf);
+
+// Sync Lenis with GSAP ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+lenis.on('scroll',ScrollTrigger.update);
+gsap.ticker.add(t=>lenis.raf(t*1000));
+gsap.ticker.lagSmoothing(0);
+
+// Smooth anchor scrolling with Lenis
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)lenis.scrollTo(t,{offset:-80,duration:1.2})})});
+
 let lp=0;const ldp=document.getElementById('lp'),ldr=document.getElementById('ld');
 const li=setInterval(()=>{lp+=Math.random()*18+8;if(lp>=100){lp=100;clearInterval(li);setTimeout(()=>ldr.classList.add('hid'),400)}ldp.textContent=Math.floor(lp)+'%'},220);
 
@@ -740,7 +760,12 @@ function ap(){cx.clearRect(0,0,cv.width,cv.height);pts.forEach(p=>{p.u();p.d()})
 new ResizeObserver(()=>{cv.height=document.documentElement.scrollHeight}).observe(document.body);
 
 const cg=document.getElementById('cg'),cd=document.getElementById('cd');
-addEventListener('mousemove',e=>{cg.style.left=e.clientX+'px';cg.style.top=e.clientY+'px';cd.style.left=e.clientX+'px';cd.style.top=e.clientY+'px'});
+addEventListener('mousemove',e=>{
+  cg.style.left=e.clientX+'px';cg.style.top=e.clientY+'px';cd.style.left=e.clientX+'px';cd.style.top=e.clientY+'px';
+  // Aurora mouse tracking — blobs follow cursor subtly
+  const mx=(e.clientX/innerWidth-.5)*20,my=(e.clientY/innerHeight-.5)*20;
+  document.querySelectorAll('.ab').forEach((b,i)=>{const f=(i+1)*0.3;b.style.transform=`translate(${mx*f}px,${my*f}px)`});
+});
 document.querySelectorAll('a,button,.gl,.prc,.poi').forEach(el=>{el.addEventListener('mouseenter',()=>cd.classList.add('hov'));el.addEventListener('mouseleave',()=>cd.classList.remove('hov'))});
 
 addEventListener('scroll',()=>{
@@ -754,15 +779,112 @@ addEventListener('scroll',()=>{
   if(ptl){const r=ptl.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight-r.top)/(r.height+innerHeight*.3)));document.getElementById('prf').style.height=(p*100)+'%'}
 });
 
-const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:.06,rootMargin:'0px 0px -20px 0px'});
-document.querySelectorAll('.rv').forEach(el=>ob.observe(el));
+// ═══ GSAP SCROLL ANIMATIONS ═══
 
-const co=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting&&!x.target.dataset.c){x.target.dataset.c='1';const t=+x.target.dataset.t;let v=0;const s=t/30;const ti=setInterval(()=>{v+=s;if(v>=t){v=t;clearInterval(ti)}x.target.textContent=Math.floor(v)},28)}})},{threshold:.5});
-document.querySelectorAll('.cnt').forEach(el=>co.observe(el));
+// Hero — word stagger
+const heroH1=document.querySelector('.hero h1');
+if(heroH1){
+  const words=heroH1.innerHTML.split(/(\s+|<[^>]+>)/).filter(Boolean);
+  heroH1.innerHTML=words.map(w=>w.startsWith('<')?w:`<span class="hw" style="display:inline-block;opacity:0;transform:translateY(30px)">${w}</span>`).join('');
+  gsap.to('.hw',{opacity:1,y:0,duration:0.8,stagger:0.04,ease:'power3.out',delay:1.8});
+}
 
+// Section titles — mask reveal
+document.querySelectorAll('.st').forEach(t=>{
+  gsap.from(t,{y:60,opacity:0,duration:0.9,ease:'power3.out',scrollTrigger:{trigger:t,start:'top 85%'}});
+});
+document.querySelectorAll('.ss').forEach(t=>{
+  gsap.from(t,{y:30,opacity:0,duration:0.8,ease:'power3.out',delay:0.15,scrollTrigger:{trigger:t,start:'top 88%'}});
+});
+document.querySelectorAll('.sl').forEach(t=>{
+  gsap.from(t,{x:-30,opacity:0,duration:0.6,ease:'power3.out',scrollTrigger:{trigger:t,start:'top 90%'}});
+});
+
+// Problem cards — scale + rotateX stagger
+gsap.from('.pc',{scale:0.85,rotateX:8,opacity:0,y:40,duration:0.8,stagger:0.15,ease:'power3.out',
+  scrollTrigger:{trigger:'.pg',start:'top 75%'}});
+
+// Solution numbers — clip-path reveal
+gsap.from('.sn',{clipPath:'inset(100% 0 0 0)',opacity:0,duration:0.8,stagger:0.12,ease:'power3.out',
+  scrollTrigger:{trigger:'.sg',start:'top 75%'}});
+gsap.from('.sc',{y:40,opacity:0,duration:0.7,stagger:0.12,ease:'power3.out',
+  scrollTrigger:{trigger:'.sg',start:'top 75%'}});
+
+// Pricing — slide from sides
+const prcs=document.querySelectorAll('.prc');
+prcs.forEach((c,i)=>{
+  const dir=i===0?-80:i===2?80:0;
+  gsap.from(c,{x:dir,scale:dir?0.9:0.85,opacity:0,duration:0.9,ease:'power3.out',
+    scrollTrigger:{trigger:'.prg',start:'top 70%'}});
+});
+
+// Process dots — glow when timeline reaches
+document.querySelectorAll('.sd').forEach((d,i)=>{
+  gsap.from(d,{scale:0.5,opacity:0,duration:0.6,delay:i*0.2,ease:'back.out(2)',
+    scrollTrigger:{trigger:d,start:'top 80%'}});
+});
+
+// Comparison rows — stagger
+gsap.from('.cmp tbody tr',{x:-30,opacity:0,duration:0.5,stagger:0.08,ease:'power2.out',
+  scrollTrigger:{trigger:'.cmp',start:'top 75%'}});
+
+// CTA box — scale up
+gsap.from('.ctaf',{y:40,opacity:0,scale:0.95,duration:0.9,ease:'power3.out',
+  scrollTrigger:{trigger:'.cta',start:'top 70%'}});
+
+// Retainer
+gsap.from('.retc',{y:40,opacity:0,duration:0.8,ease:'power3.out',
+  scrollTrigger:{trigger:'.retc',start:'top 80%'}});
+
+// Counters with GSAP (elastic finish)
+document.querySelectorAll('.cnt').forEach(el=>{
+  const t=+el.dataset.t;
+  ScrollTrigger.create({trigger:el,start:'top 80%',once:true,onEnter:()=>{
+    gsap.to(el,{innerHTML:t,duration:1.5,snap:{innerHTML:1},ease:'power2.out',
+      onUpdate:function(){el.textContent=Math.floor(this.targets()[0].innerHTML)}});
+  }});
+});
+
+// Reveal fallback for .rv elements (still needed for some)
+document.querySelectorAll('.rv').forEach(el=>{
+  gsap.from(el,{opacity:0,y:30,duration:0.7,ease:'power3.out',clearProps:'opacity,transform',
+    scrollTrigger:{trigger:el,start:'top 90%'}});
+});
+
+// ═══ MICRO-INTERACTIONS ═══
+
+// Magnetic CTA button
+document.querySelectorAll('.bp').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*0.15;
+    const y=(e.clientY-r.top-r.height/2)*0.15;
+    gsap.to(btn,{x,y,duration:0.3,ease:'power2.out'});
+  });
+  btn.addEventListener('mouseleave',()=>{
+    gsap.to(btn,{x:0,y:0,duration:0.5,ease:'elastic.out(1,0.5)'});
+  });
+});
+
+// 3D tilt on cards
 document.querySelectorAll('.pc,.sc,.prc').forEach(c=>{
-  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(800px) rotateY(${x*4}deg) rotateX(${-y*4}deg) translateY(-5px) scale(1.01)`});
-  c.addEventListener('mouseleave',()=>{c.style.transform=''})});
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;gsap.to(c,{rotateY:x*6,rotateX:-y*6,y:-5,scale:1.02,duration:0.4,ease:'power1.out',transformPerspective:800})});
+  c.addEventListener('mouseleave',()=>{gsap.to(c,{rotateY:0,rotateX:0,y:0,scale:1,duration:0.6,ease:'elastic.out(1,0.6)'})})});
+
+// FAQ arrow rotation
+document.querySelectorAll('.fqic').forEach(ic=>{
+  const fqi=ic.closest('.fqi');
+  if(fqi)new MutationObserver(()=>{
+    gsap.to(ic,{rotation:fqi.classList.contains('open')?135:0,duration:0.4,ease:'back.out(2)'});
+  }).observe(fqi,{attributes:true,attributeFilter:['class']});
+});
+
+// Nav link elastic underline
+document.querySelectorAll('.nl a:not(.ncta)').forEach(a=>{
+  a.addEventListener('mouseenter',()=>{
+    gsap.fromTo(a,{backgroundSize:'0% 1.5px'},{backgroundSize:'100% 1.5px',duration:0.4,ease:'power2.out'});
+  });
+});
 
 document.querySelectorAll('.fqq').forEach(b=>{b.addEventListener('click',()=>{const i=b.parentElement,a=i.querySelector('.fqa'),o=i.classList.contains('open');document.querySelectorAll('.fqi').forEach(x=>{x.classList.remove('open');x.querySelector('.fqa').style.maxHeight=null});if(!o){i.classList.add('open');a.style.maxHeight=a.scrollHeight+'px'}})});
 
@@ -781,6 +903,9 @@ document.querySelectorAll('.lbtn').forEach(b=>{b.addEventListener('click',()=>{d
 </script>
 
 <div id="ckb" style="position:fixed;bottom:0;left:0;right:0;z-index:9995;background:rgba(250,251,254,0.95);backdrop-filter:blur(12px);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:.8rem;border-top:1px solid var(--brd);box-shadow:0 -2px 12px rgba(15,30,80,0.04)"><p style="color:var(--tx2);flex:1">We use essential cookies for language preferences only. No tracking. <a href="privacy.html" style="color:var(--ac)">Privacy Policy</a></p><button onclick="document.getElementById('ckb').style.display='none';localStorage.setItem('dwai-cookies','1')" style="background:var(--grd);color:#fff;border:none;padding:7px 18px;border-radius:100px;font-weight:600;cursor:pointer;font-size:.8rem;white-space:nowrap">Accept</button></div>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="i18n.js"></script>
 <script>
 if(localStorage.getItem('dwai-cookies'))document.getElementById('ckb').style.display='none';
