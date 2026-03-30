@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="alternate" hreflang="en" href="https://dentalwebai.com/">
+    <link rel="alternate" hreflang="de" href="https://dentalwebai.com/?lang=de">
+    <link rel="alternate" hreflang="nl" href="https://dentalwebai.com/?lang=nl">
+    <link rel="alternate" hreflang="ru" href="https://dentalwebai.com/?lang=ru">
+    <link rel="alternate" hreflang="x-default" href="https://dentalwebai.com/">
+    <title>DentalWebAI — AI-Powered Dental Websites</title>
+    <meta name="description" content="High-converting dental websites built with AI. Delivered in days, not months. Starting at €1,400.">
+    <meta property="og:title" content="DentalWebAI — Websites That Book Patients">
+    <meta property="og:description" content="AI-powered dental website design. 3-10 days delivery. Transparent pricing.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dentalwebai.com">
+    <meta property="og:image" content="https://dentalwebai.com/screenshots/og-image.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DentalWebAI — Websites That Book Patients">
+    <meta name="twitter:description" content="AI-powered dental website design. 3-10 days delivery. Transparent pricing.">
+    <meta name="twitter:image" content="https://dentalwebai.com/screenshots/og-image.webp">
+    <link rel="canonical" href="https://dentalwebai.com">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230066FF'/><text x='50' y='70' text-anchor='middle' font-family='sans-serif' font-size='50' font-weight='bold' fill='white'>D</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DentalWebAI",
+      "description": "AI-powered dental website design agency",
+      "url": "https://dentalwebai.com",
+      "sameAs": [],
+      "offers": {
+        "@type": "AggregateOffer",
+        "lowPrice": "1400",
+        "highPrice": "6500",
+        "priceCurrency": "EUR"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How long does it take to build a dental website?", "acceptedAnswer": {"@type": "Answer", "text": "Depending on the package: Starter in 3-5 days, Professional in 7-10 days, Premium in 14-21 days."}},
+        {"@type": "Question", "name": "Do I need to provide content?", "acceptedAnswer": {"@type": "Answer", "text": "You provide your logo, photos, and basic info. We handle all copywriting, SEO optimization, and design."}},
+        {"@type": "Question", "name": "Do I own my website?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, 100%. Upon full payment you own all code, design, and content. No lock-in, no proprietary platforms."}},
+        {"@type": "Question", "name": "What if I already have a website?", "acceptedAnswer": {"@type": "Answer", "text": "We offer free website audits. We'll analyze your current site, show what's losing you patients, and build a modern replacement."}}
+      ]
+    }
+    </script>
+</head>
+<body>
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+        <div class="loader-text">DentalWebAI</div>
+        <div class="loader-line"></div>
+    </div>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="customCursor"></div>
+    <div class="cursor-dot" id="customCursorDot"></div>
+    <!-- GRAIN OVERLAY -->
+    <div class="grain-overlay"></div>
+    <!-- THREE.JS HERO PARTICLES -->
+    <canvas id="heroParticles"></canvas>
+    <!-- NAV -->
+    <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__inner">
+            <a href="#" class="nav__logo">
+                <span class="logo-icon">&#9677;</span> DentalWebAI
+            </a>
+            <div class="nav__links" id="navLinks">
+                <a href="#problem" data-i18n="nav.problem">Why Change</a>
+                <a href="#packages" data-i18n="nav.packages">Packages</a>
+                <a href="#process" data-i18n="nav.process">Process</a>
+                <a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a>
+                <a href="#faq" data-i18n="nav.faq">FAQ</a>
+                <a href="#contact" class="nav__cta" data-i18n="nav.cta">Free Audit</a>
+            </div>
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="nl">NL</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+            </div>
+            <button class="burger" id="burger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero__bg"></div>
+        <div class="container hero__inner">
+            <div class="hero__badge" data-i18n="hero.badge">AI-Powered Dental Websites</div>
+            <h1 class="hero__title" data-i18n="hero.title">Your dental website is <span class="highlight">losing you patients.</span> Let's fix that.</h1>
+            <p class="hero__sub" data-i18n="hero.sub">High-converting websites for dental practices. Built with AI. Delivered in days, not months. You own everything.</p>
+            <div class="hero__stats">
+                <div class="stat">
+                    <span class="stat__num">3-10</span>
+                    <span class="stat__label" data-i18n="hero.stat1">Days delivery</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__num">2-3x</span>
+                    <span class="stat__label" data-i18n="hero.stat2">Cheaper than agencies</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__num">100%</span>
+                    <span class="stat__label" data-i18n="hero.stat3">You own the code</span>
+                </div>
+            </div>
+            <div class="hero__ctas">
+                <a href="audit.html" class="btn btn--primary" data-i18n="hero.cta1">Get Your Free Website Audit</a>
+                <a href="#packages" class="btn btn--outline" data-i18n="hero.cta2">View Packages</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section problem" id="problem">
+        <div class="container">
+            <h2 class="section__title" data-i18n="problem.title">Is your dental website costing you patients?</h2>
+            <p class="section__sub" data-i18n="problem.sub">Most dental websites have critical issues that drive patients to competitors.</p>
+            <div class="problem__grid">
+                <div class="problem__card">
+                    <div class="problem__icon">&#9201;</div>
+                    <h3 data-i18n="problem.c1.title">Slow loading</h3>
+                    <p data-i18n="problem.c1.text">67% of patients leave if your site takes more than 3 seconds to load.</p>
+                </div>
+                <div class="problem__card">
+                    <div class="problem__icon">&#128241;</div>
+                    <h3 data-i18n="problem.c2.title">Not mobile-friendly</h3>
+                    <p data-i18n="problem.c2.text">60% of patients search for dentists on mobile. If your site doesn't adapt — they bounce.</p>
+                </div>
+                <div class="problem__card">
+                    <div class="problem__icon">&#128197;</div>
+                    <h3 data-i18n="problem.c3.title">No online booking</h3>
+                    <p data-i18n="problem.c3.text">70% of patients prefer booking online. No booking button = lost appointments.</p>
+                </div>
+                <div class="problem__card">
+                    <div class="problem__icon">&#128269;</div>
+                    <h3 data-i18n="problem.c4.title">Invisible on Google</h3>
+                    <p data-i18n="problem.c4.text">92% of people never go past page 1. If you're not there — you don't exist.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="section solution">
+        <div class="container">
+            <div class="solution__inner">
+                <h2 class="section__title" data-i18n="solution.title">We build websites that <span class="highlight">book patients</span></h2>
+                <div class="solution__grid">
+                    <div class="solution__item">
+                        <div class="solution__num">01</div>
+                        <h3 data-i18n="solution.s1.title">AI-Powered Design</h3>
+                        <p data-i18n="solution.s1.text">We use AI to generate and iterate designs 10x faster than traditional agencies — saving you time and money.</p>
+                    </div>
+                    <div class="solution__item">
+                        <div class="solution__num">02</div>
+                        <h3 data-i18n="solution.s2.title">Conversion-Focused</h3>
+                        <p data-i18n="solution.s2.text">Every element is designed to convert visitors into booked appointments. Not just "pretty" — effective.</p>
+                    </div>
+                    <div class="solution__item">
+                        <div class="solution__num">03</div>
+                        <h3 data-i18n="solution.s3.title">You Own Everything</h3>
+                        <p data-i18n="solution.s3.text">No lock-in. No proprietary platforms. You get the full source code and can host anywhere.</p>
+                    </div>
+                    <div class="solution__item">
+                        <div class="solution__num">04</div>
+                        <h3 data-i18n="solution.s4.title">SEO Built-In</h3>
+                        <p data-i18n="solution.s4.text">Local SEO, schema markup, Google Business integration — so patients in your area find you first.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PACKAGES -->
+    <section class="section packages" id="packages">
+        <div class="container">
+            <h2 class="section__title" data-i18n="packages.title">Transparent pricing. No surprises.</h2>
+            <p class="section__sub" data-i18n="packages.sub">Choose the package that fits your practice. All prices are final — no hidden fees.</p>
+            <div class="packages__grid">
+                <!-- STARTER -->
+                <div class="package-card">
+                    <div class="package-card__header">
+                        <h3 data-i18n="packages.starter.name">Starter</h3>
+                        <div class="package-card__price">€1,400</div>
+                        <p class="package-card__time" data-i18n="packages.starter.time">3-5 business days</p>
+                    </div>
+                    <ul class="package-card__features">
+                        <li data-i18n="packages.starter.f1">5-7 pages (Home, About, Services, Contact, FAQ)</li>
+                        <li data-i18n="packages.starter.f2">Mobile-responsive design</li>
+                        <li data-i18n="packages.starter.f3">Contact form + Click-to-call</li>
+                        <li data-i18n="packages.starter.f4">Basic SEO setup (meta, sitemap, schema)</li>
+                        <li data-i18n="packages.starter.f5">Google Maps integration</li>
+                        <li data-i18n="packages.starter.f6">SSL certificate</li>
+                        <li data-i18n="packages.starter.f7">First year hosting included</li>
+                    </ul>
+                    <a href="#contact" class="btn btn--outline btn--full" data-i18n="packages.cta">Get Started</a>
+                </div>
+                <!-- PROFESSIONAL -->
+                <div class="package-card package-card--popular">
+                    <div class="package-card__badge" data-i18n="packages.popular">Most Popular</div>
+                    <div class="package-card__header">
+                        <h3 data-i18n="packages.pro.name">Professional</h3>
+                        <div class="package-card__price">€3,200</div>
+                        <p class="package-card__time" data-i18n="packages.pro.time">7-10 business days</p>
+                    </div>
+                    <ul class="package-card__features">
+                        <li data-i18n="packages.pro.f1">10-15 pages with dedicated service pages</li>
+                        <li data-i18n="packages.pro.f2">Semi-custom design (colors, fonts, photos)</li>
+                        <li data-i18n="packages.pro.f3">Online appointment booking</li>
+                        <li data-i18n="packages.pro.f4">Blog section</li>
+                        <li data-i18n="packages.pro.f5">Google Business Profile optimization</li>
+                        <li data-i18n="packages.pro.f6">Patient reviews widget</li>
+                        <li data-i18n="packages.pro.f7">Core Web Vitals optimization</li>
+                    </ul>
+                    <a href="#contact" class="btn btn--primary btn--full" data-i18n="packages.cta">Get Started</a>
+                </div>
+                <!-- PREMIUM -->
+                <div class="package-card">
+                    <div class="package-card__header">
+                        <h3 data-i18n="packages.premium.name">Premium</h3>
+                        <div class="package-card__price">€6,500</div>
+                        <p class="package-card__time" data-i18n="packages.premium.time">14-21 business days</p>
+                    </div>
+                    <ul class="package-card__features">
+                        <li data-i18n="packages.premium.f1">Up to 25 pages, full custom design</li>
+                        <li data-i18n="packages.premium.f2">Video integration (hero, service demos)</li>
+                        <li data-i18n="packages.premium.f3">Patient portal & intake forms</li>
+                        <li data-i18n="packages.premium.f4">Local SEO strategy (10 geo pages)</li>
+                        <li data-i18n="packages.premium.f5">Professional copywriting</li>
+                        <li data-i18n="packages.premium.f6">Google Ads landing page</li>
+                        <li data-i18n="packages.premium.f7">3 months post-launch support</li>
+                    </ul>
+                    <a href="#contact" class="btn btn--outline btn--full" data-i18n="packages.cta">Get Started</a>
+                </div>
+            </div>
+            <!-- RETAINER -->
+            <div class="retainer">
+                <div class="retainer__inner">
+                    <div>
+                        <h3 data-i18n="packages.retainer.name">Monthly Retainer</h3>
+                        <p data-i18n="packages.retainer.desc">Content updates, 2 blog posts/month, analytics reports, priority support, backups & monitoring.</p>
+                    </div>
+                    <div class="retainer__price">
+                        <span>€450</span><small data-i18n="packages.retainer.per">/month</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section process" id="process">
+        <div class="container">
+            <h2 class="section__title" data-i18n="process.title">How it works</h2>
+            <p class="section__sub" data-i18n="process.sub">From first call to live website — simple and fast.</p>
+            <div class="process__grid">
+                <div class="process__step">
+                    <div class="process__num">1</div>
+                    <h3 data-i18n="process.s1.title">Free Audit</h3>
+                    <p data-i18n="process.s1.text">We analyze your current website and show exactly what's losing you patients. 10 minutes, no obligation.</p>
+                </div>
+                <div class="process__step">
+                    <div class="process__num">2</div>
+                    <h3 data-i18n="process.s2.title">Design & Build</h3>
+                    <p data-i18n="process.s2.text">AI generates multiple design options. You pick, we refine. Your site is built in days, not weeks.</p>
+                </div>
+                <div class="process__step">
+                    <div class="process__num">3</div>
+                    <h3 data-i18n="process.s3.title">Review & Launch</h3>
+                    <p data-i18n="process.s3.text">You review, request changes, and we launch. 2 rounds of revisions included. Go live with confidence.</p>
+                </div>
+                <div class="process__step">
+                    <div class="process__num">4</div>
+                    <h3 data-i18n="process.s4.title">Grow</h3>
+                    <p data-i18n="process.s4.text">Your new website starts converting visitors into appointments. We provide ongoing support and SEO.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="section portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section__title" data-i18n="portfolio.title">Our work</h2>
+            <p class="section__sub" data-i18n="portfolio.sub">Modern dental websites that convert visitors into patients.</p>
+            <div class="portfolio__grid">
+                <a href="demos/bright-smile.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
+                    <div class="portfolio__img" style="background:url('screenshots/bright-smile.webp') center/cover" role="img" aria-label="Bright Smile Dental website - premium dark theme"></div>
+                    <h3>Bright Smile Dental</h3>
+                    <p data-i18n="portfolio.p1.desc">Full redesign. Online booking increased by 45%.</p>
+                </a>
+                <a href="demos/alpine-dental.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
+                    <div class="portfolio__img" style="background:url('screenshots/alpine-dental.webp') center/cover" role="img" aria-label="Alpine Family Dentistry website - clean modern design"></div>
+                    <h3>Alpine Family Dentistry</h3>
+                    <p data-i18n="portfolio.p2.desc">New website from scratch. Page 1 Google in 30 days.</p>
+                </a>
+                <a href="demos/citydent.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
+                    <div class="portfolio__img" style="background:url('screenshots/citydent.webp') center/cover" role="img" aria-label="CityDent Clinic Berlin - warm European design"></div>
+                    <h3>CityDent Clinic</h3>
+                    <p data-i18n="portfolio.p3.desc">Multilingual site (EN/DE). 60% more appointment requests.</p>
+                </a>
+                <a href="https://tradervd9.github.io/novadent/" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
+                    <div class="portfolio__img" style="background:url('screenshots/novadent.webp') center/cover" role="img" aria-label="NovaDent - immersive dental website with Three.js and GSAP"></div>
+                    <h3>NovaDent Premium</h3>
+                    <p>Immersive experience. Three.js 3D, GSAP animations, before/after slider, real photos.</p>
+                </a>
+                <a href="demos/premium-dental.html" class="portfolio__card" target="_blank" style="text-decoration:none;color:inherit">
+                    <div class="portfolio__img" style="background:linear-gradient(135deg, #1a1a1a, #0a0a0a);display:flex;align-items:center;justify-content:center;color:#c9a96e;font-family:serif;font-size:1.5rem;font-style:italic" role="img" aria-label="Luxe Dental Studio - Awwwards-level premium design">Luxe Dental</div>
+                    <h3>Luxe Dental Studio</h3>
+                    <p>Awwwards-level. 3D particles, custom cursor, GSAP scroll animations, luxury aesthetic.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON -->
+    <section class="section comparison">
+        <div class="container">
+            <h2 class="section__title" data-i18n="comparison.title">Why DentalWebAI?</h2>
+            <div class="comparison__table-wrap">
+                <table class="comparison__table">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col" data-i18n="comparison.agencies">Agencies</th>
+                            <th scope="col" data-i18n="comparison.freelancers">Freelancers</th>
+                            <th scope="col" class="comparison__us">DentalWebAI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="comparison.row1">Price</td>
+                            <td>€8K–€25K</td>
+                            <td>€500–€1K</td>
+                            <td class="comparison__us">€1.4K–€6.5K</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="comparison.row2">Delivery time</td>
+                            <td data-i18n="comparison.r2a">4-8 weeks</td>
+                            <td data-i18n="comparison.r2b">2-6 weeks</td>
+                            <td class="comparison__us" data-i18n="comparison.r2c">3-10 days</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="comparison.row3">You own the code</td>
+                            <td>&#10060;</td>
+                            <td>&#9989;</td>
+                            <td class="comparison__us">&#9989;</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="comparison.row4">Dental expertise</td>
+                            <td>&#9989;</td>
+                            <td>&#10060;</td>
+                            <td class="comparison__us">&#9989;</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="comparison.row5">SEO included</td>
+                            <td data-i18n="comparison.r5a">Extra cost</td>
+                            <td>&#10060;</td>
+                            <td class="comparison__us">&#9989;</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="comparison.row6">Transparent pricing</td>
+                            <td>&#10060;</td>
+                            <td>&#9989;</td>
+                            <td class="comparison__us">&#9989;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- BEFORE/AFTER -->
+    <section class="section ba-section">
+        <div class="ba-inner">
+            <h2 class="section__title" style="color:#fff" data-i18n="ba.title">The transformation</h2>
+            <p class="section__sub" style="color:rgba(255,255,255,.5);margin:0 auto 48px" data-i18n="ba.sub">Before and after our redesign — real results</p>
+            <div class="ba-slider" id="baSlider">
+                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1200&q=80" alt="Before redesign" class="ba-before" style="filter:grayscale(.8) brightness(.7)">
+                <img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?w=1200&q=80" alt="After redesign" class="ba-after">
+                <div class="ba-line" id="baLine"></div>
+                <div class="ba-handle" id="baHandle">&#8596;</div>
+            </div>
+            <div class="ba-labels"><span>Before — Score 34</span><span>After — Score 96</span></div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="section testimonial-section">
+        <div class="container" style="text-align:center">
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <blockquote class="testimonial-quote" data-i18n="testimonial.quote">"Our online bookings increased by 45% in the first month. The site was delivered in 8 days — faster than any agency we've talked to."</blockquote>
+            <p class="testimonial-author" data-i18n="testimonial.author">— Dr. S. Mitchell, Bright Smile Dental</p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <h2 class="section__title" data-i18n="faq.title">Frequently asked questions</h2>
+            <div class="faq__list">
+                <details class="faq__item">
+                    <summary data-i18n="faq.q1">How long does it take to build a dental website?</summary>
+                    <p data-i18n="faq.a1">Depending on the package: Starter in 3-5 days, Professional in 7-10 days, Premium in 14-21 business days. We're 3-5x faster than traditional agencies thanks to AI-powered design.</p>
+                </details>
+                <details class="faq__item">
+                    <summary data-i18n="faq.q2">Do I need to provide content?</summary>
+                    <p data-i18n="faq.a2">You provide your logo, photos, and basic practice info. We handle all copywriting, SEO optimization, and design. Premium package includes professional copywriting.</p>
+                </details>
+                <details class="faq__item">
+                    <summary data-i18n="faq.q3">Do I own my website?</summary>
+                    <p data-i18n="faq.a3">Yes, 100%. Upon full payment you own all code, design, and content. No lock-in, no proprietary platforms. You can host it anywhere and modify freely.</p>
+                </details>
+                <details class="faq__item">
+                    <summary data-i18n="faq.q4">What if I already have a website?</summary>
+                    <p data-i18n="faq.a4">We offer a free website audit. We'll analyze your current site, show what's losing you patients, and build a modern replacement that converts better.</p>
+                </details>
+                <details class="faq__item">
+                    <summary data-i18n="faq.q5">How does payment work?</summary>
+                    <p data-i18n="faq.a5">50% deposit before we start, 50% upon completion and approval. We accept credit cards, bank transfers, and PayPal. All payments are processed securely through Stripe.</p>
+                </details>
+                <details class="faq__item">
+                    <summary data-i18n="faq.q6">Where do you work?</summary>
+                    <p data-i18n="faq.a6">We work globally — 100% online. Our focus is Tier 1 markets: US, UK, Canada, Australia, Germany, Austria, Switzerland, Netherlands, and Scandinavia. We build multilingual websites and handle local SEO for any market worldwide.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section" id="contact">
+        <div class="container">
+            <div class="cta-box">
+                <h2 data-i18n="cta.title">Ready to get more patients?</h2>
+                <p data-i18n="cta.sub">Get a free 10-minute website audit. We'll show you exactly what's costing you appointments — no obligation.</p>
+                <form class="cta-form" id="contactForm" role="form" aria-label="Request free website audit">
+                    <div class="cta-form__row">
+                        <label for="audit-name" class="sr-only">Your name</label>
+                        <input type="text" id="audit-name" name="name" placeholder="Dr. John Smith" required data-i18n-placeholder="cta.name" aria-required="true">
+                        <label for="audit-email" class="sr-only">Email address</label>
+                        <input type="email" id="audit-email" name="email" placeholder="doctor@clinic.com" required aria-required="true">
+                    </div>
+                    <div class="cta-form__row">
+                        <label for="audit-clinic" class="sr-only">Practice name</label>
+                        <input type="text" id="audit-clinic" name="clinic" placeholder="Practice name" required data-i18n-placeholder="cta.clinic" aria-required="true">
+                        <label for="audit-website" class="sr-only">Website URL</label>
+                        <input type="url" id="audit-website" name="website" placeholder="Your website URL" required data-i18n-placeholder="cta.website" aria-required="true">
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full" data-i18n="cta.submit">Get My Free Audit</button>
+                </form>
+                <p class="cta-note" data-i18n="cta.note">We'll respond within 24 hours with a personalized audit report of your website.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+        <div class="container footer__inner">
+            <div class="footer__brand">
+                <span class="logo-icon">&#9677;</span> DentalWebAI
+                <p data-i18n="footer.tagline">Websites that book patients.</p>
+            </div>
+            <div class="footer__links">
+                <a href="#packages" data-i18n="nav.packages">Packages</a>
+                <a href="#process" data-i18n="nav.process">Process</a>
+                <a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a>
+                <a href="#faq" data-i18n="nav.faq">FAQ</a>
+                <a href="#contact" data-i18n="nav.cta">Free Audit</a>
+            </div>
+            <p class="footer__copy">&copy; 2026 DentalWebAI. Netherlands. All rights reserved. | <a href="privacy.html" style="color:var(--primary);text-decoration:none">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <!-- CLICK-TO-CALL FLOATING BUTTON -->
+    <a href="tel:+31000000000" class="click-to-call" aria-label="Call DentalWebAI" title="Call us">
+        &#128222;
+    </a>
+
+    <!-- COOKIE CONSENT -->
+    <div class="cookie-banner" id="cookieBanner" role="alert" aria-live="polite">
+        <p>We use essential cookies for language preferences only. No tracking. <a href="privacy.html">Privacy Policy</a></p>
+        <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('dwai-cookies','1')" aria-label="Accept cookies">Accept</button>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="main.js"></script>
+    <script>if(localStorage.getItem('dwai-cookies'))document.getElementById('cookieBanner').style.display='none';</script>
+</body>
+</html>
