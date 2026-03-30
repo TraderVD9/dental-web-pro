@@ -368,6 +368,17 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
   .mock{display:none}
 }
 @media(min-width:901px) and (max-width:1100px){.sg{grid-template-columns:repeat(2,1fr)}.prg{grid-template-columns:repeat(2,1fr)}}
+/* Portfolio carousel */
+.po-card{min-width:340px;max-width:340px;border-radius:14px;overflow:hidden;background:var(--card-s);border:1px solid var(--brd);box-shadow:var(--shadow);transition:all .5s cubic-bezier(.16,1,.3,1);text-decoration:none;color:var(--tx);display:block;flex-shrink:0}
+.po-card:hover{border-color:var(--brd-h);transform:translateY(-6px);box-shadow:var(--shadow-h)}
+.po-card .pop{height:200px;position:relative;overflow:hidden;transition:all .6s}
+.po-card:hover .pop{transform:scale(1.04)}
+.po-card .pop::after{content:'VIEW DEMO →';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(37,99,235,0.06);backdrop-filter:blur(3px);font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ac);letter-spacing:.1em;opacity:0;transition:.4s}
+.po-card:hover .pop::after{opacity:1}
+.po-tier{display:inline-block;padding:3px 12px;border-radius:100px;font-size:.62rem;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.po-meta{display:flex;gap:10px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--ac)}
+.po-arr:hover{background:var(--ac);color:#fff;border-color:var(--ac)}
+@media(max-width:900px){.po-card{min-width:280px;max-width:280px}.po-arr{display:none}}
 /* Click-to-call floating */
 .ctc-float{position:fixed;bottom:24px;right:24px;z-index:9990;width:52px;height:52px;border-radius:50%;background:var(--grd);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem;text-decoration:none;box-shadow:0 4px 20px rgba(37,99,235,0.3);transition:all .3s;animation:ctcPulse 2s infinite}
 .ctc-float:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,99,235,0.4)}
@@ -560,12 +571,37 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 </section><div class="sdv"></div>
 
 <section id="portfolio"><div class="rv"><div class="sl">Our Work</div><div class="st" data-i18n="portfolio.title">Dental websites that convert</div><div class="ss" data-i18n="portfolio.sub">Real demos. Click and test.</div></div>
-  <div class="pog">
-    <a href="https://dentalwebai.com/demos/bright-smile.html" class="poi rv rd1" target="_blank" rel="noopener noreferrer"><div class="pop" style="background:url('screenshots/bright-smile.webp') center/cover"></div><div class="poif"><h3>Bright Smile Dental</h3><p data-i18n="portfolio.p1.desc">Full redesign. Online booking +45%. Click-to-call, reviews, 3D hero.</p><div style="display:flex;gap:12px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ac)"><span>PageSpeed 97</span><span>·</span><span>5 days</span><span>·</span><span>Charlotte, NC</span></div><div class="potg"><span>Redesign</span><span>Booking</span><span>SEO</span><span>Reviews</span></div></div></a>
-    <a href="https://dentalwebai.com/demos/alpine-dental.html" class="poi rv rd2" target="_blank" rel="noopener noreferrer"><div class="pop" style="background:url('screenshots/alpine-dental.webp') center/cover"></div><div class="poif"><h3>Alpine Family Dentistry</h3><p data-i18n="portfolio.p2.desc">From scratch. Page 1 Google in 30 days. Schema, GBP, local SEO.</p><div style="display:flex;gap:12px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ac2)"><span>PageSpeed 99</span><span>·</span><span>7 days</span><span>·</span><span>Denver, CO</span></div><div class="potg"><span>Custom</span><span>Local SEO</span><span>Schema</span><span>GBP</span></div></div></a>
-    <a href="https://dentalwebai.com/demos/citydent.html" class="poi rv rd3" target="_blank" rel="noopener noreferrer"><div class="pop" style="background:url('screenshots/citydent.webp') center/cover"></div><div class="poif"><h3>CityDent Clinic</h3><p data-i18n="portfolio.p3.desc">Multilingual EN/DE. +60% appointment requests. Mobile-first, bento grid.</p><div style="display:flex;gap:12px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ac)"><span>PageSpeed 96</span><span>·</span><span>8 days</span><span>·</span><span>Berlin, DE</span></div><div class="potg"><span>Multilingual</span><span>Mobile</span><span>Booking</span><span>Bento</span></div></div></a>
-    <a href="https://tradervd9.github.io/novadent/" class="poi rv rd1" target="_blank" rel="noopener noreferrer"><div class="pop" style="background:url('screenshots/novadent.webp') center/cover"></div><div class="poif"><h3>NovaDent Premium</h3><p>Immersive 3D experience. Three.js particles, GSAP scroll, before/after slider, real clinic photos.</p><div style="display:flex;gap:12px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ac2)"><span>PageSpeed 94</span><span>·</span><span>12 days</span><span>·</span><span>Premium tier</span></div><div class="potg"><span>Three.js</span><span>3D</span><span>GSAP</span><span>Immersive</span></div></div></a>
-    <a href="demos/premium-dental.html" class="poi rv rd2" target="_blank" rel="noopener noreferrer"><div class="pop" style="background:linear-gradient(135deg,#1a1a1a,#0a0a0a);display:flex;align-items:center;justify-content:center;color:#c9a96e;font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic">Luxe Dental</div><div class="poif"><h3>Luxe Dental Studio</h3><p>Awwwards-level dark luxury. Custom cursor, particle system, scroll-driven animations, editorial layout.</p><div style="display:flex;gap:12px;margin:10px 0;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ac)"><span>PageSpeed 98</span><span>·</span><span>14 days</span><span>·</span><span>Premium tier</span></div><div class="potg"><span>Awwwards</span><span>Luxury</span><span>GSAP</span><span>WebGL</span></div></div></a>
+  <div class="po-wrap" style="overflow:hidden;position:relative;margin-top:48px">
+    <div class="po-track" id="poTrack" style="display:flex;gap:18px;transition:transform .5s cubic-bezier(.16,1,.3,1);cursor:grab;user-select:none">
+      <!-- 1. PREMIUM — Luxe Dental Studio -->
+      <a href="demos/premium-dental.html" class="po-card" target="_blank" rel="noopener noreferrer">
+        <div class="pop" style="background:linear-gradient(135deg,#1a1a1a,#0a0a0a);display:flex;align-items:center;justify-content:center;color:#c9a96e;font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic">Luxe Dental</div>
+        <div class="poif"><div class="po-tier" style="background:linear-gradient(135deg,#c9a96e,#8a6d3b)">Premium</div><h3>Luxe Dental Studio</h3><p>Full custom design with 3D particle system, custom cursor, GSAP scroll animations, editorial dark luxury layout. Video hero, patient portal ready.</p><div class="po-meta"><span>PageSpeed 98</span><span>·</span><span>14 days</span></div><div class="potg"><span>25 pages</span><span>Video hero</span><span>3D WebGL</span><span>Custom cursor</span><span>GSAP</span></div></div>
+      </a>
+      <!-- 2. PREMIUM — NovaDent -->
+      <a href="https://tradervd9.github.io/novadent/" class="po-card" target="_blank" rel="noopener noreferrer">
+        <div class="pop" style="background:url('screenshots/novadent.webp') center/cover"></div>
+        <div class="poif"><div class="po-tier" style="background:linear-gradient(135deg,#c9a96e,#8a6d3b)">Premium</div><h3>NovaDent Premium</h3><p>Immersive 3D experience with Three.js particles, GSAP scroll animations, before/after slider, real clinic photos. Full copywriting included.</p><div class="po-meta"><span>PageSpeed 94</span><span>·</span><span>12 days</span></div><div class="potg"><span>25 pages</span><span>Three.js</span><span>Before/After</span><span>Copywriting</span></div></div>
+      </a>
+      <!-- 3. PROFESSIONAL — CityDent -->
+      <a href="https://dentalwebai.com/demos/citydent.html" class="po-card" target="_blank" rel="noopener noreferrer">
+        <div class="pop" style="background:url('screenshots/citydent.webp') center/cover"></div>
+        <div class="poif"><div class="po-tier" style="background:var(--grd)">Professional</div><h3>CityDent Clinic Berlin</h3><p data-i18n="portfolio.p3.desc">Multilingual EN/DE with online booking, patient reviews widget, blog section. Google Business optimized. +60% appointment requests.</p><div class="po-meta"><span>PageSpeed 96</span><span>·</span><span>8 days</span><span>·</span><span>Berlin, DE</span></div><div class="potg"><span>15 pages</span><span>Multilingual</span><span>Booking</span><span>Blog</span><span>Reviews</span></div></div>
+      </a>
+      <!-- 4. PROFESSIONAL — Bright Smile -->
+      <a href="https://dentalwebai.com/demos/bright-smile.html" class="po-card" target="_blank" rel="noopener noreferrer">
+        <div class="pop" style="background:url('screenshots/bright-smile.webp') center/cover"></div>
+        <div class="poif"><div class="po-tier" style="background:var(--grd)">Professional</div><h3>Bright Smile Dental</h3><p data-i18n="portfolio.p1.desc">Full redesign with online booking, patient reviews, click-to-call, 3D hero section. Core Web Vitals optimized. +45% online bookings.</p><div class="po-meta"><span>PageSpeed 97</span><span>·</span><span>5 days</span><span>·</span><span>Charlotte, NC</span></div><div class="potg"><span>12 pages</span><span>Booking</span><span>Reviews</span><span>Click-to-call</span></div></div>
+      </a>
+      <!-- 5. STARTER — Alpine Family -->
+      <a href="https://dentalwebai.com/demos/alpine-dental.html" class="po-card" target="_blank" rel="noopener noreferrer">
+        <div class="pop" style="background:url('screenshots/alpine-dental.webp') center/cover"></div>
+        <div class="poif"><div class="po-tier" style="background:var(--ac2)">Starter</div><h3>Alpine Family Dentistry</h3><p data-i18n="portfolio.p2.desc">Clean 7-page site from scratch. Contact form, click-to-call, Google Maps, basic SEO with schema markup. Page 1 Google in 30 days.</p><div class="po-meta"><span>PageSpeed 99</span><span>·</span><span>4 days</span><span>·</span><span>Denver, CO</span></div><div class="potg"><span>7 pages</span><span>SEO</span><span>Schema</span><span>Google Maps</span></div></div>
+      </a>
+    </div>
+    <!-- Navigation arrows -->
+    <button class="po-arr po-prev" id="poPrev" aria-label="Previous" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:var(--bg3);border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--tx);box-shadow:var(--shadow);z-index:5;transition:.3s">←</button>
+    <button class="po-arr po-next" id="poNext" aria-label="Next" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:var(--bg3);border:1px solid var(--brd);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--tx);box-shadow:var(--shadow);z-index:5;transition:.3s">→</button>
   </div>
 </section><div class="sdv"></div>
 
@@ -706,6 +742,35 @@ document.querySelectorAll('.lbtn').forEach(b=>{b.addEventListener('click',()=>{d
 <script src="i18n.js"></script>
 <script>
 if(localStorage.getItem('dwai-cookies'))document.getElementById('ckb').style.display='none';
+// Portfolio infinite carousel
+(function(){
+const track=document.getElementById('poTrack');if(!track)return;
+const cards=track.querySelectorAll('.po-card');
+const cardW=358;// card width + gap
+let pos=0,dragging=false,startX=0,scrollStart=0;
+
+// Clone cards for infinite loop
+cards.forEach(c=>track.appendChild(c.cloneNode(true)));
+const total=cards.length;
+
+// Auto scroll
+let autoI=setInterval(()=>{pos++;track.style.transition='transform .5s cubic-bezier(.16,1,.3,1)';track.style.transform=`translateX(-${pos*cardW}px)`;if(pos>=total){setTimeout(()=>{track.style.transition='none';pos=0;track.style.transform='translateX(0)'},520)}},4000);
+
+// Arrows
+const prev=document.getElementById('poPrev'),next=document.getElementById('poNext');
+function go(dir){clearInterval(autoI);pos=Math.max(0,pos+dir);if(pos>=total){pos=0;track.style.transition='none';track.style.transform='translateX(0)';return}track.style.transition='transform .5s cubic-bezier(.16,1,.3,1)';track.style.transform=`translateX(-${pos*cardW}px)`}
+if(prev)prev.addEventListener('click',()=>go(-1));
+if(next)next.addEventListener('click',()=>go(1));
+
+// Touch/drag
+track.addEventListener('mousedown',e=>{dragging=true;startX=e.pageX;scrollStart=pos*cardW;track.style.transition='none';track.style.cursor='grabbing'});
+document.addEventListener('mousemove',e=>{if(!dragging)return;const dx=e.pageX-startX;track.style.transform=`translateX(-${scrollStart-dx}px)`});
+document.addEventListener('mouseup',e=>{if(!dragging)return;dragging=false;track.style.cursor='grab';const dx=e.pageX-startX;if(Math.abs(dx)>60){go(dx<0?1:-1)}else{track.style.transition='transform .3s';track.style.transform=`translateX(-${pos*cardW}px)`}});
+track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;scrollStart=pos*cardW;track.style.transition='none';clearInterval(autoI)},{passive:true});
+track.addEventListener('touchmove',e=>{const dx=e.touches[0].clientX-startX;track.style.transform=`translateX(-${scrollStart-dx}px)`},{passive:true});
+track.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>50)go(dx<0?1:-1);else{track.style.transition='transform .3s';track.style.transform=`translateX(-${pos*cardW}px)`}},{passive:true});
+})();
+
 // Testimonial carousel
 let tmCur=0;const tmSlides=document.querySelectorAll('.tms'),tmDots=document.querySelectorAll('.tmd');
 function goTm(i){tmSlides.forEach((s,j)=>{s.style.opacity=j===i?'1':'0';s.style.position=j===i?'relative':'absolute'});tmDots.forEach((d,j)=>{d.style.background=j===i?'var(--ac)':'var(--brd)';d.style.opacity=j===i?'1':'.5'});tmCur=i}

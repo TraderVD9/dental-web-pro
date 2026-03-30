@@ -16,6 +16,7 @@ const http = require('http');
 const { URL } = require('url');
 
 const TARGET_URL = process.argv[2];
+const SELF_MODE = process.argv.includes('--self'); // Skip Google Maps check for our own site
 
 if (!TARGET_URL) {
   console.log('Usage: node prospect-audit.js <website-url>');
@@ -127,13 +128,13 @@ async function audit(url) {
   }
   console.log(`✓ Schema markup: ${hasSchema ? 'Yes' : '❌ No'}`);
 
-  // 7. Google Maps
+  // 7. Google Maps (skip for own site with --self)
   const hasMaps = html.includes('maps.google') || html.includes('google.com/maps') || html.includes('maps.googleapis');
-  if (!hasMaps) {
+  if (!hasMaps && !SELF_MODE) {
     report.issues.push({ severity: 'low', issue: 'No Google Maps', detail: 'No embedded Google Maps found. Helps patients find your practice easily.' });
     report.score -= 3;
   }
-  console.log(`✓ Google Maps: ${hasMaps ? 'Yes' : '❌ No'}`);
+  console.log(`✓ Google Maps: ${hasMaps ? 'Yes' : SELF_MODE ? 'N/A (online business)' : '❌ No'}`);
 
   // 8. Phone number (click-to-call)
   const hasPhone = html.includes('tel:') || html.includes('href="tel');
