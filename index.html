@@ -432,7 +432,7 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
 /* Build in Real-Time */
 @keyframes brtPulse{0%,100%{box-shadow:0 4px 12px rgba(37,99,235,0.3)}50%{box-shadow:0 4px 24px rgba(37,99,235,0.5)}}
 .brt-stage{transition:opacity .5s ease}
-@media(max-width:768px){.brt>div{height:200vh!important}.brt-browser{width:92vw!important;height:50vh!important}}
+@media(max-width:768px){.brt{padding:40px 18px 20px!important}.brt-browser{width:92vw!important;height:55vw!important}}
 /* Page transition */
 body{animation:pageIn .6s ease both}
 @keyframes pageIn{from{opacity:0}to{opacity:1}}
@@ -535,9 +535,9 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 <main id="main-content">
 
 <!-- ═══ BUILD IN REAL-TIME — Concept C ═══ -->
-<section class="brt" id="brt" style="position:relative;z-index:3">
-  <div style="height:250vh">
-    <div class="brt-pin" style="position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;background:var(--bg)">
+<section class="brt" id="brt" style="position:relative;z-index:3;padding:60px 40px 40px;max-width:1200px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:32px"><div class="sl" style="justify-content:center">See It Built</div><div class="st">We build your website in real time</div><div class="ss" style="margin:8px auto 0">Watch a dental website come to life — from empty canvas to live site.</div></div>
+    <div class="brt-pin" style="display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative">
     <!-- Browser mockup frame -->
     <div class="brt-browser" style="width:min(85vw,900px);height:min(55vh,520px);border-radius:12px;background:var(--bg3);border:1px solid var(--brd);box-shadow:0 24px 80px rgba(15,30,80,0.12);overflow:hidden;position:relative">
       <!-- Browser bar -->
@@ -640,11 +640,10 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
     </div>
     <!-- Progress bar -->
     <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--brd)">
-      <div id="brtProgress" style="height:100%;width:0%;background:var(--grd);transition:width .1s"></div>
+      <div id="brtProgress" style="height:100%;width:0%;background:var(--grd);transition:width .3s"></div>
     </div>
   </div>
-  </div>
-</section>
+</section><div class="sdv"></div>
 
 <section class="hero">
   <div class="hb"><span class="pd"></span> <span data-i18n="hero.badge">AI-Powered Dental Websites</span></div>
@@ -852,38 +851,60 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
 <script>
-// ═══ BUILD IN REAL-TIME ═══
+// ═══ BUILD IN REAL-TIME (auto-play on visibility) ═══
 (function(){
 const brt=document.getElementById('brt');if(!brt)return;
 const stages=brt.querySelectorAll('.brt-stage');
-const labels=['Scroll to build →','Drawing wireframe...','Adding colors & layout...','Writing content...','Adding booking & CTAs...','✓ Website complete!'];
+const labels=['','Drawing wireframe...','Adding colors & layout...','Writing content...','Adding booking & CTAs...','✓ Website complete!'];
 const urls=['your-dental-practice.com','wireframe.dental','styling.dental','content.dental','booking.dental','your-dental-practice.com ✓'];
 const labelEl=document.getElementById('brtLabel');
 const timeEl=document.getElementById('brtTime');
 const progEl=document.getElementById('brtProgress');
 const urlEl=document.getElementById('brtUrl');
-let lastStage=-1;
+let currentStage=0,playing=false,timer=null;
 
-function updateBrt(){
-  const rect=brt.getBoundingClientRect();
-  const scrollArea=brt.offsetHeight-window.innerHeight;
-  if(scrollArea<=0)return;
-  const scrolled=Math.max(0,-rect.top);
-  const progress=Math.min(1,scrolled/scrollArea);
-  const stageIdx=Math.min(5,Math.floor(progress*6));
-
-  if(progEl)progEl.style.width=(progress*100)+'%';
-
-  if(stageIdx!==lastStage){
-    lastStage=stageIdx;
-    stages.forEach((s,i)=>{s.style.opacity=i===stageIdx?'1':'0'});
-    if(labelEl)labelEl.textContent=labels[stageIdx]||'';
-    if(urlEl)urlEl.textContent=urls[stageIdx]||'';
-    if(timeEl)timeEl.style.opacity=stageIdx>=5?'1':'0';
-  }
+function showStage(idx){
+  currentStage=idx;
+  stages.forEach((s,i)=>{s.style.opacity=i===idx?'1':'0'});
+  if(labelEl)labelEl.textContent=labels[idx]||'';
+  if(urlEl)urlEl.textContent=urls[idx]||'';
+  if(progEl)progEl.style.width=((idx/5)*100)+'%';
+  if(timeEl)timeEl.style.opacity=idx>=5?'1':'0';
 }
-window.addEventListener('scroll',updateBrt,{passive:true});
-updateBrt();
+
+function play(){
+  if(playing)return;
+  playing=true;
+  currentStage=0;
+  showStage(0);
+  let i=1;
+  timer=setInterval(()=>{
+    if(i>5){clearInterval(timer);playing=false;
+      // Restart after 3s pause
+      setTimeout(()=>{if(!playing){showStage(0);play()}},4000);
+      return;
+    }
+    showStage(i);
+    i++;
+  },1500);
+}
+
+function stop(){
+  if(timer){clearInterval(timer);timer=null}
+  playing=false;
+}
+
+// Auto-start when visible
+const brtObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){play()}
+    else{stop();showStage(0)}
+  });
+},{threshold:0.3});
+brtObs.observe(brt);
+
+// Also start on hover
+brt.addEventListener('mouseenter',play);
 })();
 
 // ═══ LOADER (runs immediately) ═══
