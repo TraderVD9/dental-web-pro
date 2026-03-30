@@ -431,8 +431,8 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
 @media(max-width:600px){.ctc-float{bottom:80px}}
 /* Build in Real-Time */
 @keyframes brtPulse{0%,100%{box-shadow:0 4px 12px rgba(37,99,235,0.3)}50%{box-shadow:0 4px 24px rgba(37,99,235,0.5)}}
-.brt-stage{transition:opacity .6s ease}
-@media(max-width:600px){.brt{height:400vh}.brt-browser{width:92vw!important;height:45vh!important}}
+.brt-stage{transition:opacity .5s ease}
+@media(max-width:768px){.brt>div{height:200vh!important}.brt-browser{width:92vw!important;height:50vh!important}}
 /* Page transition */
 body{animation:pageIn .6s ease both}
 @keyframes pageIn{from{opacity:0}to{opacity:1}}
@@ -535,8 +535,9 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 <main id="main-content">
 
 <!-- ═══ BUILD IN REAL-TIME — Concept C ═══ -->
-<section class="brt" id="brt" style="height:300vh;position:relative;z-index:3">
-  <div class="brt-pin" style="position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;background:var(--bg)">
+<section class="brt" id="brt" style="position:relative;z-index:3">
+  <div style="height:250vh">
+    <div class="brt-pin" style="position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;background:var(--bg)">
     <!-- Browser mockup frame -->
     <div class="brt-browser" style="width:min(85vw,900px);height:min(55vh,520px);border-radius:12px;background:var(--bg3);border:1px solid var(--brd);box-shadow:0 24px 80px rgba(15,30,80,0.12);overflow:hidden;position:relative">
       <!-- Browser bar -->
@@ -641,6 +642,7 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
     <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--brd)">
       <div id="brtProgress" style="height:100%;width:0%;background:var(--grd);transition:width .1s"></div>
     </div>
+  </div>
   </div>
 </section>
 
@@ -855,36 +857,33 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 const brt=document.getElementById('brt');if(!brt)return;
 const stages=brt.querySelectorAll('.brt-stage');
 const labels=['Scroll to build →','Drawing wireframe...','Adding colors & layout...','Writing content...','Adding booking & CTAs...','✓ Website complete!'];
-const urls=['your-dental-practice.com','your-dental-practice.com/wireframe','your-dental-practice.com','your-dental-practice.com','your-dental-practice.com','your-dental-practice.com — Live!'];
+const urls=['your-dental-practice.com','wireframe.dental','styling.dental','content.dental','booking.dental','your-dental-practice.com ✓'];
 const labelEl=document.getElementById('brtLabel');
 const timeEl=document.getElementById('brtTime');
 const progEl=document.getElementById('brtProgress');
 const urlEl=document.getElementById('brtUrl');
 let lastStage=-1;
 
-window.addEventListener('scroll',()=>{
+function updateBrt(){
   const rect=brt.getBoundingClientRect();
-  const totalScroll=brt.offsetHeight-window.innerHeight;
+  const scrollArea=brt.offsetHeight-window.innerHeight;
+  if(scrollArea<=0)return;
   const scrolled=Math.max(0,-rect.top);
-  const progress=Math.min(1,scrolled/totalScroll);
+  const progress=Math.min(1,scrolled/scrollArea);
   const stageIdx=Math.min(5,Math.floor(progress*6));
 
-  // Update progress bar
   if(progEl)progEl.style.width=(progress*100)+'%';
 
-  // Show current stage
   if(stageIdx!==lastStage){
     lastStage=stageIdx;
-    stages.forEach((s,i)=>{
-      s.style.opacity=i===stageIdx?'1':'0';
-      s.style.transition='opacity .6s ease';
-    });
+    stages.forEach((s,i)=>{s.style.opacity=i===stageIdx?'1':'0'});
     if(labelEl)labelEl.textContent=labels[stageIdx]||'';
     if(urlEl)urlEl.textContent=urls[stageIdx]||'';
-    // Show final message
     if(timeEl)timeEl.style.opacity=stageIdx>=5?'1':'0';
   }
-},{passive:true});
+}
+window.addEventListener('scroll',updateBrt,{passive:true});
+updateBrt();
 })();
 
 // ═══ LOADER (runs immediately) ═══
