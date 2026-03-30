@@ -8,37 +8,37 @@ const translations = {
     "nav.cta": "Free Audit",
 
     "hero.badge": "AI-Powered Dental Websites",
-    "hero.title": 'Your dental website is <span class="highlight">losing you patients.</span> Let\'s fix that.',
-    "hero.sub": "High-converting websites for dental practices. Built with AI. Delivered in days, not months. You own everything.",
+    "hero.title": 'Websites that <span class="gt">book patients</span> while you sleep',
+    "hero.sub": "High-converting dental websites built with AI. Custom design in days, not months. You own everything.",
     "hero.stat1": "Days delivery",
     "hero.stat2": "Cheaper than agencies",
     "hero.stat3": "You own the code",
-    "hero.cta1": "Get Your Free Website Audit",
-    "hero.cta2": "View Packages",
+    "hero.cta1": "Get Your Free Audit <span class='aw'>→</span>",
+    "hero.cta2": "See our work <span class='aw'>↓</span>",
 
-    "problem.title": "Is your dental website costing you patients?",
-    "problem.sub": "Most dental websites have critical issues that drive patients to competitors.",
-    "problem.c1.title": "Slow loading",
-    "problem.c1.text": "67% of patients leave if your site takes more than 3 seconds to load.",
-    "problem.c2.title": "Not mobile-friendly",
-    "problem.c2.text": "60% of patients search for dentists on mobile. If your site doesn't adapt — they bounce.",
-    "problem.c3.title": "No online booking",
-    "problem.c3.text": "70% of patients prefer booking online. No booking button = lost appointments.",
+    "problem.title": "Your website is losing you patients",
+    "problem.sub": "Critical issues silently drive patients to competitors.",
+    "problem.c1.title": "Painfully Slow",
+    "problem.c1.text": "5+ seconds to load. Patients don't wait.",
+    "problem.c2.title": "Broken on Mobile",
+    "problem.c2.text": "60% search on phone. Bad mobile = bounce.",
+    "problem.c3.title": "No Online Booking",
+    "problem.c3.text": "Patients want to book at midnight.",
     "problem.c4.title": "Invisible on Google",
-    "problem.c4.text": "92% of people never go past page 1. If you're not there — you don't exist.",
+    "problem.c4.text": "Competitors rank above you.",
 
-    "solution.title": 'We build websites that <span class="highlight">book patients</span>',
-    "solution.s1.title": "AI-Powered Design",
-    "solution.s1.text": "We use AI to generate and iterate designs 10x faster than traditional agencies — saving you time and money.",
-    "solution.s2.title": "Conversion-Focused",
-    "solution.s2.text": 'Every element is designed to convert visitors into booked appointments. Not just "pretty" — effective.',
-    "solution.s3.title": "You Own Everything",
-    "solution.s3.text": "No lock-in. No proprietary platforms. You get the full source code and can host anywhere.",
+    "solution.title": 'We build websites that <span class="gt">book patients</span>',
+    "solution.s1.title": "AI-Powered",
+    "solution.s1.text": "10x faster. Custom quality.",
+    "solution.s2.title": "Conversion",
+    "solution.s2.text": "Every element = appointments.",
+    "solution.s3.title": "You Own It",
+    "solution.s3.text": "Full code. No lock-in.",
     "solution.s4.title": "SEO Built-In",
-    "solution.s4.text": "Local SEO, schema markup, Google Business integration — so patients in your area find you first.",
+    "solution.s4.text": "Local SEO. Schema. GBP.",
 
     "packages.title": "Transparent pricing. No surprises.",
-    "packages.sub": "Choose the package that fits your practice. All prices are final — no hidden fees.",
+    "packages.sub": "One-time investment. Lifetime ownership.",
     "packages.popular": "Most Popular",
     "packages.cta": "Get Started",
     "packages.starter.name": "Starter",
@@ -72,62 +72,62 @@ const translations = {
     "packages.retainer.desc": "Content updates, 2 blog posts/month, analytics reports, priority support, backups & monitoring.",
     "packages.retainer.per": "/month",
 
-    "process.title": "How it works",
-    "process.sub": "From first call to live website — simple and fast.",
-    "process.s1.title": "Free Audit",
-    "process.s1.text": "We analyze your current website and show exactly what's losing you patients. 10 minutes, no obligation.",
-    "process.s2.title": "Design & Build",
-    "process.s2.text": "AI generates multiple design options. You pick, we refine. Your site is built in days, not weeks.",
-    "process.s3.title": "Review & Launch",
-    "process.s3.text": "You review, request changes, and we launch. 2 rounds of revisions included. Go live with confidence.",
-    "process.s4.title": "Grow",
-    "process.s4.text": "Your new website starts converting visitors into appointments. We provide ongoing support and SEO.",
+    "process.title": "Audit to launch in 10 days",
+    "process.sub": "First 3 steps free.",
+    "process.s1.title": "Free Audit <span class='sbg bf'>Free</span>",
+    "process.s1.text": "Speed, SEO, mobile, booking, competitors. 24h report.",
+    "process.s2.title": "Discovery Call <span class='sbg bf'>Free</span>",
+    "process.s2.text": "15 min. Walk through audit. No pressure.",
+    "process.s3.title": "Proposal <span class='sbg bf'>Free</span>",
+    "process.s3.text": "Right package. Clear price. Clear timeline.",
+    "process.s4.title": "Design & Build <span class='sbg bb'>7–14d</span>",
+    "process.s4.text": "AI designs. You pick. Mobile-first, SEO built-in.",
 
-    "portfolio.title": "Our work",
-    "portfolio.sub": "Modern dental websites that convert visitors into patients.",
-    "portfolio.p1.desc": "Full redesign. Online booking increased by 45%.",
-    "portfolio.p2.desc": "New website from scratch. Page 1 Google in 30 days.",
-    "portfolio.p3.desc": "Multilingual site (EN/DE). 60% more appointment requests.",
+    "portfolio.title": "Dental websites that convert",
+    "portfolio.sub": "Real demos. Click and test.",
+    "portfolio.p1.desc": "Full redesign. Booking, reviews, click-to-call. PageSpeed 95+.",
+    "portfolio.p2.desc": "From scratch. Local SEO, schema, Google Business.",
+    "portfolio.p3.desc": "Multilingual EN/DE. Mobile-first. Booking everywhere.",
 
-    "comparison.title": "Why DentalWebAI?",
+    "comparison.title": "How we compare",
     "comparison.agencies": "Agencies",
     "comparison.freelancers": "Freelancers",
     "comparison.row1": "Price",
-    "comparison.row2": "Delivery time",
-    "comparison.r2a": "4-8 weeks",
-    "comparison.r2b": "2-6 weeks",
-    "comparison.r2c": "3-10 days",
-    "comparison.row3": "You own the code",
-    "comparison.row4": "Dental expertise",
-    "comparison.row5": "SEO included",
-    "comparison.r5a": "Extra cost",
-    "comparison.row6": "Transparent pricing",
+    "comparison.row2": "Delivery",
+    "comparison.r2a": "4–8 weeks",
+    "comparison.r2b": "2–6 weeks",
+    "comparison.r2c": "3–10 days",
+    "comparison.row3": "Own code",
+    "comparison.row4": "Dental focus",
+    "comparison.row5": "SEO",
+    "comparison.r5a": "Extra $",
+    "comparison.row6": "Lock-in",
 
-    "faq.title": "Frequently asked questions",
-    "faq.q1": "How long does it take to build a dental website?",
-    "faq.a1": "Depending on the package: Starter in 3-5 days, Professional in 7-10 days, Premium in 14-21 business days. We're 3-5x faster than traditional agencies thanks to AI-powered design.",
+    "faq.title": "Questions & answers",
+    "faq.q1": "How long does it take?",
+    "faq.a1": "Starter: 3–5 days. Professional: 7–10. Premium: 14–21. 3–5x faster than agencies.",
     "faq.q2": "Do I need to provide content?",
     "faq.a2": "You provide your logo, photos, and basic practice info. We handle all copywriting, SEO optimization, and design. Premium package includes professional copywriting.",
-    "faq.q3": "Do I own my website?",
-    "faq.a3": "Yes, 100%. Upon full payment you own all code, design, and content. No lock-in, no proprietary platforms. You can host it anywhere and modify freely.",
-    "faq.q4": "What if I already have a website?",
-    "faq.a4": "We offer a free website audit. We'll analyze your current site, show what's losing you patients, and build a modern replacement that converts better.",
+    "faq.q3": "Do I own the website?",
+    "faq.a3": "Yes, 100%. Full source code. No lock-in. Host anywhere.",
+    "faq.q4": "What's in the free audit?",
+    "faq.a4": "Mobile speed, SEO, booking, SSL, competitor comparison. Report in 24h. No cost.",
     "faq.q5": "How does payment work?",
-    "faq.a5": "50% deposit before we start, 50% upon completion and approval. We accept credit cards, bank transfers, and PayPal. All payments are processed securely through Stripe.",
-    "faq.q6": "Where do you work?",
-    "faq.a6": "We work globally — 100% online. Our focus is Tier 1 markets: US, UK, Canada, Australia, Germany, Austria, Switzerland, Netherlands, and Scandinavia. We build multilingual websites and handle local SEO for any market worldwide.",
+    "faq.a5": "50% deposit, 50% on completion. Cards, bank transfer, PayPal — via Stripe.",
+    "faq.q6": "Work outside the US?",
+    "faq.a6": "US, UK, Europe, globally. Multilingual + local SEO.",
 
-    "cta.title": "Ready to get more patients?",
-    "cta.sub": "Get a free 10-minute website audit. We'll show you exactly what's costing you appointments — no obligation.",
+    "cta.title": "Ready for more patients?",
+    "cta.sub": "Free audit. We show what's costing you appointments.",
     "cta.name": "Dr. John Smith",
-    "cta.clinic": "Practice name",
-    "cta.website": "Your website URL",
-    "cta.submit": "Get My Free Audit",
+    "cta.clinic": "Practice Name",
+    "cta.website": "Website URL (https://...)",
+    "cta.submit": "Get My Free Audit <span class='aw'>→</span>",
     "cta.note": "We'll respond within 24 hours with a personalized audit report of your website.",
 
     "footer.tagline": "Websites that book patients.",
-    "ba.title": "The transformation",
-    "ba.sub": "Before and after our redesign — real results",
+    "ba.title": "Before & After",
+    "ba.sub": "Real results from our redesigns",
     "testimonial.quote": "\"Our online bookings increased by 45% in the first month. The site was delivered in 8 days — faster than any agency we've talked to.\"",
     "testimonial.author": "— Dr. S. Mitchell, Bright Smile Dental",
   },
@@ -141,7 +141,7 @@ const translations = {
     "nav.cta": "Gratis Audit",
 
     "hero.badge": "KI-gestützte Zahnarzt-Websites",
-    "hero.title": 'Ihre Zahnarzt-Website <span class="highlight">kostet Sie Patienten.</span> Lassen Sie uns das ändern.',
+    "hero.title": 'Ihre Zahnarzt-Website <span class="gt">kostet Sie Patienten.</span> Lassen Sie uns das ändern.',
     "hero.sub": "Konvertierende Websites für Zahnarztpraxen. Mit KI erstellt. In Tagen geliefert, nicht Monaten. Alles gehört Ihnen.",
     "hero.stat1": "Tage Lieferzeit",
     "hero.stat2": "Günstiger als Agenturen",
@@ -160,7 +160,7 @@ const translations = {
     "problem.c4.title": "Unsichtbar bei Google",
     "problem.c4.text": "92% der Menschen gehen nie über Seite 1 hinaus. Wenn Sie nicht dort sind — existieren Sie nicht.",
 
-    "solution.title": 'Wir bauen Websites, die <span class="highlight">Patienten buchen</span>',
+    "solution.title": 'Wir bauen Websites, die <span class="gt">Patienten buchen</span>',
     "solution.s1.title": "KI-gestütztes Design",
     "solution.s1.text": "Wir nutzen KI, um Designs 10x schneller zu erstellen als traditionelle Agenturen — spart Ihnen Zeit und Geld.",
     "solution.s2.title": "Konversionsfokussiert",
@@ -274,7 +274,7 @@ const translations = {
     "nav.cta": "Gratis Audit",
 
     "hero.badge": "AI-Powered Tandarts Websites",
-    "hero.title": 'Uw tandartswebsite <span class="highlight">kost u patiënten.</span> Laten we dat oplossen.',
+    "hero.title": 'Uw tandartswebsite <span class="gt">kost u patiënten.</span> Laten we dat oplossen.',
     "hero.sub": "Converterende websites voor tandartspraktijken. Gebouwd met AI. Geleverd in dagen, niet maanden. U bent eigenaar van alles.",
     "hero.stat1": "Dagen levertijd",
     "hero.stat2": "Goedkoper dan bureaus",
@@ -293,7 +293,7 @@ const translations = {
     "problem.c4.title": "Onzichtbaar op Google",
     "problem.c4.text": "92% van de mensen gaat nooit voorbij pagina 1. Als u er niet staat — bestaat u niet.",
 
-    "solution.title": 'Wij bouwen websites die <span class="highlight">patiënten boeken</span>',
+    "solution.title": 'Wij bouwen websites die <span class="gt">patiënten boeken</span>',
     "solution.s1.title": "AI-Powered Ontwerp",
     "solution.s1.text": "Wij gebruiken AI om ontwerpen 10x sneller te genereren dan traditionele bureaus — u bespaart tijd en geld.",
     "solution.s2.title": "Conversiegericht",
@@ -407,7 +407,7 @@ const translations = {
     "nav.cta": "Бесплатный аудит",
 
     "hero.badge": "Сайты для стоматологий на базе AI",
-    "hero.title": 'Ваш сайт клиники <span class="highlight">теряет пациентов.</span> Давайте это исправим.',
+    "hero.title": 'Ваш сайт клиники <span class="gt">теряет пациентов.</span> Давайте это исправим.',
     "hero.sub": "Конверсионные сайты для стоматологий. Создаём с помощью AI. Готово за дни, а не месяцы. Вы владеете всем.",
     "hero.stat1": "Дней на создание",
     "hero.stat2": "Дешевле агентств",
@@ -426,7 +426,7 @@ const translations = {
     "problem.c4.title": "Невидим в Google",
     "problem.c4.text": "92% людей не заходят дальше первой страницы. Если вас там нет — вы не существуете.",
 
-    "solution.title": 'Мы создаём сайты, которые <span class="highlight">записывают пациентов</span>',
+    "solution.title": 'Мы создаём сайты, которые <span class="gt">записывают пациентов</span>',
     "solution.s1.title": "Дизайн на базе AI",
     "solution.s1.text": "Мы используем AI для генерации дизайна в 10 раз быстрее агентств — экономим ваше время и деньги.",
     "solution.s2.title": "Фокус на конверсии",
@@ -532,7 +532,8 @@ const translations = {
   }
 };
 
-let currentLang = localStorage.getItem('dwp-lang') || 'en';
+const browserLang = (navigator.language || navigator.userLanguage || 'en').split('-')[0];
+let currentLang = localStorage.getItem('dwp-lang') || (['en','de','nl','ru'].includes(browserLang) ? browserLang : 'en');
 
 function setLang(lang) {
   currentLang = lang;
@@ -551,13 +552,17 @@ function setLang(lang) {
     if (val) el.placeholder = val;
   });
 
-  document.querySelectorAll('.lang-btn').forEach(btn => {
+  document.querySelectorAll('.lang-btn, .lbtn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
+    if (btn.classList.contains('lbtn')) {
+      btn.style.background = btn.dataset.lang === lang ? 'var(--grd)' : 'none';
+      btn.style.color = btn.dataset.lang === lang ? '#fff' : 'var(--tx2)';
+    }
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.lang-btn').forEach(btn => {
+  document.querySelectorAll('.lang-btn, .lbtn').forEach(btn => {
     btn.addEventListener('click', () => setLang(btn.dataset.lang));
   });
   setLang(currentLang);
