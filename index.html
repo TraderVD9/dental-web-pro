@@ -834,10 +834,10 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 <section style="padding:100px 40px;max-width:1200px;margin:0 auto;position:relative;z-index:2">
 <div class="rv" style="text-align:center"><div class="sl">Transformation</div><h2 class="st" data-i18n="ba.title">Before & After</h2><div class="ss" data-i18n="ba.sub">Real results from our redesigns</div></div>
 <div style="position:relative;max-width:800px;margin:0 auto;border-radius:14px;overflow:hidden;height:420px;cursor:col-resize;user-select:none;border:1px solid var(--brd);box-shadow:var(--shadow)" id="baSlider">
-<img src="screenshots/before-bad.webp" alt="Real dental website before redesign — Weebly free subdomain, outdated 2010s design, no booking, PageSpeed 34" loading="lazy" width="1400" height="900" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover">
-<img src="screenshots/bright-smile.webp" alt="Dental website after DentalWebAI redesign — premium dark theme, online booking, PageSpeed 97" loading="lazy" width="1280" height="800" class="ba-after" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 50% 0 0)">
-<div id="baLine" style="position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--ac);z-index:5;transform:translateX(-50%)"></div>
-<div id="baHandle" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:var(--ac);border-radius:50%;z-index:6;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;font-weight:700;box-shadow:0 4px 20px rgba(37,99,235,.3)">↔</div>
+<img src="screenshots/before-bad.webp" alt="Real dental website before redesign — Weebly free subdomain, outdated 2010s design, no booking, PageSpeed 34" loading="lazy" width="1400" height="900" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;-webkit-backface-visibility:hidden;backface-visibility:hidden">
+<img src="screenshots/novadent.webp" alt="NovaDent Premium — immersive 3D dental website with Three.js, GSAP animations, PageSpeed 94" loading="lazy" width="1280" height="800" class="ba-after" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 50% 0 0);will-change:clip-path;-webkit-backface-visibility:hidden;backface-visibility:hidden">
+<div id="baLine" style="display:none"></div>
+<div id="baHandle" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:rgba(255,255,255,0.95);border-radius:50%;z-index:6;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--tx);font-weight:600;box-shadow:0 4px 24px rgba(0,0,0,.2);backdrop-filter:blur(8px);cursor:grab">↔</div>
 </div>
 <div style="display:flex;justify-content:space-between;max-width:800px;margin:12px auto 0"><span style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mt)">Before — Score 34</span><span style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mt)">After — Score 96</span></div>
 </section><div class="sdv"></div>
@@ -1068,8 +1068,28 @@ const s=encodeURIComponent('New Audit Request — DentalWebAI'),bd=encodeURIComp
 window.location.href=`mailto:hello@dentalwebai.com?subject=${s}&body=${bd}`;
 b.innerHTML='✓ Opening email...';f.reset();setTimeout(()=>{b.innerHTML='Get My Free Audit <span class="aw">→</span>';b.style.background='';b.disabled=false},3000)}
 
-// Before/After slider
-const bas=document.getElementById('baSlider');if(bas){const bal=document.getElementById('baLine'),bah=document.getElementById('baHandle'),baa=bas.querySelector('.ba-after');let bad=false;function bau(x){const r=bas.getBoundingClientRect();let p=Math.max(0,Math.min(1,(x-r.left)/r.width));baa.style.clipPath='inset(0 '+((1-p)*100)+'% 0 0)';bal.style.left=p*100+'%';bah.style.left=p*100+'%'}bas.addEventListener('mousedown',()=>bad=true);document.addEventListener('mouseup',()=>bad=false);document.addEventListener('mousemove',e=>{if(bad)bau(e.clientX)});bas.addEventListener('touchstart',()=>bad=true);document.addEventListener('touchend',()=>bad=false);document.addEventListener('touchmove',e=>{if(bad)bau(e.touches[0].clientX)});bas.addEventListener('click',e=>bau(e.clientX))}
+// Before/After slider (rAF for smooth, no flicker)
+const bas=document.getElementById('baSlider');if(bas){
+const bah=document.getElementById('baHandle'),baa=bas.querySelector('.ba-after');
+let bad=false,baPending=false,baTarget=0.5;
+function baRender(){
+  baa.style.clipPath='inset(0 '+((1-baTarget)*100)+'% 0 0)';
+  bah.style.left=baTarget*100+'%';
+  baPending=false;
+}
+function bau(x){
+  const r=bas.getBoundingClientRect();
+  baTarget=Math.max(0,Math.min(1,(x-r.left)/r.width));
+  if(!baPending){baPending=true;requestAnimationFrame(baRender)}
+}
+bas.addEventListener('mousedown',e=>{bad=true;bau(e.clientX)});
+document.addEventListener('mouseup',()=>bad=false);
+document.addEventListener('mousemove',e=>{if(bad)bau(e.clientX)},{passive:true});
+bas.addEventListener('touchstart',e=>{bad=true;bau(e.touches[0].clientX)},{passive:true});
+document.addEventListener('touchend',()=>bad=false,{passive:true});
+document.addEventListener('touchmove',e=>{if(bad)bau(e.touches[0].clientX)},{passive:true});
+bas.addEventListener('click',e=>bau(e.clientX));
+}
 
 document.querySelectorAll('.lbtn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.lbtn').forEach(x=>{x.style.background='none';x.style.color='var(--tx2)';x.classList.remove('active')});b.style.background='var(--grd)';b.style.color='#fff';b.classList.add('active')})});
 </script>
