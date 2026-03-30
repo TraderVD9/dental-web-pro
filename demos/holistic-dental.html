@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holistic Dental LV — Where Oral Health Meets Overall Wellness | Las Vegas, NV</title>
+<meta name="description" content="Holistic Dental LV in Las Vegas, NV — Dr. Puneet Brar DMD. Mercury-free, biocompatible holistic dentistry. Call 702-733-7244 today.">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--ac:#059669;--ac2:#047857;--warm:#F0FDF4;--gold:#34D399;--tx:#0C1F17;--tx2:#3B5C4E;--mt:#94A3B8;--bg:#F8FDF9;--brd:rgba(5,150,105,0.08);--shadow:0 4px 24px rgba(12,31,23,0.06)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;color:var(--tx);background:var(--bg);-webkit-font-smoothing:antialiased}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(248,253,249,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+.logo{font-size:1.1rem;font-weight:700;color:var(--ac);text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo svg{width:28px;height:28px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--tx2);font-size:.85rem;font-weight:400;transition:.3s}
+.nav-links a:hover{color:var(--ac)}
+.nav-cta{background:var(--ac)!important;color:#fff!important;padding:9px 22px!important;border-radius:100px;font-weight:600!important;font-size:.82rem!important}
+.nav-cta:hover{background:var(--ac2)!important}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 40px 80px;background:linear-gradient(135deg,#F0FDF4 0%,#DCFCE7 50%,#F0FDF4 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-20%;right:-10%;width:50vw;height:50vw;background:radial-gradient(circle,rgba(5,150,105,0.06),transparent 60%);border-radius:50%}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%}
+.hero-content{position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.12);border-radius:100px;font-size:.72rem;color:var(--ac);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
+.hero-badge .dot{width:6px;height:6px;background:var(--ac);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(5,150,105,.3)}50%{box-shadow:0 0 0 8px rgba(5,150,105,0)}}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:700;line-height:1.08;margin-bottom:18px;color:var(--tx);letter-spacing:-.02em}
+h1 em{color:var(--ac);font-style:italic}
+.hero-sub{font-size:1.05rem;color:var(--tx2);line-height:1.7;margin-bottom:28px;font-weight:300;max-width:460px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-p{background:var(--ac);color:#fff;padding:14px 30px;border-radius:100px;font-size:.9rem;font-weight:600;text-decoration:none;transition:.3s;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(5,150,105,0.2)}
+.btn-p:hover{background:var(--ac2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(5,150,105,0.25)}
+.btn-s{color:var(--tx2);padding:14px 20px;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.3s}
+.btn-s:hover{color:var(--ac)}
+.hero-stats{display:flex;gap:36px;margin-top:36px;padding-top:24px;border-top:1px solid var(--brd)}
+.stat{text-align:center}
+.stat-n{font-size:1.5rem;font-weight:700;color:var(--ac);line-height:1}
+.stat-l{font-size:.65rem;color:var(--mt);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.hero-img{position:relative;z-index:2}
+.hero-mockup{background:var(--warm);border-radius:20px;padding:32px;box-shadow:var(--shadow);border:1px solid var(--brd);text-align:center}
+.hero-mockup .stars{color:var(--gold);font-size:1.1rem;letter-spacing:4px;margin-bottom:8px}
+.hero-mockup .rev-text{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--tx);line-height:1.5;margin-bottom:12px}
+.hero-mockup .rev-author{font-size:.75rem;color:var(--mt)}
+.trust-bar{display:flex;gap:16px;margin-top:16px;justify-content:center;flex-wrap:wrap}
+.trust-item{font-size:.7rem;color:var(--mt);display:flex;align-items:center;gap:4px}
+.trust-item .check{color:var(--ac)}
+
+/* Services */
+.services{padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:var(--ac);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:18px;height:1.5px;background:var(--ac)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;margin-bottom:12px;color:var(--tx)}
+.section-sub{font-size:.95rem;color:var(--tx2);max-width:480px;line-height:1.7;font-weight:300;margin-bottom:48px}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.srv-card{background:#fff;border-radius:14px;padding:28px 22px;border:1px solid var(--brd);transition:all .4s;text-align:center}
+.srv-card:hover{border-color:rgba(5,150,105,0.15);box-shadow:var(--shadow);transform:translateY(-4px)}
+.srv-icon{font-size:1.8rem;margin-bottom:14px}
+.srv-card h3{font-size:.95rem;font-weight:600;margin-bottom:6px;color:var(--tx)}
+.srv-card p{font-size:.8rem;color:var(--tx2);line-height:1.5}
+
+/* Team */
+.team{padding:100px 40px;background:var(--warm)}
+.team-inner{max-width:1200px;margin:0 auto}
+.team-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:48px;max-width:400px;margin-left:auto;margin-right:auto}
+.doc-card{background:#fff;border-radius:14px;padding:36px;text-align:center;border:1px solid var(--brd);transition:.4s}
+.doc-card:hover{box-shadow:var(--shadow);transform:translateY(-4px)}
+.doc-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,rgba(5,150,105,0.08),rgba(52,211,153,0.08));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.8rem}
+.doc-card h3{font-size:1.05rem;font-weight:600;color:var(--tx);margin-bottom:2px}
+.doc-card p{font-size:.78rem;color:var(--mt)}
+
+/* CTA */
+.cta{padding:100px 40px;text-align:center;max-width:700px;margin:0 auto}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:14px}
+.cta p{color:var(--tx2);margin-bottom:28px;font-weight:300}
+.cta-info{display:flex;gap:24px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.cta-item{font-size:.8rem;color:var(--tx2);display:flex;align-items:center;gap:6px}
+
+/* Footer */
+footer{padding:32px 40px;border-top:1px solid var(--brd);display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:12px}
+footer p{font-size:.75rem;color:var(--mt)}
+footer a{color:var(--ac);text-decoration:none;font-size:.75rem}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-img{display:none}
+  .srv-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  nav{padding:12px 18px}
+  .nav-links{display:none}
+  .hero{padding:100px 18px 60px}
+  .services,.cta{padding:60px 18px}
+  .team{padding:60px 18px}
+  .hero-stats{flex-direction:column;gap:16px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <svg viewBox="0 0 28 28" fill="none"><path d="M14 2C11 2 9 5 8.2 9.5C7.5 14 7.5 18 8.2 21.5C9 25 11.5 27 14 27C16.5 27 19 25 19.8 21.5C20.5 18 20.5 14 19.8 9.5C19 5 17 2 14 2Z" stroke="#059669" stroke-width="1.5" fill="none"/><path d="M10 12L13 15L19 9" stroke="#059669" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></svg>
+    Holistic Dental LV
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#team">Our Team</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:7027337244">702-733-7244</a>
+    <a href="#contact" class="nav-cta">Book Appointment</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> Mercury-Free Practice</div>
+      <h1>Where oral health meets <em>overall</em> wellness</h1>
+      <p class="hero-sub">Holistic, mercury-free dentistry in Las Vegas. Dr. Brar uses biocompatible materials that are safe for your body — and your smile.</p>
+      <div class="hero-btns">
+        <a href="tel:7027337244" class="btn-p">📅 Book Appointment</a>
+        <a href="#services" class="btn-s">Our Services ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Mercury-Free</div></div>
+        <div class="stat"><div class="stat-n">Bio</div><div class="stat-l">Compatible</div></div>
+        <div class="stat"><div class="stat-n">1</div><div class="stat-l">Dentist</div></div>
+      </div>
+    </div>
+    <div class="hero-img">
+      <div class="hero-mockup">
+        <div class="stars">★★★★★</div>
+        <p class="rev-text">"Dr. Brar truly cares about your whole-body health, not just your teeth. The holistic approach makes all the difference."</p>
+        <p class="rev-author">— Verified Google Review</p>
+        <div class="trust-bar">
+          <span class="trust-item"><span class="check">✓</span> Mercury-Free</span>
+          <span class="trust-item"><span class="check">✓</span> Biocompatible</span>
+          <span class="trust-item"><span class="check">✓</span> Holistic</span>
+          <span class="trust-item"><span class="check">✓</span> Natural</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-label">What We Offer</div>
+  <div class="section-title">Holistic dentistry for whole-body health</div>
+  <p class="section-sub">Safe, biocompatible materials and a holistic approach to oral care that supports your overall wellness.</p>
+  <div class="srv-grid">
+    <div class="srv-card"><div class="srv-icon">🌿</div><h3>Holistic Dentistry</h3><p>Whole-body approach to oral health using safe, natural methods.</p></div>
+    <div class="srv-card"><div class="srv-icon">🚫</div><h3>Mercury-Free Fillings</h3><p>Safe composite fillings — no mercury, no metal, no compromise.</p></div>
+    <div class="srv-card"><div class="srv-icon">🧬</div><h3>Biocompatible Materials</h3><p>Materials tested for compatibility with your unique body chemistry.</p></div>
+    <div class="srv-card"><div class="srv-icon">🦷</div><h3>General Dentistry</h3><p>Cleanings, exams, and preventive care with a holistic perspective.</p></div>
+    <div class="srv-card"><div class="srv-icon">✨</div><h3>Cosmetic Dentistry</h3><p>Natural-looking restorations that enhance your smile safely.</p></div>
+    <div class="srv-card"><div class="srv-icon">🛡️</div><h3>Preventive Wellness</h3><p>Nutrition guidance and prevention strategies for lasting oral health.</p></div>
+  </div>
+</section>
+
+<section class="team" id="team">
+  <div class="team-inner">
+    <div class="section-label">Meet Your Dentist</div>
+    <div class="section-title">Your holistic dental partner.</div>
+    <p class="section-sub">Dr. Brar combines modern dental expertise with a holistic philosophy, treating the whole patient — not just the symptom.</p>
+    <div class="team-grid">
+      <div class="doc-card"><div class="doc-avatar">👨‍⚕️</div><h3>Dr. Puneet Brar DMD</h3><p>Holistic & Mercury-Free Dentistry</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="section-label" style="justify-content:center">Get Started</div>
+  <h2>Ready for dentistry that cares about your <em>whole</em> health?</h2>
+  <p>Mercury-free, biocompatible, holistic. Call us or email to schedule your visit.</p>
+  <a href="tel:7027337244" class="btn-p" style="font-size:1rem;padding:16px 36px">📞 Call 702-733-7244</a>
+  <div class="cta-info">
+    <span class="cta-item">📍 4312 S Eastern Ave, Las Vegas, NV 89119</span>
+    <span class="cta-item">📧 holisticdentallv@gmail.com</span>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Holistic Dental LV. Las Vegas, NV.</p>
+  <div style="display:flex;gap:16px">
+    <a href="tel:7027337244">702-733-7244</a>
+    <a href="mailto:holisticdentallv@gmail.com">Email Us</a>
+  </div>
+</footer>
+
+<div style="position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#059669,#047857);color:#fff;text-align:center;padding:10px 20px;font-size:.75rem;z-index:200">
+  🎁 This is a <strong>free redesign concept</strong> by <a href="https://dentalwebai.com" style="color:#34D399;text-decoration:none;font-weight:600">DentalWebAI</a> — yours to keep, no strings attached.
+</div>
+
+</body>
+</html>
