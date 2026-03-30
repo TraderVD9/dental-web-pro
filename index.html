@@ -429,6 +429,10 @@ footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color 
 .ctc-float:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,99,235,0.4)}
 @keyframes ctcPulse{0%,100%{box-shadow:0 4px 20px rgba(37,99,235,0.3)}50%{box-shadow:0 4px 20px rgba(37,99,235,0.1)}}
 @media(max-width:600px){.ctc-float{bottom:80px}}
+/* Build in Real-Time */
+@keyframes brtPulse{0%,100%{box-shadow:0 4px 12px rgba(37,99,235,0.3)}50%{box-shadow:0 4px 24px rgba(37,99,235,0.5)}}
+.brt-stage{transition:opacity .6s ease}
+@media(max-width:600px){.brt{height:400vh}.brt-browser{width:92vw!important;height:45vh!important}}
 /* Page transition */
 body{animation:pageIn .6s ease both}
 @keyframes pageIn{from{opacity:0}to{opacity:1}}
@@ -529,6 +533,117 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 </nav>
 
 <main id="main-content">
+
+<!-- ═══ BUILD IN REAL-TIME — Concept C ═══ -->
+<section class="brt" id="brt" style="height:500vh;position:relative;z-index:3">
+  <div class="brt-pin" style="position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;background:var(--bg)">
+    <!-- Browser mockup frame -->
+    <div class="brt-browser" style="width:min(85vw,900px);height:min(55vh,520px);border-radius:12px;background:var(--bg3);border:1px solid var(--brd);box-shadow:0 24px 80px rgba(15,30,80,0.12);overflow:hidden;position:relative">
+      <!-- Browser bar -->
+      <div style="height:32px;background:rgba(245,247,252,0.95);display:flex;align-items:center;padding:0 12px;gap:6px;border-bottom:1px solid var(--brd)">
+        <span style="width:8px;height:8px;border-radius:50%;background:#FF5F57"></span>
+        <span style="width:8px;height:8px;border-radius:50%;background:#FFBD2E"></span>
+        <span style="width:8px;height:8px;border-radius:50%;background:#28CA42"></span>
+        <span id="brtUrl" style="margin-left:12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mt);transition:all .5s">your-dental-practice.com</span>
+      </div>
+      <!-- Build stages -->
+      <div style="position:relative;height:calc(100% - 32px);overflow:hidden">
+        <!-- Stage 0: Empty -->
+        <div class="brt-stage" data-stage="0" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg3)">
+          <div style="text-align:center;color:var(--mt)">
+            <div style="font-size:3rem;margin-bottom:12px;opacity:.3">🦷</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em">EMPTY CANVAS</div>
+          </div>
+        </div>
+        <!-- Stage 1: Wireframe -->
+        <div class="brt-stage" data-stage="1" style="position:absolute;inset:0;opacity:0;padding:20px">
+          <div style="height:25%;background:repeating-linear-gradient(90deg,rgba(37,99,235,0.06) 0px,rgba(37,99,235,0.06) 2px,transparent 2px,transparent 12px);border:1px dashed rgba(37,99,235,0.15);border-radius:6px;margin-bottom:12px;display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--ac);opacity:.5">HERO SECTION</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+            <div style="height:60px;border:1px dashed rgba(37,99,235,0.12);border-radius:4px"></div>
+            <div style="height:60px;border:1px dashed rgba(37,99,235,0.12);border-radius:4px"></div>
+            <div style="height:60px;border:1px dashed rgba(37,99,235,0.12);border-radius:4px"></div>
+          </div>
+          <div style="height:15%;border:1px dashed rgba(37,99,235,0.1);border-radius:4px;margin-bottom:8px"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="height:40px;border:1px dashed rgba(37,99,235,0.1);border-radius:4px"></div>
+            <div style="height:40px;border:1px dashed rgba(37,99,235,0.1);border-radius:4px"></div>
+          </div>
+        </div>
+        <!-- Stage 2: Colors + Layout -->
+        <div class="brt-stage" data-stage="2" style="position:absolute;inset:0;opacity:0;padding:20px">
+          <div style="height:25%;background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(14,163,113,0.06));border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center">
+            <div style="width:60%;height:6px;background:linear-gradient(90deg,var(--ac),var(--ac2));border-radius:3px;opacity:.4"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+            <div style="height:60px;background:rgba(37,99,235,0.04);border-radius:6px;border:1px solid rgba(37,99,235,0.08)"></div>
+            <div style="height:60px;background:rgba(14,163,113,0.04);border-radius:6px;border:1px solid rgba(14,163,113,0.08)"></div>
+            <div style="height:60px;background:rgba(99,102,241,0.04);border-radius:6px;border:1px solid rgba(99,102,241,0.08)"></div>
+          </div>
+          <div style="height:15%;background:rgba(37,99,235,0.03);border-radius:6px;margin-bottom:8px"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="height:40px;background:rgba(37,99,235,0.04);border-radius:6px"></div>
+            <div style="height:40px;background:rgba(14,163,113,0.04);border-radius:6px"></div>
+          </div>
+        </div>
+        <!-- Stage 3: Content -->
+        <div class="brt-stage" data-stage="3" style="position:absolute;inset:0;opacity:0;padding:20px">
+          <div style="height:25%;background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(14,163,113,0.04));border-radius:8px;margin-bottom:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px">
+            <div style="font-size:.65rem;font-weight:600;color:var(--ac);letter-spacing:.08em;text-transform:uppercase">Your Dental Practice</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--tx);font-weight:700;text-align:center">Beautiful Smiles Start Here</div>
+            <div style="font-size:.55rem;color:var(--tx2);text-align:center;max-width:80%">Comprehensive dental care for your whole family</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+            <div style="height:60px;background:rgba(37,99,235,0.04);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:.7rem">🦷</span><span style="font-size:.5rem;font-weight:600;color:var(--tx)">General</span></div>
+            <div style="height:60px;background:rgba(14,163,113,0.04);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:.7rem">✨</span><span style="font-size:.5rem;font-weight:600;color:var(--tx)">Cosmetic</span></div>
+            <div style="height:60px;background:rgba(99,102,241,0.04);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:.7rem">🔧</span><span style="font-size:.5rem;font-weight:600;color:var(--tx)">Implants</span></div>
+          </div>
+          <div style="height:15%;background:rgba(37,99,235,0.03);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;padding:0 12px">
+            <div style="display:flex;gap:4px"><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span></div>
+            <span style="font-size:.5rem;color:var(--tx2);margin-left:8px">"Best dentist ever!"</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="height:40px;background:rgba(37,99,235,0.04);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--tx2)">📍 123 Main St</div>
+            <div style="height:40px;background:rgba(14,163,113,0.04);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--tx2)">📞 (555) 123-4567</div>
+          </div>
+        </div>
+        <!-- Stage 4: Booking button -->
+        <div class="brt-stage" data-stage="4" style="position:absolute;inset:0;opacity:0;padding:20px">
+          <div style="height:25%;background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(14,163,113,0.04));border-radius:8px;margin-bottom:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px">
+            <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--tx);font-weight:700">Beautiful Smiles Start Here</div>
+            <div style="background:var(--grd);color:#fff;padding:6px 20px;border-radius:100px;font-size:.6rem;font-weight:600;letter-spacing:.05em;box-shadow:0 4px 12px rgba(37,99,235,0.3);animation:brtPulse 2s infinite">📅 BOOK APPOINTMENT</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+            <div style="height:60px;background:rgba(37,99,235,0.04);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:.7rem">🦷</span><span style="font-size:.5rem;font-weight:600;color:var(--tx)">General</span></div>
+            <div style="height:60px;background:rgba(14,163,113,0.04);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:.7rem">✨</span><span style="font-size:.5rem;font-weight:600;color:var(--tx)">Cosmetic</span></div>
+            <div style="height:60px;background:rgba(99,102,241,0.04);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px"><span style="font-size:.7rem">🔧</span><span style="font-size:.5rem;font-weight:600;color:var(--tx)">Implants</span></div>
+          </div>
+          <div style="height:15%;background:rgba(37,99,235,0.03);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;padding:0 12px">
+            <div style="display:flex;gap:4px"><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span><span style="width:8px;height:8px;background:var(--ac3);border-radius:50%"></span></div>
+            <span style="font-size:.5rem;color:var(--tx2);margin-left:8px">"Best dentist ever!" — Sarah M.</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="height:40px;background:rgba(37,99,235,0.04);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.5rem;color:var(--tx2)">📍 123 Main St</div>
+            <div style="height:40px;background:var(--grd);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.5rem;color:#fff;font-weight:600">📞 CALL NOW</div>
+          </div>
+        </div>
+        <!-- Stage 5: Final premium (screenshot) -->
+        <div class="brt-stage" data-stage="5" style="position:absolute;inset:0;opacity:0;background:url('screenshots/bright-smile.webp') center/cover"></div>
+      </div>
+    </div>
+    <!-- Progress label -->
+    <div style="margin-top:28px;text-align:center">
+      <div id="brtLabel" style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ac);letter-spacing:.1em;text-transform:uppercase;transition:all .4s;min-height:20px">Scroll to build →</div>
+      <div id="brtTime" style="font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,2rem);color:var(--tx);margin-top:8px;opacity:0;transition:opacity .6s">This took <span style="color:var(--ac)">30 seconds</span>. We do it in <span style="color:var(--ac2)">10 days</span> for real.</div>
+    </div>
+    <!-- Progress bar -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--brd)">
+      <div id="brtProgress" style="height:100%;width:0%;background:var(--grd);transition:width .1s"></div>
+    </div>
+  </div>
+</section>
+
 <section class="hero">
   <div class="hb"><span class="pd"></span> <span data-i18n="hero.badge">AI-Powered Dental Websites</span></div>
   <h1 data-i18n="hero.title">Websites that <span class="gt">book patients</span> while you sleep</h1>
@@ -737,6 +852,43 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
+// ═══ BUILD IN REAL-TIME ═══
+(function(){
+const brt=document.getElementById('brt');if(!brt)return;
+const stages=brt.querySelectorAll('.brt-stage');
+const labels=['Scroll to build →','Drawing wireframe...','Adding colors & layout...','Writing content...','Adding booking & CTAs...','✓ Website complete!'];
+const urls=['your-dental-practice.com','your-dental-practice.com/wireframe','your-dental-practice.com','your-dental-practice.com','your-dental-practice.com','your-dental-practice.com — Live!'];
+const labelEl=document.getElementById('brtLabel');
+const timeEl=document.getElementById('brtTime');
+const progEl=document.getElementById('brtProgress');
+const urlEl=document.getElementById('brtUrl');
+let lastStage=-1;
+
+window.addEventListener('scroll',()=>{
+  const rect=brt.getBoundingClientRect();
+  const totalScroll=brt.offsetHeight-window.innerHeight;
+  const scrolled=Math.max(0,-rect.top);
+  const progress=Math.min(1,scrolled/totalScroll);
+  const stageIdx=Math.min(5,Math.floor(progress*6));
+
+  // Update progress bar
+  if(progEl)progEl.style.width=(progress*100)+'%';
+
+  // Show current stage
+  if(stageIdx!==lastStage){
+    lastStage=stageIdx;
+    stages.forEach((s,i)=>{
+      s.style.opacity=i===stageIdx?'1':'0';
+      s.style.transition='opacity .6s ease';
+    });
+    if(labelEl)labelEl.textContent=labels[stageIdx]||'';
+    if(urlEl)urlEl.textContent=urls[stageIdx]||'';
+    // Show final message
+    if(timeEl)timeEl.style.opacity=stageIdx>=5?'1':'0';
+  }
+},{passive:true});
+})();
+
 // ═══ LOADER (runs immediately) ═══
 let lp=0;const ldp=document.getElementById('lp'),ldr=document.getElementById('ld');
 
