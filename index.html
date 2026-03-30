@@ -180,8 +180,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);overfl
 .ld-pct{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--mt);margin-top:18px;letter-spacing:.12em}
 
 /* ═══ REVEAL ═══ */
-.rv{opacity:0;transform:translateY(40px);transition:all 1s cubic-bezier(.16,1,.3,1)}
-.rv.vis{opacity:1;transform:translateY(0)}
+.rv{opacity:1;transform:none}
+.rv.vis{opacity:1;transform:none}
 .rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}.rd5{transition-delay:.5s}
 
 /* ═══ LOGO ═══ */
@@ -787,13 +787,19 @@ addEventListener('scroll',()=>{
 // ═══ GSAP SCROLL ANIMATIONS ═══
 
 // Hero — word stagger
+try{
 const heroH1=document.querySelector('.hero h1');
-if(heroH1){
+if(heroH1&&typeof gsap!=='undefined'){
   const words=heroH1.innerHTML.split(/(\s+|<[^>]+>)/).filter(Boolean);
-  heroH1.innerHTML=words.map(w=>w.startsWith('<')?w:`<span class="hw" style="display:inline-block;opacity:0;transform:translateY(30px)">${w}</span>`).join('');
-  gsap.to('.hw',{opacity:1,y:0,duration:0.8,stagger:0.04,ease:'power3.out',delay:1.8});
+  heroH1.innerHTML=words.map(w=>w.startsWith('<')?w:`<span class="hw" style="display:inline-block">${w}</span>`).join('');
+  gsap.from('.hw',{opacity:0,y:30,duration:0.8,stagger:0.04,ease:'power3.out',delay:1.8,clearProps:'all'});
 }
+}catch(e){}
 
+if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined'){
+  // Fallback — make everything visible
+  document.querySelectorAll('.rv,.st,.ss,.sl,.pc,.sc,.prc,.sd,.hw').forEach(el=>{el.style.opacity='1';el.style.transform='none'});
+}else{
 // Section titles — mask reveal
 document.querySelectorAll('.st').forEach(t=>{
   gsap.from(t,{y:60,opacity:0,duration:0.9,ease:'power3.out',scrollTrigger:{trigger:t,start:'top 85%'}});
@@ -890,6 +896,7 @@ document.querySelectorAll('.nl a:not(.ncta)').forEach(a=>{
     gsap.fromTo(a,{backgroundSize:'0% 1.5px'},{backgroundSize:'100% 1.5px',duration:0.4,ease:'power2.out'});
   });
 });
+} // end GSAP check
 
 document.querySelectorAll('.fqq').forEach(b=>{b.addEventListener('click',()=>{const i=b.parentElement,a=i.querySelector('.fqa'),o=i.classList.contains('open');document.querySelectorAll('.fqi').forEach(x=>{x.classList.remove('open');x.querySelector('.fqa').style.maxHeight=null});if(!o){i.classList.add('open');a.style.maxHeight=a.scrollHeight+'px'}})});
 
