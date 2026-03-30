@@ -343,7 +343,7 @@ footer p{font-size:.8rem;color:var(--mt)}
 footer a{color:var(--tx2);text-decoration:none;font-size:.8rem;transition:color .3s}footer a:hover{color:var(--tx)}
 
 @media(max-width:900px){
-  .pg,.sg,.prg,.pog{grid-template-columns:1fr}.retc{grid-template-columns:1fr}.retf{grid-template-columns:1fr}
+  .pg,.sg,.prg,.pog{grid-template-columns:1fr}.retc{grid-template-columns:1fr!important}.retc>div:last-child{grid-template-columns:1fr!important}.retf{grid-template-columns:1fr}
   .hst{flex-direction:column;gap:18px}nav{padding:12px 18px}.nl{display:none}
   section,.cta{padding:70px 18px}.hero{padding:110px 18px 50px}
   .hbtns{flex-direction:column;width:100%}.bp{width:100%;justify-content:center}
@@ -503,7 +503,46 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
     <div class="prc ft rv rd2"><div class="pb" data-i18n="packages.popular">Most Popular</div><div class="pn" data-i18n="packages.pro.name">Professional</div><div class="pp"><span class="c">€</span>3,200</div><div class="pt" data-i18n="packages.pro.time">7–10 days</div><ul class="pf"><li data-i18n="packages.pro.f1">10–15 page custom</li><li data-i18n="packages.pro.f3">Online booking</li><li data-i18n="packages.pro.f6">Reviews widget</li><li data-i18n="packages.pro.f4">Blog section</li><li data-i18n="packages.pro.f5">Google Business</li><li data-i18n="packages.pro.f7">Core Web Vitals</li><li>PageSpeed 95+</li></ul><a href="#contact" class="pbtn pm" data-i18n="packages.cta">Get Started</a></div>
     <div class="prc rv rd3"><div class="pn" data-i18n="packages.premium.name">Premium</div><div class="pp"><span class="c">€</span>6,500</div><div class="pt" data-i18n="packages.premium.time">14–21 days</div><ul class="pf"><li data-i18n="packages.premium.f1">25 pages full custom</li><li data-i18n="packages.premium.f2">Video integration</li><li data-i18n="packages.premium.f3">Patient portal</li><li data-i18n="packages.premium.f4">Local SEO (10 pages)</li><li data-i18n="packages.premium.f5">Pro copywriting</li><li data-i18n="packages.premium.f6">Google Ads page</li><li data-i18n="packages.premium.f7">3 months support</li></ul><a href="#contact" class="pbtn po" data-i18n="packages.cta">Get Started</a></div>
   </div>
-  <div class="retc rv"><div><div class="sl">After Launch</div><div class="reth" data-i18n="packages.retainer.name">Growth & Care Plan</div><div class="retp">€450<span data-i18n="packages.retainer.per">/month</span></div><p style="font-size:.88rem;color:var(--tx2);line-height:1.6" data-i18n="packages.retainer.desc">Keep bringing patients — zero effort from you.</p></div><ul class="retf"><li>2 SEO posts/month</li><li>Google Business opt.</li><li>Review collection</li><li>Review monitoring</li><li>Monthly report</li><li>Positions vs competitors</li><li>Hosting + SSL + backups</li><li>Security updates</li><li>2h content updates</li><li>Priority support 24h</li><li>Quarterly call</li><li>No lock-in</li></ul></div>
+  <div class="retc rv" style="grid-template-columns:1fr 2fr;gap:32px">
+    <div>
+      <div class="sl">After Launch</div>
+      <div class="reth" data-i18n="packages.retainer.name">Growth & Care Plan</div>
+      <div class="retp">€450<span data-i18n="packages.retainer.per">/month</span></div>
+      <p style="font-size:.88rem;color:var(--tx2);line-height:1.6" data-i18n="packages.retainer.desc">Keep bringing patients — zero effort from you.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <div>
+        <div style="font-size:.78rem;font-weight:600;color:var(--ac);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em">📈 Growth</div>
+        <ul class="retf" style="display:flex;flex-direction:column;gap:4px">
+          <li>2 SEO blog posts/month</li>
+          <li>2–3 local directory listings/month</li>
+          <li>1 backlink outreach/month</li>
+          <li>Google Business: 2 posts/month</li>
+          <li>Monthly report: traffic, rankings, calls</li>
+          <li>Keyword positions vs 3 competitors</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:.78rem;font-weight:600;color:var(--ac3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em">⭐ Reviews</div>
+        <ul class="retf" style="display:flex;flex-direction:column;gap:4px">
+          <li>Review collection system setup</li>
+          <li>Review monitoring (Google + Yelp)</li>
+          <li>Review response templates</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:.78rem;font-weight:600;color:var(--ac2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em">🔧 Care</div>
+        <ul class="retf" style="display:flex;flex-direction:column;gap:4px">
+          <li>Hosting + SSL + daily backups</li>
+          <li>Security updates & patches</li>
+          <li>Up to 2h content updates/month</li>
+          <li>Priority support (24h response)</li>
+          <li>Quarterly strategy call (15 min)</li>
+          <li>No lock-in — cancel anytime</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section><div class="sdv"></div>
 
 <section id="process"><div class="rv"><div class="sl">How It Works</div><div class="st" data-i18n="process.title">Audit to launch in 10 days</div><div class="ss" data-i18n="process.sub">First 3 steps free.</div></div>
@@ -592,7 +631,7 @@ section:nth-child(n+2){content-visibility:auto;contain-intrinsic-size:auto 600px
     <div class="fqi rv"><button class="fqq"><span data-i18n="faq.q1">How long does it take?</span><span class="fqic">+</span></button><div class="fqa"><div class="fqai" data-i18n="faq.a1">Starter: 3–5 days. Professional: 7–10. Premium: 14–21. 3–5x faster than agencies.</div></div></div>
     <div class="fqi rv"><button class="fqq"><span data-i18n="faq.q3">Do I own the website?</span><span class="fqic">+</span></button><div class="fqa"><div class="fqai" data-i18n="faq.a3">Yes, 100%. Full source code. No lock-in. Host anywhere.</div></div></div>
     <div class="fqi rv"><button class="fqq"><span data-i18n="faq.q4">What's in the free audit?</span><span class="fqic">+</span></button><div class="fqa"><div class="fqai" data-i18n="faq.a4">Mobile speed, SEO, booking, SSL, competitor comparison. Report in 24h. No cost.</div></div></div>
-    <div class="fqi rv"><button class="fqq"><span>What's the Growth & Care Plan?</span><span class="fqic">+</span></button><div class="fqa"><div class="fqai">€450/mo: hosting, security, 2 blog posts, Google Business, reviews, updates, report. Cancel anytime.</div></div></div>
+    <div class="fqi rv"><button class="fqq"><span>What's the Growth & Care Plan?</span><span class="fqic">+</span></button><div class="fqa"><div class="fqai">€450/month after launch. Three pillars: <strong>Growth</strong> — 2 SEO blog posts, local directory listings, backlink outreach, Google Business posts, monthly traffic/rankings report, keyword positions vs 3 competitors. <strong>Reviews</strong> — review collection system, monitoring on Google + Yelp, response templates. <strong>Care</strong> — hosting, SSL, daily backups, security patches, up to 2h content updates, priority support (24h), quarterly strategy call. No lock-in — cancel anytime.</div></div></div>
     <div class="fqi rv"><button class="fqq"><span data-i18n="faq.q5">How does payment work?</span><span class="fqic">+</span></button><div class="fqa"><div class="fqai" data-i18n="faq.a5">50% deposit, 50% on completion. Cards, bank transfer, PayPal — via Stripe.</div></div></div>
     <div class="fqi rv"><button class="fqq"><span data-i18n="faq.q6">Work outside the US?</span><span class="fqic">+</span></button><div class="fqa"><div class="fqai" data-i18n="faq.a6">US, UK, Europe, globally. Multilingual + local SEO.</div></div></div>
   </div>

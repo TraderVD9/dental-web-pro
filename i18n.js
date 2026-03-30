@@ -68,8 +68,8 @@ const translations = {
     "packages.premium.f5": "Professional copywriting",
     "packages.premium.f6": "Google Ads landing page",
     "packages.premium.f7": "3 months post-launch support",
-    "packages.retainer.name": "Monthly Retainer",
-    "packages.retainer.desc": "Content updates, 2 blog posts/month, analytics reports, priority support, backups & monitoring.",
+    "packages.retainer.name": "Growth & Care Plan",
+    "packages.retainer.desc": "Keep bringing patients — zero effort from you.",
     "packages.retainer.per": "/month",
 
     "process.title": "Audit to launch in 10 days",
@@ -201,8 +201,8 @@ const translations = {
     "packages.premium.f5": "Professionelles Copywriting",
     "packages.premium.f6": "Google Ads Landingpage",
     "packages.premium.f7": "3 Monate Support nach Launch",
-    "packages.retainer.name": "Monatliches Abonnement",
-    "packages.retainer.desc": "Content-Updates, 2 Blogbeiträge/Monat, Analytics-Berichte, Prioritäts-Support, Backups & Monitoring.",
+    "packages.retainer.name": "Growth & Care Plan",
+    "packages.retainer.desc": "Patienten gewinnen — ohne Aufwand für Sie.",
     "packages.retainer.per": "/Monat",
 
     "process.title": "So funktioniert es",
@@ -334,8 +334,8 @@ const translations = {
     "packages.premium.f5": "Professionele copywriting",
     "packages.premium.f6": "Google Ads landingspagina",
     "packages.premium.f7": "3 maanden support na lancering",
-    "packages.retainer.name": "Maandelijks Abonnement",
-    "packages.retainer.desc": "Content updates, 2 blogposts/maand, analytics rapporten, prioriteit support, backups & monitoring.",
+    "packages.retainer.name": "Growth & Care Plan",
+    "packages.retainer.desc": "Patiënten blijven binnenhalen — zonder moeite voor u.",
     "packages.retainer.per": "/maand",
 
     "process.title": "Hoe het werkt",
@@ -467,8 +467,8 @@ const translations = {
     "packages.premium.f5": "Профессиональный копирайтинг",
     "packages.premium.f6": "Лендинг для Google Ads",
     "packages.premium.f7": "3 месяца поддержки после запуска",
-    "packages.retainer.name": "Ежемесячное обслуживание",
-    "packages.retainer.desc": "Обновление контента, 2 статьи/месяц, аналитические отчёты, приоритетная поддержка, бэкапы и мониторинг.",
+    "packages.retainer.name": "Growth & Care Plan",
+    "packages.retainer.desc": "Привлекаем пациентов — без усилий с вашей стороны.",
     "packages.retainer.per": "/месяц",
 
     "process.title": "Как это работает",
