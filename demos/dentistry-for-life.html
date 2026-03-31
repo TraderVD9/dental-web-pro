@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dentistry For Life — Philadelphia, PA</title>
+<meta name="description" content="Dentistry For Life in Philadelphia, PA. Dentistry for life — literally">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--ac:#0D9488;--ac2:#0D9488DD;--tx:#0F1A2E;--tx2:#4A5568;--mt:#6B7A8D;--bg:#FAFBFE;--brd:#0D948812}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;color:var(--tx);background:var(--bg);-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,251,254,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+.logo{font-size:1.1rem;font-weight:700;color:var(--ac);text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--tx2);font-size:.82rem;font-weight:400;transition:.3s}
+.nav-links a:hover{color:var(--ac)}
+.nav-cta{background:var(--ac)!important;color:#fff!important;padding:8px 20px!important;border-radius:100px;font-weight:600!important}
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 40px 80px;background:linear-gradient(135deg,#0D948808,#0D948804)}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;width:100%}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#0D948808;border:1px solid #0D948818;border-radius:100px;font-size:.7rem;color:var(--ac);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
+.badge .dot{width:6px;height:6px;background:var(--ac);border-radius:50%;animation:p 2s infinite}
+@keyframes p{0%,100%{box-shadow:0 0 0 0 #0D948840}50%{box-shadow:0 0 0 8px #0D948800}}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:700;line-height:1.1;margin-bottom:16px;letter-spacing:-.02em}
+h1 em{color:var(--ac);font-style:italic}
+.hero-sub{font-size:1rem;color:var(--tx2);line-height:1.7;margin-bottom:24px;font-weight:300;max-width:440px}
+.btn-p{background:var(--ac);color:#fff;padding:13px 28px;border-radius:100px;font-size:.88rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px #0D948830;transition:.3s}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 24px #0D948835}
+.stats{display:flex;gap:32px;margin-top:28px;padding-top:20px;border-top:1px solid var(--brd)}
+.stat-n{font-size:1.4rem;font-weight:700;color:var(--ac);line-height:1}
+.stat-l{font-size:.6rem;color:var(--mt);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+section{padding:80px 40px;max-width:1100px;margin:0 auto}
+.sl{font-size:.68rem;text-transform:uppercase;letter-spacing:.18em;color:var(--ac);font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.sl::before{content:'';width:16px;height:1.5px;background:var(--ac)}
+.st{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;margin-bottom:36px}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.srv{background:#fff;border-radius:12px;padding:22px 18px;border:1px solid var(--brd);text-align:center;transition:.3s}
+.srv:hover{transform:translateY(-3px);box-shadow:0 4px 20px #0D948808}
+.srv-i{font-size:1.6rem;margin-bottom:10px}
+.srv h3{font-size:.88rem;font-weight:600;margin-bottom:4px}
+.srv p{font-size:.75rem;color:var(--tx2)}
+.cta{text-align:center;padding:80px 40px}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:12px}
+.cta p{color:var(--tx2);margin-bottom:24px;font-weight:300}
+.info{display:flex;gap:20px;justify-content:center;margin-top:20px;flex-wrap:wrap;font-size:.78rem;color:var(--tx2)}
+footer{padding:28px 40px;border-top:1px solid var(--brd);display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto;font-size:.72rem;color:var(--mt);flex-wrap:wrap;gap:8px}
+footer a{color:var(--ac);text-decoration:none}
+.banner{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;text-align:center;padding:10px 20px;font-size:.75rem;z-index:200}
+.banner a{color:#FCD34D;text-decoration:none;font-weight:600}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.hero-img{display:none}.srv-grid{grid-template-columns:1fr}nav{padding:12px 18px}.nav-links{display:none}.hero{padding:100px 18px 60px}section,.cta{padding:50px 18px}.stats{flex-wrap:wrap;gap:16px}.info{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">🦷 Dentistry For Life</a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:2155150404">(215) 515-0404</a>
+    <a href="#contact" class="nav-cta">Book Appointment</a>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="badge"><span class="dot"></span> Accepting New Patients</div>
+      <h1><em>Dentistry for life — literally</em></h1>
+      <p class="hero-sub">Dentistry For Life in Philadelphia, PA — quality dental care for your whole family.</p>
+      <a href="tel:2155150404" class="btn-p">📅 Book Appointment</a>
+      <div class="stats">
+        
+        
+        
+      </div>
+    </div>
+    <div class="hero-img"><div style="background:#fff;border-radius:14px;padding:28px;text-align:center;border:1px solid #0D948815;max-width:280px;margin:0 auto">
+      <div style="width:64px;height:64px;border-radius:50%;background:#0D948810;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.4rem">🦷</div>
+      <h3 style="font-size:.95rem;font-weight:600;color:#0F1A2E">Dentistry For Life</h3>
+      <p style="font-size:.72rem;color:#6B7A8D">Dentistry for life — literally</p>
+    </div></div>
+  </div>
+</section>
+<section id="services">
+  <div class="sl">Services</div>
+  <div class="st">What we offer</div>
+  <div class="srv-grid">
+    <div class="srv"><div class="srv-i">🦷</div><h3>General</h3><p>Professional general dentistry</p></div>
+    <div class="srv"><div class="srv-i">✨</div><h3>Cosmetic</h3><p>Professional cosmetic dentistry</p></div>
+    <div class="srv"><div class="srv-i">🔧</div><h3>Implants</h3><p>Professional implants dentistry</p></div>
+    <div class="srv"><div class="srv-i">👨‍👩‍👧</div><h3>Family</h3><p>Professional family dentistry</p></div>
+    <div class="srv"><div class="srv-i">💎</div><h3>Veneers</h3><p>Professional veneers dentistry</p></div>
+    <div class="srv"><div class="srv-i">😁</div><h3>Whitening</h3><p>Professional whitening dentistry</p></div>
+  </div>
+</section>
+<section class="cta" id="contact">
+  <div class="sl" style="justify-content:center">Get Started</div>
+  <h2>Ready for your best smile?</h2>
+  <p>New patients welcome. Call us or stop by.</p>
+  <a href="tel:2155150404" class="btn-p" style="font-size:.95rem;padding:14px 32px">📞 Call (215) 515-0404</a>
+  <div class="info">
+    <span>📍 1601 Walnut St Suite 1217, Philadelphia, PA 19102</span>
+    
+  </div>
+</section>
+<footer>
+  <p>© 2026 Dentistry For Life. Philadelphia, PA.</p>
+  <a href="tel:2155150404">(215) 515-0404</a>
+</footer>
+<div class="banner">🎁 Free redesign concept by <a href="https://dentalwebai.com">DentalWebAI</a> — yours to keep, no strings attached.</div>
+</body>
+</html>
