@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Powers Dental Group — Your Dentist in Colorado Springs, CO</title>
+<meta name="description" content="Powers Dental Group in Colorado Springs, CO — Dr. Adriana Chaves Kelton. Implants, emergency, cosmetic, Invisalign, sedation dentistry. Open Saturdays.">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--ac:#DC2626;--ac2:#B91C1C;--warm:#FEF7F5;--gold:#C5965A;--tx:#1C1917;--tx2:#57534E;--mt:#A8A29E;--bg:#FAFAF9;--brd:rgba(220,38,38,0.08);--shadow:0 4px 24px rgba(28,25,23,0.06)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;color:var(--tx);background:var(--bg);-webkit-font-smoothing:antialiased}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,249,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+.logo{font-size:1.1rem;font-weight:700;color:var(--ac);text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo svg{width:28px;height:28px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--tx2);font-size:.85rem;font-weight:400;transition:.3s}
+.nav-links a:hover{color:var(--ac)}
+.nav-cta{background:var(--ac)!important;color:#fff!important;padding:9px 22px!important;border-radius:100px;font-weight:600!important;font-size:.82rem!important}
+.nav-cta:hover{background:var(--ac2)!important}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 40px 80px;background:linear-gradient(135deg,#FEF2F2 0%,#FDE8E8 50%,#FEF7F0 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-20%;right:-10%;width:50vw;height:50vw;background:radial-gradient(circle,rgba(220,38,38,0.06),transparent 60%);border-radius:50%}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%}
+.hero-content{position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.12);border-radius:100px;font-size:.72rem;color:var(--ac);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
+.hero-badge .dot{width:6px;height:6px;background:var(--ac);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.3)}50%{box-shadow:0 0 0 8px rgba(220,38,38,0)}}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:700;line-height:1.08;margin-bottom:18px;color:var(--tx);letter-spacing:-.02em}
+h1 em{color:var(--ac);font-style:italic}
+.hero-sub{font-size:1.05rem;color:var(--tx2);line-height:1.7;margin-bottom:28px;font-weight:300;max-width:460px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-p{background:var(--ac);color:#fff;padding:14px 30px;border-radius:100px;font-size:.9rem;font-weight:600;text-decoration:none;transition:.3s;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(220,38,38,0.2)}
+.btn-p:hover{background:var(--ac2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(220,38,38,0.25)}
+.btn-s{color:var(--tx2);padding:14px 20px;font-size:.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.3s}
+.btn-s:hover{color:var(--ac)}
+.hero-stats{display:flex;gap:36px;margin-top:36px;padding-top:24px;border-top:1px solid var(--brd)}
+.stat{text-align:center}
+.stat-n{font-size:1.5rem;font-weight:700;color:var(--ac);line-height:1}
+.stat-l{font-size:.65rem;color:var(--mt);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.hero-img{position:relative;z-index:2}
+.hero-mockup{background:var(--warm);border-radius:20px;padding:32px;box-shadow:var(--shadow);border:1px solid var(--brd);text-align:center}
+.hero-mockup .stars{color:var(--gold);font-size:1.1rem;letter-spacing:4px;margin-bottom:8px}
+.hero-mockup .rev-text{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--tx);line-height:1.5;margin-bottom:12px}
+.hero-mockup .rev-author{font-size:.75rem;color:var(--mt)}
+.trust-bar{display:flex;gap:16px;margin-top:16px;justify-content:center;flex-wrap:wrap}
+.trust-item{font-size:.7rem;color:var(--mt);display:flex;align-items:center;gap:4px}
+.trust-item .check{color:var(--ac)}
+
+/* Services */
+.services{padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:var(--ac);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:18px;height:1.5px;background:var(--ac)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;margin-bottom:12px;color:var(--tx)}
+.section-sub{font-size:.95rem;color:var(--tx2);max-width:480px;line-height:1.7;font-weight:300;margin-bottom:48px}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.srv-card{background:#fff;border-radius:14px;padding:28px 22px;border:1px solid var(--brd);transition:all .4s;text-align:center}
+.srv-card:hover{border-color:rgba(220,38,38,0.15);box-shadow:var(--shadow);transform:translateY(-4px)}
+.srv-icon{font-size:1.8rem;margin-bottom:14px}
+.srv-card h3{font-size:.95rem;font-weight:600;margin-bottom:6px;color:var(--tx)}
+.srv-card p{font-size:.8rem;color:var(--tx2);line-height:1.5}
+
+/* Competitive Analysis */
+.competitive{padding:100px 40px;background:var(--warm)}
+.competitive-inner{max-width:1000px;margin:0 auto}
+.comp-table{width:100%;border-collapse:separate;border-spacing:0;margin:32px 0 24px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
+.comp-table thead th{background:var(--tx);color:#fff;padding:14px 18px;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;text-align:center}
+.comp-table thead th:first-child{text-align:left;width:180px}
+.comp-table thead th:nth-child(2){background:var(--ac);color:#fff}
+.comp-table tbody td{padding:12px 18px;font-size:.82rem;text-align:center;border-bottom:1px solid var(--brd);color:var(--tx2)}
+.comp-table tbody td:first-child{font-weight:500;color:var(--tx);text-align:left}
+.comp-table tbody td:nth-child(2){background:rgba(220,38,38,0.03);font-weight:500}
+.comp-table tbody tr:last-child td{border-bottom:none}
+.comp-table .yes{color:#16A34A;font-weight:600}
+.comp-table .no{color:#DC2626;font-weight:600}
+.comp-table .highlight{color:var(--ac);font-weight:700}
+.comp-insight{background:#fff;border-left:4px solid var(--ac);padding:20px 24px;border-radius:0 12px 12px 0;margin-top:24px;font-size:.92rem;line-height:1.7;color:var(--tx)}
+.comp-insight strong{color:var(--ac)}
+
+/* Team */
+.team{padding:100px 40px;background:#fff}
+.team-inner{max-width:1200px;margin:0 auto}
+.team-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:48px;max-width:400px}
+.doc-card{background:var(--bg);border-radius:14px;padding:24px;text-align:center;border:1px solid var(--brd);transition:.4s}
+.doc-card:hover{box-shadow:var(--shadow);transform:translateY(-4px)}
+.doc-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(220,38,38,0.08),rgba(197,150,90,0.08));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.4rem}
+.doc-card h3{font-size:.9rem;font-weight:600;color:var(--tx);margin-bottom:2px}
+.doc-card p{font-size:.72rem;color:var(--mt)}
+
+/* CTA */
+.cta{padding:100px 40px;text-align:center;max-width:700px;margin:0 auto}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:14px}
+.cta p{color:var(--tx2);margin-bottom:28px;font-weight:300}
+.cta-info{display:flex;gap:24px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.cta-item{font-size:.8rem;color:var(--tx2);display:flex;align-items:center;gap:6px}
+
+/* Footer */
+footer{padding:32px 40px;border-top:1px solid var(--brd);display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:12px}
+footer p{font-size:.75rem;color:var(--mt)}
+footer a{color:var(--ac);text-decoration:none;font-size:.75rem}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-img{display:none}
+  .srv-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  nav{padding:12px 18px}
+  .nav-links{display:none}
+  .hero{padding:100px 18px 60px}
+  .services,.cta{padding:60px 18px}
+  .team,.competitive{padding:60px 18px}
+  .hero-stats{flex-direction:column;gap:16px}
+  .comp-table{font-size:.7rem;display:block;overflow-x:auto}
+  .comp-table thead th,.comp-table tbody td{padding:10px 12px;font-size:.72rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <svg viewBox="0 0 28 28" fill="none"><path d="M14 2C11 2 9 5 8.2 9.5C7.5 14 7.5 18 8.2 21.5C9 25 11.5 27 14 27C16.5 27 19 25 19.8 21.5C20.5 18 20.5 14 19.8 9.5C19 5 17 2 14 2Z" stroke="#DC2626" stroke-width="1.5" fill="none"/><path d="M10 12L13 15L19 9" stroke="#DC2626" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></svg>
+    Powers Dental Group
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#team">Dr. Kelton</a>
+    <a href="#compare">Competitors</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:7195979737">719.597.9737</a>
+    <a href="#contact" class="nav-cta">Book Appointment</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> Open Saturdays</div>
+      <h1>Your smile deserves <em>expert</em> care</h1>
+      <p class="hero-sub">Full-service family dentistry in Colorado Springs. From routine cleanings to dental implants and Invisalign — Dr. Adriana Chaves Kelton and the Powers Dental team are here for you.</p>
+      <div class="hero-btns">
+        <a href="tel:7195979737" class="btn-p">📞 Call (719) 597-9737</a>
+        <a href="#services" class="btn-s">Our Services ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-n">47</div><div class="stat-l">Yelp Reviews</div></div>
+        <div class="stat"><div class="stat-n">6</div><div class="stat-l">Days Open</div></div>
+        <div class="stat"><div class="stat-n">7:30a</div><div class="stat-l">Early Hours</div></div>
+        <div class="stat"><div class="stat-n">6+</div><div class="stat-l">Specialties</div></div>
+      </div>
+    </div>
+    <div class="hero-img">
+      <div class="hero-mockup">
+        <div class="stars">★★★★★</div>
+        <p class="rev-text">"Dr. Kelton and her team are amazing. They made my dental implant procedure smooth and painless. Highly recommend!"</p>
+        <p class="rev-author">— Yelp Review, Colorado Springs</p>
+        <div class="trust-bar">
+          <span class="trust-item"><span class="check">✓</span> Implants</span>
+          <span class="trust-item"><span class="check">✓</span> Invisalign</span>
+          <span class="trust-item"><span class="check">✓</span> Sedation</span>
+          <span class="trust-item"><span class="check">✓</span> Emergency</span>
+          <span class="trust-item"><span class="check">✓</span> Saturdays</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-label">What We Offer</div>
+  <div class="section-title">Complete dental care under one roof</div>
+  <p class="section-sub">From emergency visits to full smile makeovers — Powers Dental Group has you covered six days a week.</p>
+  <div class="srv-grid">
+    <div class="srv-card"><div class="srv-icon">🦷</div><h3>General Dentistry</h3><p>Cleanings, exams, fillings, and preventive care for the whole family.</p></div>
+    <div class="srv-card"><div class="srv-icon">✨</div><h3>Cosmetic Dentistry</h3><p>Teeth whitening, veneers, and complete smile transformations.</p></div>
+    <div class="srv-card"><div class="srv-icon">🔧</div><h3>Dental Implants</h3><p>Permanent, natural-looking replacements for missing teeth.</p></div>
+    <div class="srv-card"><div class="srv-icon">😁</div><h3>Invisalign</h3><p>Clear aligners for straighter teeth — no metal braces needed.</p></div>
+    <div class="srv-card"><div class="srv-icon">💤</div><h3>Sedation Dentistry</h3><p>Comfortable, anxiety-free treatment for nervous patients.</p></div>
+    <div class="srv-card"><div class="srv-icon">🛡️</div><h3>Emergency Care</h3><p>Same-day emergency appointments when you need them most.</p></div>
+  </div>
+</section>
+
+<section class="competitive" id="compare">
+  <div class="competitive-inner">
+    <div class="section-label">Competitive Insight</div>
+    <div class="section-title">How you compare to competitors</div>
+    <p class="section-sub">We audited your website alongside two nearby Colorado Springs practices. Here's what patients see when they search for a dentist.</p>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Powers Dental</th>
+          <th>Springs Modern Dentistry</th>
+          <th>North Powers Modern</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Online Booking</td>
+          <td class="no">&#10060;</td>
+          <td class="yes">&#9989;</td>
+          <td class="yes">&#9989;</td>
+        </tr>
+        <tr>
+          <td>Click-to-Call</td>
+          <td class="no">&#10060;</td>
+          <td class="no">&#10060;</td>
+          <td class="yes">&#9989;</td>
+        </tr>
+        <tr>
+          <td>Patient Reviews on Site</td>
+          <td class="no">&#10060;</td>
+          <td class="no">&#10060;</td>
+          <td class="yes">&#9989;</td>
+        </tr>
+        <tr>
+          <td>Contact Form</td>
+          <td class="no">&#10060;</td>
+          <td class="no">&#10060;</td>
+          <td class="yes">&#9989;</td>
+        </tr>
+        <tr>
+          <td>PageSpeed</td>
+          <td class="highlight">67/100</td>
+          <td>82/100</td>
+          <td class="yes">90/100</td>
+        </tr>
+        <tr>
+          <td>Open Saturdays</td>
+          <td class="yes">&#9989;</td>
+          <td class="no">&#10060;</td>
+          <td class="no">&#10060;</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="comp-insight">
+      <strong>Your Saturday hours are a HUGE advantage</strong> — but your website doesn't show it. Patients searching on Google can't find you online. Meanwhile, competitors with online booking and faster sites are capturing patients who should be yours.
+    </div>
+  </div>
+</section>
+
+<section class="team" id="team">
+  <div class="team-inner">
+    <div class="section-label">Meet Your Dentist</div>
+    <div class="section-title">Trusted care in Colorado Springs</div>
+    <p class="section-sub">Dr. Kelton and the Powers Dental team bring expertise and compassion to every patient visit.</p>
+    <div class="team-grid">
+      <div class="doc-card"><div class="doc-avatar">👩‍⚕️</div><h3>Dr. Adriana Chaves Kelton</h3><p>Lead Dentist · Implants, Cosmetic & Sedation</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="section-label" style="justify-content:center">Get Started</div>
+  <h2>Ready for a dentist who's open when <em>you</em> need them?</h2>
+  <p>New patients welcome. Open six days a week — including Saturdays. Call us today.</p>
+  <a href="tel:7195979737" class="btn-p" style="font-size:1rem;padding:16px 36px">📞 Call (719) 597-9737</a>
+  <div class="cta-info">
+    <span class="cta-item">📍 5780 N Carefree Cir, Colorado Springs, CO 80917</span>
+    <span class="cta-item">🕐 Mon-Thu 7:30am-7pm · Fri 7:30am-5pm · Sat 8am-2pm</span>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Powers Dental Group. Colorado Springs, CO.</p>
+  <div style="display:flex;gap:16px">
+    <a href="tel:7195979737">(719) 597-9737</a>
+  </div>
+</footer>
+
+<div style="position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#DC2626,#B91C1C);color:#fff;text-align:center;padding:10px 20px;font-size:.75rem;z-index:200">
+  🎁 This is a <strong>free redesign concept</strong> by <a href="https://dentalwebai.com" style="color:#FCD34D;text-decoration:none;font-weight:600">DentalWebAI</a> — yours to keep, no strings attached.
+</div>
+
+</body>
+</html>
