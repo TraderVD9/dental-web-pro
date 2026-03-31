@@ -1,0 +1,81 @@
+[
+  {
+    "clinic": "Midwest Smiles",
+    "doctor": "Dr. Cliff Ferguson",
+    "address": "9321 E Reno Ave, Midwest City, OK",
+    "phone": "(405) 733-8665",
+    "email": "frontdesk@midwestsmilesok.com",
+    "hours": "Mon-Fri",
+    "stars": 4.6,
+    "reviews": 89,
+    "services": ["General", "Family", "Cosmetic", "Emergency", "Preventive", "Whitening"],
+    "tagline": "Your neighborhood smile experts",
+    "color": "#B91C1C",
+    "slug": "midwest-smiles",
+    "city": "Midwest City, OK"
+  },
+  {
+    "clinic": "Buckley Comprehensive Dentistry",
+    "doctor": "Dr. Dan Buckley",
+    "address": "Atmore, AL",
+    "phone": "(251) 368-4210",
+    "email": "drdanbuckley@gmail.com",
+    "stars": 4.7,
+    "reviews": 52,
+    "services": ["General", "Cosmetic", "Family", "Preventive", "Crowns", "Whitening"],
+    "tagline": "Comprehensive care you can trust",
+    "color": "#7C3AED",
+    "slug": "buckley-dental",
+    "city": "Atmore, AL"
+  },
+  {
+    "clinic": "Bent Creek Dental",
+    "doctor": "",
+    "address": "Auburn, AL",
+    "phone": "",
+    "email": "bentcreekdental@gmail.com",
+    "stars": 4.5,
+    "reviews": 67,
+    "services": ["General", "Cosmetic", "Family", "Emergency", "Cleaning", "Whitening"],
+    "tagline": "Auburn's trusted dental home",
+    "color": "#0369A1",
+    "slug": "bent-creek-dental",
+    "city": "Auburn, AL"
+  },
+  {
+    "clinic": "Diamond Lakes Dental",
+    "doctor": "",
+    "address": "Hot Springs, AR",
+    "phone": "",
+    "email": "diamondlakesdental@gmail.com",
+    "stars": 4.6,
+    "reviews": 55,
+    "services": ["General", "Cosmetic", "Family", "Preventive", "Implants", "Emergency"],
+    "tagline": "Sparkling smiles at Diamond Lakes",
+    "color": "#0891B2",
+    "slug": "diamond-lakes-dental",
+    "city": "Hot Springs, AR"
+  },
+  {
+    "clinic": "Oxford Dental Care",
+    "doctor": "",
+    "address": "Idaho Falls, ID",
+    "phone": "",
+    "email": "oxforddentalidahofalls@gmail.com",
+    "services": ["General", "Cosmetic", "Family", "Preventive", "Whitening", "Crowns"],
+    "tagline": "Quality dental care in Idaho Falls",
+    "color": "#4338CA",
+    "slug": "oxford-dental",
+    "city": "Idaho Falls, ID"
+  },
+  {
+    "clinic": "Smile Select Dental",
+    "doctor": "",
+    "email": "welcome@smileselectdental.com",
+    "services": ["General", "Cosmetic", "Invisalign", "Family", "Whitening", "Implants"],
+    "tagline": "Select your perfect smile",
+    "color": "#DB2777",
+    "slug": "smile-select",
+    "city": "Georgia"
+  }
+]
