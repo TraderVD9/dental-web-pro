@@ -1,0 +1,8 @@
+[
+  {"clinic":"The Row Dental Edinburgh","email":"","city":"Edinburgh, UK","services":["General","Cosmetic","Family","Implants","Whitening","Preventive"],"tagline":"Modern dentistry on Edinburgh's Royal Mile","color":"#1E40AF","slug":"row-dental-edinburgh"},
+  {"clinic":"Dentist in Perth","email":"","city":"Perth, Australia","services":["General","Cosmetic","Family","Implants","Emergency","Whitening"],"tagline":"Perth's trusted dental practice","color":"#0891B2","slug":"dentist-perth"},
+  {"clinic":"Maylands Dental Centre","email":"","city":"Perth, Australia","services":["General","Cosmetic","Family","Preventive","Implants","Emergency"],"tagline":"Experienced dental care in the heart of Perth","color":"#059669","slug":"maylands-dental-perth"},
+  {"clinic":"Keilor Road Dental","email":"","city":"Melbourne, Australia","services":["General","Cosmetic","Family","Implants","Whitening","Preventive"],"tagline":"Niddrie's friendly neighbourhood dentist","color":"#7C3AED","slug":"keilor-road-dental"},
+  {"clinic":"Mount Oval Dental","doctor":"Dr. Mary O'Dea","email":"","city":"Cork, Ireland","services":["General","Cosmetic","Implants","Preventive","Family","Whitening"],"tagline":"Specialist dental care in Rochestown since 2002","color":"#059669","slug":"mount-oval-cork","years":24},
+  {"clinic":"ArtMedica Dublin","email":"info@artmedica.ie","address":"Unit 6 John Street North, Smithfield, Dublin 7","city":"Dublin, Ireland","services":["General","Cosmetic","Implants","Whitening","Veneers","Family"],"tagline":"Art meets dental care in Smithfield","color":"#DC2626","slug":"artmedica-dublin"}
+]
