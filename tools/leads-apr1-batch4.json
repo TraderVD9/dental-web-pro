@@ -1,0 +1,7 @@
+[
+  {"clinic":"West Hawaii Dental","doctor":"Dr. Gary Ault & Dr. Ray Alsaadi","email":"","phone":"","city":"Kailua Kona, HI","services":["General","Cosmetic","Family","Implants","Emergency","Preventive"],"tagline":"Aloha to healthy smiles on the Big Island","color":"#0EA5E9","slug":"west-hawaii-dental"},
+  {"clinic":"Honolulu Dental Lab","email":"","phone":"","address":"848 S Beretania St Suite 405, Honolulu, HI","city":"Honolulu, HI","services":["General","Cosmetic","Crowns","Implants","Veneers","Whitening"],"tagline":"60 years serving Oahu and the Islands","color":"#059669","slug":"honolulu-dental","years":60},
+  {"clinic":"Dr. Robert Rumbaugh III","doctor":"Dr. Robert Rumbaugh III","email":"","phone":"","city":"Pennsylvania","services":["General","Cosmetic","Family","Preventive","Crowns","Whitening"],"tagline":"Experienced family dentistry you can trust","color":"#1D4ED8","slug":"rumbaugh-dental"},
+  {"clinic":"Waterfall Dental Studio","email":"","phone":"","city":"USA","services":["General","Cosmetic","Implants","Preventive","Whitening","Veneers"],"tagline":"Where precision meets beauty","color":"#7C3AED","slug":"waterfall-dental"},
+  {"clinic":"Zahnarzt Bonn","email":"","phone":"","city":"Bonn","lang":"de","services":["General","Cosmetic","Implants","Surgery","Preventive","Crowns"],"tagline":"Ihr Zahnarzt in Bonn","color":"#DC2626","slug":"zahnarzt-bonn"}
+]
