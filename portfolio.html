@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — 87 Dental Websites | DentalWebAI</title>
+<meta name="description" content="87 personalized dental website demos across 9 countries. See real examples of our work for dental practices worldwide.">
+<link rel="canonical" href="https://dentalwebai.com/portfolio.html">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFBFE;--ac:#2563EB;--ac2:#0EA371;--tx:#0F1A2E;--tx2:#526280;--mt:#94A3B8;--brd:rgba(15,30,80,0.06);--shadow:0 4px 24px rgba(15,30,80,0.06)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx)}
+
+nav{padding:16px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--brd);position:sticky;top:0;background:rgba(250,251,254,0.95);backdrop-filter:blur(12px);z-index:10}
+nav a{text-decoration:none;color:var(--tx);font-weight:600;font-size:.95rem}
+nav .back{color:var(--ac);font-size:.85rem}
+
+.hero{text-align:center;padding:60px 40px 40px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:12px}
+.hero p{color:var(--tx2);font-size:1rem;max-width:500px;margin:0 auto 28px}
+
+.filters{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;padding:0 20px}
+.f{padding:6px 16px;border-radius:100px;font-size:.75rem;cursor:pointer;border:1px solid var(--brd);background:#fff;color:var(--tx2);transition:.2s}
+.f.active{background:var(--ac);color:#fff;border-color:var(--ac)}
+.f:hover{border-color:var(--ac)}
+.count{font-family:'JetBrains Mono',monospace;font-size:.65rem;margin-left:4px;opacity:.6}
+
+.search{display:block;margin:0 auto 32px;padding:12px 20px;border:1px solid var(--brd);border-radius:100px;width:min(400px,90vw);font-size:.88rem;font-family:'Outfit',sans-serif;outline:none;background:#fff}
+.search:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,0.06)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;padding:0 40px 60px;max-width:1400px;margin:0 auto}
+
+.card{background:#fff;border:1px solid var(--brd);border-radius:12px;overflow:hidden;transition:all .3s;text-decoration:none;color:var(--tx);display:block}
+.card:hover{border-color:rgba(37,99,235,0.15);box-shadow:var(--shadow);transform:translateY(-4px)}
+.card-top{height:140px;background:linear-gradient(135deg,rgba(37,99,235,0.04),rgba(14,163,113,0.03));display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative;overflow:hidden}
+.card-top::after{content:'VIEW →';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(37,99,235,0.04);backdrop-filter:blur(2px);font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ac);letter-spacing:.1em;opacity:0;transition:.3s}
+.card:hover .card-top::after{opacity:1}
+.card-body{padding:14px 16px}
+.card-body h3{font-size:.88rem;font-weight:600;margin-bottom:4px}
+.card-body p{font-size:.75rem;color:var(--tx2)}
+.card-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.tag{font-size:.6rem;padding:2px 8px;background:rgba(37,99,235,0.04);color:var(--ac);border-radius:100px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(37,99,235,0.06)}
+.tag.country{background:rgba(14,163,113,0.04);color:var(--ac2);border-color:rgba(14,163,113,0.06)}
+
+footer{text-align:center;padding:32px;border-top:1px solid var(--brd);font-size:.78rem;color:var(--mt)}
+footer a{color:var(--ac);text-decoration:none}
+
+@media(max-width:600px){.grid{padding:0 14px 40px;grid-template-columns:1fr}nav{padding:12px 18px}.hero{padding:40px 18px 24px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">🦷 DentalWebAI</a>
+  <a href="/" class="back">← Back to site</a>
+</nav>
+
+<div class="hero">
+  <h1>87 Dental Websites Built</h1>
+  <p>Personalized demos for real dental practices across 9 countries. Click any to see it live.</p>
+</div>
+
+<div class="filters" id="filters"></div>
+<input type="text" class="search" id="search" placeholder="Search clinic, city, country...">
+
+<div class="grid" id="grid"></div>
+
+<footer>© 2026 DentalWebAI. <a href="/">Back to site</a> · <a href="mailto:hello@dentalwebai.com">hello@dentalwebai.com</a></footer>
+
+<script>
+const projects = [
+  {name:"Luxe Dental Studio",city:"Premium Demo",country:"US",tags:["Premium","GSAP","WebGL"],icon:"✦",slug:"premium-dental",tier:"premium"},
+  {name:"NovaDent Premium",city:"Premium Demo",country:"US",tags:["Three.js","3D","Immersive"],icon:"🎬",slug:"https://tradervd9.github.io/novadent/",tier:"premium",external:true},
+  {name:"CityDent Clinic",city:"Berlin",country:"DE",tags:["Multilingual","Booking","Bento"],icon:"🌍",slug:"citydent",tier:"professional"},
+  {name:"Bright Smile Dental",city:"Charlotte, NC",country:"US",tags:["Redesign","Booking","Reviews"],icon:"🦷",slug:"bright-smile",tier:"professional"},
+  {name:"Alpine Family Dentistry",city:"Denver, CO",country:"US",tags:["Starter","SEO","Schema"],icon:"🏔",slug:"alpine-dental",tier:"starter"},
+  {name:"Pine Grove Family Dental",city:"Parker, CO",country:"US",tags:["4.9★","1544 reviews","4 Doctors"],icon:"🌲",slug:"pine-grove",tier:"client"},
+  {name:"Powers Dental Group",city:"Colorado Springs",country:"US",tags:["Competitor Analysis","Saturday hrs"],icon:"⛰️",slug:"powers-dental",tier:"analysis"},
+  {name:"Sninski & Schmitt",city:"Raleigh, NC",country:"US",tags:["3 Locations","Competitor Analysis"],icon:"🦷",slug:"sninski-schmitt",tier:"analysis"},
+  {name:"Holistic Dental LV",city:"Las Vegas, NV",country:"US",tags:["Holistic","Mercury-free"],icon:"🌿",slug:"holistic-dental",tier:"client"},
+  {name:"Urban Smiles",city:"Chicago, IL",country:"US",tags:["Urban","Invisalign","Dark"],icon:"🏙️",slug:"urban-smiles",tier:"client"},
+  {name:"Dr. Faber Dental",city:"Detroit, MI",country:"US",tags:["Heritage","30 years"],icon:"🏛️",slug:"dr-faber",tier:"client"},
+  {name:"Bright Smile Chicago",city:"Chicago, IL",country:"US",tags:["2 Locations","5 Languages","7 Days"],icon:"☀️",slug:"bright-smile-chicago",tier:"client"},
+  {name:"Charlton Village Dental",city:"London",country:"UK",tags:["London","SE7"],icon:"🇬🇧",slug:"charlton-village-dental",tier:"client"},
+  {name:"Euro Dental Care",city:"Birmingham",country:"UK",tags:["Birmingham"],icon:"🇬🇧",slug:"euro-dental-birmingham",tier:"client"},
+  {name:"Love-Teeth Dental",city:"Manchester",country:"UK",tags:["Manchester","Cosmetic"],icon:"🇬🇧",slug:"love-teeth-manchester",tier:"client"},
+  {name:"Diss Dental Care",city:"Norfolk",country:"UK",tags:["Norfolk","Since 1991"],icon:"🇬🇧",slug:"diss-dental",tier:"client"},
+  {name:"Row Dental",city:"Edinburgh",country:"UK",tags:["Edinburgh"],icon:"🇬🇧",slug:"row-dental-edinburgh",tier:"client"},
+  {name:"Miranda Dental Centre",city:"Sydney",country:"AU",tags:["Sydney","Orthodontics"],icon:"🇦🇺",slug:"miranda-dental-sydney",tier:"client"},
+  {name:"Macquarie Dental",city:"Sydney CBD",country:"AU",tags:["Sydney CBD","Premium"],icon:"🇦🇺",slug:"macquarie-dental-sydney",tier:"client"},
+  {name:"Holistic Dental Melbourne",city:"Melbourne",country:"AU",tags:["Melbourne","Holistic"],icon:"🇦🇺",slug:"holistic-dental-melbourne",tier:"client"},
+  {name:"Dentist Perth",city:"Perth",country:"AU",tags:["Perth"],icon:"🇦🇺",slug:"dentist-perth",tier:"client"},
+  {name:"Maylands Dental",city:"Perth",country:"AU",tags:["Perth","Maylands"],icon:"🇦🇺",slug:"maylands-dental-perth",tier:"client"},
+  {name:"Keilor Road Dental",city:"Melbourne",country:"AU",tags:["Melbourne","Niddrie"],icon:"🇦🇺",slug:"keilor-road-dental",tier:"client"},
+  {name:"McKnight Square Dental",city:"Calgary",country:"CA",tags:["Calgary"],icon:"🇨🇦",slug:"mcknight-dental-calgary",tier:"client"},
+  {name:"ArtMedica Dublin",city:"Dublin",country:"IE",tags:["Dublin","Smithfield"],icon:"🇮🇪",slug:"artmedica-dublin",tier:"client"},
+  {name:"Mount Oval Dental",city:"Cork",country:"IE",tags:["Cork","Specialist"],icon:"🇮🇪",slug:"mount-oval-cork",tier:"client"},
+  {name:"Zahnärzte am Zoo",city:"Düsseldorf",country:"DE",tags:["Düsseldorf"],icon:"🇩🇪",slug:"zahnaerzte-am-zoo",tier:"client"},
+  {name:"Zahnarzt Schöneberg",city:"Berlin",country:"DE",tags:["Berlin"],icon:"🇩🇪",slug:"zahnarzt-schoeneberg",tier:"client"},
+  {name:"Zahnarzt Aschendorff",city:"Hamburg",country:"DE",tags:["Hamburg"],icon:"🇩🇪",slug:"aschendorff-hamburg",tier:"client"},
+  {name:"Zahnarzt Stuttgart",city:"Stuttgart",country:"DE",tags:["Stuttgart"],icon:"🇩🇪",slug:"zahnarzt-stuttgart",tier:"client"},
+  {name:"Dr. Samanek",city:"Deutschland",country:"DE",tags:["Deutschland"],icon:"🇩🇪",slug:"dr-samanek",tier:"client"},
+  {name:"Zahnarzt Bonn",city:"Bonn",country:"DE",tags:["Bonn","Zahn S.P.A."],icon:"🇩🇪",slug:"zahnarzt-bonn",tier:"client"},
+  {name:"Zahnarzt Riesa",city:"Riesa",country:"DE",tags:["Riesa","Orthodontie"],icon:"🇩🇪",slug:"zahnarzt-riesa",tier:"client"},
+  {name:"Zimmermann Wuppertal",city:"Wuppertal",country:"DE",tags:["Wuppertal"],icon:"🇩🇪",slug:"zimmermann-wuppertal",tier:"client"},
+  {name:"Ursa Günzburg",city:"Günzburg",country:"DE",tags:["Günzburg"],icon:"🇩🇪",slug:"ursa-gunzburg",tier:"client"},
+  {name:"Tandartspraktijk Transparant",city:"Amsterdam",country:"NL",tags:["Amsterdam"],icon:"🇳🇱",slug:"transparant-amsterdam",tier:"client"},
+  {name:"Studentist",city:"Amsterdam",country:"NL",tags:["Amsterdam","Students"],icon:"🇳🇱",slug:"studentist-amsterdam",tier:"client"},
+  {name:"Medeco Rotterdam",city:"Rotterdam",country:"NL",tags:["Rotterdam"],icon:"🇳🇱",slug:"medeco-rotterdam",tier:"client"},
+  {name:"Tendens Antwerpen",city:"Antwerpen",country:"BE",tags:["Antwerpen"],icon:"🇧🇪",slug:"tendens-antwerpen",tier:"client"},
+  {name:"De Tandkliniek",city:"Asse",country:"BE",tags:["Asse"],icon:"🇧🇪",slug:"de-tandkliniek-asse",tier:"client"},
+  {name:"Darley Dental",city:"Altamonte Springs, FL",country:"US",tags:["Florida","Dr. Darley"],icon:"🦷",slug:"darley-dental",tier:"client"},
+  {name:"Montville Center",city:"Montville, NJ",country:"US",tags:["New Jersey"],icon:"🦷",slug:"montville-dental",tier:"client"},
+  {name:"Somerset Dental",city:"Las Vegas, NV",country:"US",tags:["Las Vegas","Dr. Palluck"],icon:"🦷",slug:"somerset-dental-lv",tier:"client"},
+  {name:"Aria Dental",city:"San Antonio, TX",country:"US",tags:["San Antonio"],icon:"🦷",slug:"aria-dental-sa",tier:"client"},
+  {name:"Southside Dental",city:"Pittsburgh, PA",country:"US",tags:["Pittsburgh"],icon:"🦷",slug:"southside-dental",tier:"client"},
+  {name:"Dawson Modern Dental",city:"Matthews, NC",country:"US",tags:["Matthews"],icon:"🦷",slug:"dawson-modern-dental",tier:"client"},
+  {name:"All Smiles Family",city:"Clarksville, TN",country:"US",tags:["Clarksville"],icon:"🦷",slug:"all-smiles-clarksville",tier:"client"},
+  {name:"Grayson Family Dental",city:"Lawrenceville, GA",country:"US",tags:["Georgia"],icon:"🦷",slug:"grayson-family-dental",tier:"client"},
+  {name:"Syracuse Family Dental",city:"Syracuse, NY",country:"US",tags:["Syracuse","Since 1964"],icon:"🦷",slug:"syracuse-family-dental",tier:"client"},
+  {name:"Marine City Dental",city:"Marine City, MI",country:"US",tags:["Michigan"],icon:"🦷",slug:"marine-city-dental",tier:"client"},
+  {name:"Coopersburg Dental",city:"Coopersburg, PA",country:"US",tags:["Pennsylvania"],icon:"🦷",slug:"coopersburg-dental",tier:"client"},
+  {name:"Midwest Smiles",city:"Midwest City, OK",country:"US",tags:["Oklahoma"],icon:"🦷",slug:"midwest-smiles",tier:"client"},
+  {name:"AAA Dental",city:"Charlotte, NC",country:"US",tags:["Charlotte","3 Locations"],icon:"🦷",slug:"aaa-dental-charlotte",tier:"client"},
+  {name:"All Smiles Atlanta",city:"Atlanta, GA",country:"US",tags:["Atlanta","Dental Spa"],icon:"🦷",slug:"all-smiles-atlanta",tier:"client"},
+  {name:"Carolina Family",city:"North Charleston, SC",country:"US",tags:["Since 1961"],icon:"🦷",slug:"carolina-family-dental",tier:"client"},
+];
+
+const countries = [...new Set(projects.map(p=>p.country))].sort();
+const tiers = {premium:'Premium',professional:'Professional',starter:'Starter',client:'Client Work',analysis:'Competitor Analysis'};
+
+// Render filters
+const filtersEl = document.getElementById('filters');
+filtersEl.innerHTML = '<div class="f active" data-f="all">All<span class="count">'+projects.length+'</span></div>' +
+  Object.entries(tiers).map(([k,v])=>'<div class="f" data-f="tier:'+k+'">'+v+'<span class="count">'+projects.filter(p=>p.tier===k).length+'</span></div>').join('') +
+  countries.map(c=>'<div class="f" data-f="country:'+c+'">'+({US:'🇺🇸',UK:'🇬🇧',AU:'🇦🇺',CA:'🇨🇦',IE:'🇮🇪',DE:'🇩🇪',NL:'🇳🇱',AT:'🇦🇹',BE:'🇧🇪'}[c]||c)+'<span class="count">'+projects.filter(p=>p.country===c).length+'</span></div>').join('');
+
+let currentFilter = 'all';
+
+function render() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const grid = document.getElementById('grid');
+  let filtered = projects.filter(p => {
+    if (currentFilter !== 'all') {
+      if (currentFilter.startsWith('tier:') && p.tier !== currentFilter.split(':')[1]) return false;
+      if (currentFilter.startsWith('country:') && p.country !== currentFilter.split(':')[1]) return false;
+    }
+    if (search && !`${p.name} ${p.city} ${p.country} ${p.tags.join(' ')}`.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  grid.innerHTML = filtered.map(p => {
+    const href = p.external ? p.slug : 'demos/' + p.slug + '.html';
+    return `<a href="${href}" class="card" target="_blank" rel="noopener noreferrer">
+      <div class="card-top">${p.icon}</div>
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p>${p.city}</p>
+        <div class="card-meta">
+          ${p.tags.map(t=>'<span class="tag">'+t+'</span>').join('')}
+          <span class="tag country">${p.country}</span>
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+document.querySelectorAll('.f').forEach(f => {
+  f.addEventListener('click', () => {
+    document.querySelectorAll('.f').forEach(x=>x.classList.remove('active'));
+    f.classList.add('active');
+    currentFilter = f.dataset.f;
+    render();
+  });
+});
+
+document.getElementById('search').addEventListener('input', render);
+render();
+</script>
+</body>
+</html>
