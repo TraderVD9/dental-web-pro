@@ -186,7 +186,7 @@ ${lead.stars ? `<li>Your ${lead.stars}★ rating and ${lead.reviews}+ reviews pr
 </ul>
 <p><strong>This page is yours to keep.</strong> No charge.</p>
 <p>If you want the full site (10-25 pages + booking + blog + SEO), I'd love 15 minutes of your time.</p>
-<p>Best,<br>Dmytro V.<br>DentalWebAI<br><a href="https://dentalwebai.com">dentalwebai.com</a><br>+31 20 808 0888</p>`
+<p>Best,<br>Dmytro V.<br>DentalWebAI<br><a href="https://dentalwebai.com">dentalwebai.com</a><br>+31 6 2522 5150</p>`
   };
 }
 
